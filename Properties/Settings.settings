@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ReadyToRead.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="dbConnString" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Server=localhost;Database=readytoread;Uid=root;Pwd=root;</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
