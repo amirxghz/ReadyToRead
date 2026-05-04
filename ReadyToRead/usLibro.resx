@@ -118,43 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnAggiungiWishList.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAaJJREFUSEvd
-        1M2LjmEUx/GP95eNaGoUK38ASikpdopZ2FjMRikpS9mzUVJWFiSlLChRDJJiq8xKSYSU1yUpRV7y0tF5
-        6prDeO55ZjZ866q73+9c576uc5/78D8yHztwHGdxEKtqUGoHMiZiR7GwBlXW4iF+4C2e4Guu/U1cPPf0
-        iHmTe55iQxM3gTV4h+cYwezUl+N8JtibK55DCy+YhS35sg/Y2OT9xRzcxyusqGYmuIJPucZSqwzhcR5y
-        cWtsz1NF7SdjZfOCPx2ix6bMtacVT2bN4yZ/Y1+ufjzC5Va4hdutME0u4EEr3MB4K0yTS7jXCkfxsUsf
-        d+QFzrXC5vwwu1txQKJdI9fOakSJXmJZNabAAtzNPPOqGX9xtOA1zK1mR07gO7ZVo0f0blwv6tevZStH
-        cu/halSizyPwTDMu+nEo95ya5A//jZiSseEiFlWzIW55LGNPd03eIybmN9zBcDWxFDczeZSn620nsBXv
-        8bpMyHU5mqMpdjX6QKzOMfwlR3U0wmc8w/oaPChLcDXLEet6lmhGiQ8a3RJrqi38D/MTt71dH/gX1iIA
-        AAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="btnAggiungiAlCarrello.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAQdJREFUSEvd
-        lTtuwlAQRQ9pUFqUPcAqCCmyD3pEF9bBKkh6KCmyCDpSkSYVsIIIdKVnCY3fFZ4yOdJIT3M9x8+WP/Af
-        GQEfwDZZ78AwyiJ94Av4qQjulWY0K4dlAVyA1xh04KXMvsWgYQAcgXUMEmyAM/AUA7EsO9hVLr9raVYO
-        uVp8AqfKULbkkKuFmtUgifXYIIn1uGBeKuL6zmODFbCPzdJTFnEeG0zLkzG76WmtnrKI89jgobwbEmrX
-        Kq3VUxZxHh8AvbJb3RKV1urVsB4bJLEeGySxHhsksR4bJLEe/TAOwGMMEmj227wfTIDfckD8gHUtzcrx
-        HOUNCnT2ONi1NDuO0r/NFeUyiWmv1gP0AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="rtbDescrizione.Text" xml:space="preserve">
-    <value>Il tempo per alcuni è una corsa incessante, per altri un passo lento e incerto. Per qualcuno, invece, si è arrestato per sempre. E la storia d'Italia è un filo spezzato: un orologio fermo alla stagione del piombo e del sangue. In questo silenzio immobile sono immersi Vera Coen e Andrea Malchiodi. Ha il destino scritto nel nome, Vera. Lavora come giornalista per un quotidiano locale e considera la ricerca della verità una missione. Ma a quarant'anni si ritrova con un lavoro insoddisfacente e precario, i dubbi di aver sbagliato tutto ad affollarle la mente e una scoperta sconvolgente con cui fare i conti... Il professor Andrea Malchiodi di anni ne ha quarantatré e ha incassato le delusioni di una carriera accademica spezzata da uno scandalo, in cui è stato ingiustamente coinvolto, insieme all'amarezza per un matrimonio finito. A separarlo dalla moglie e dalla figlia c'è un oceano di incomprensione. Ad affliggerlo, il dolore per la malattia della madre che lo ha cresciuto da sola. Un giorno come tanti, Andrea si trova davanti Vera. La giornalista lo mette a parte di un'incredibile rivelazione. C'è</value>
-  </data>
-  <data name="btnScriviRecensione.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAARdJREFUSEvd
-        lU0OAUEQhZ+NcCk/O3EK7N3DChfAiktY2BDn4ABuIORNqietpqp1L/mSCqqmv6dnMjPAvzEEcABwdGqu
-        FwgzABepqR4GKH8CuBniVMAKwAvAVYrfJ/ogwn9OeUcPEgQ5P0lLQriTBiepXLSchIBz1KspCbDkcd88
-        RbkBC0fu9WtyAjyJ1//gW4An8foNUgHfzrnum3gBI5GsVb9ITryAHYAHgHbUS8l5M1o3pBlAKeUMCb+5
-        E09OLE+FNRiLbBntJCUnlqfCGmxEyAo74TVJYXkqrAHP5VZ2El+DFJanwh0U4nrcQSGuJzyuu3pQANfe
-        Aez1gAzkhcMD9Ismt7iWjr6WBzhgul6YW1zb09Lf5g0q+YN6CyzsyQAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="pbValutazione.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="pictureBox6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAPoAAAAyCAYAAAB1V8bkAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         xAAADsQBlSsOGwAALDpJREFUeF7tfQl0G+W1/9XC3tdCW7rAH3gt0KalARpaKEsp0ELBHu+LRt4t29HI

@@ -220,6 +220,42 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="usLibro.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="usLibro.Designer.cs">
+      <DependentUpon>usLibro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="usLibroConsigliato.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="usLibroConsigliato.Designer.cs">
+      <DependentUpon>usLibroConsigliato.cs</DependentUpon>
+    </Compile>
+    <Compile Include="usLibroNelCarrello.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="usLibroNelCarrello.Designer.cs">
+      <DependentUpon>usLibroNelCarrello.cs</DependentUpon>
+    </Compile>
+    <Compile Include="usLibroPopolare.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="usLibroPopolare.Designer.cs">
+      <DependentUpon>usLibroPopolare.cs</DependentUpon>
+    </Compile>
+    <Compile Include="usLibroTendenza.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="usLibroTendenza.Designer.cs">
+      <DependentUpon>usLibroTendenza.cs</DependentUpon>
+    </Compile>
+    <Compile Include="usRecensione.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="usRecensione.Designer.cs">
+      <DependentUpon>usRecensione.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="FrmAutori.resx">
       <DependentUpon>FrmAutori.cs</DependentUpon>
     </EmbeddedResource>
@@ -269,6 +305,24 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="usLibro.resx">
+      <DependentUpon>usLibro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="usLibroConsigliato.resx">
+      <DependentUpon>usLibroConsigliato.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="usLibroNelCarrello.resx">
+      <DependentUpon>usLibroNelCarrello.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="usLibroPopolare.resx">
+      <DependentUpon>usLibroPopolare.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="usLibroTendenza.resx">
+      <DependentUpon>usLibroTendenza.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="usRecensione.resx">
+      <DependentUpon>usRecensione.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="bin\Debug\ReadyToRead.exe.config" />
     <None Include="packages.config" />
   </ItemGroup>

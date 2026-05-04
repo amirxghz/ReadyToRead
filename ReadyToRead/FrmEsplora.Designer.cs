@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEsplora));
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.cbOrdina = new System.Windows.Forms.ComboBox();
@@ -57,13 +56,6 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.btnVaiPaginaAvanti = new System.Windows.Forms.Button();
-            this.flpnlLibro = new System.Windows.Forms.FlowLayoutPanel();
-            this.pictureBox9 = new System.Windows.Forms.PictureBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.linkLabel4 = new System.Windows.Forms.LinkLabel();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
             this.flpLibri = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.nudMinPrezzo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxPrezzo)).BeginInit();
@@ -71,10 +63,6 @@
             this.flpAutore.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
-            this.flpnlLibro.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            this.flpLibri.SuspendLayout();
             this.SuspendLayout();
             // 
             // label17
@@ -411,90 +399,9 @@
             this.btnVaiPaginaAvanti.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnVaiPaginaAvanti.UseVisualStyleBackColor = false;
             // 
-            // flpnlLibro
-            // 
-            this.flpnlLibro.Controls.Add(this.pictureBox9);
-            this.flpnlLibro.Controls.Add(this.label20);
-            this.flpnlLibro.Controls.Add(this.linkLabel4);
-            this.flpnlLibro.Controls.Add(this.pictureBox6);
-            this.flpnlLibro.Controls.Add(this.label24);
-            this.flpnlLibro.Controls.Add(this.label27);
-            this.flpnlLibro.Location = new System.Drawing.Point(3, 3);
-            this.flpnlLibro.Name = "flpnlLibro";
-            this.flpnlLibro.Size = new System.Drawing.Size(170, 337);
-            this.flpnlLibro.TabIndex = 130;
-            this.flpnlLibro.Click += new System.EventHandler(this.flpnlLibro_Click);
-            // 
-            // pictureBox9
-            // 
-            this.pictureBox9.BackColor = System.Drawing.Color.Black;
-            this.pictureBox9.Location = new System.Drawing.Point(3, 3);
-            this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(170, 214);
-            this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox9.TabIndex = 0;
-            this.pictureBox9.TabStop = false;
-            // 
-            // label20
-            // 
-            this.label20.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label20.Location = new System.Drawing.Point(3, 220);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(170, 30);
-            this.label20.TabIndex = 8;
-            this.label20.Text = "Titolo libro";
-            // 
-            // linkLabel4
-            // 
-            this.linkLabel4.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.linkLabel4.BackColor = System.Drawing.Color.Transparent;
-            this.linkLabel4.Font = new System.Drawing.Font("Coolvetica", 12F);
-            this.linkLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(84)))), ((int)(((byte)(97)))));
-            this.linkLabel4.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(84)))), ((int)(((byte)(97)))));
-            this.linkLabel4.Location = new System.Drawing.Point(3, 250);
-            this.linkLabel4.Name = "linkLabel4";
-            this.linkLabel4.Size = new System.Drawing.Size(138, 23);
-            this.linkLabel4.TabIndex = 16;
-            this.linkLabel4.TabStop = true;
-            this.linkLabel4.Text = "Autore";
-            // 
-            // pictureBox6
-            // 
-            this.pictureBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
-            this.pictureBox6.Location = new System.Drawing.Point(3, 276);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(125, 25);
-            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox6.TabIndex = 135;
-            this.pictureBox6.TabStop = false;
-            // 
-            // label24
-            // 
-            this.label24.Font = new System.Drawing.Font("Coolvetica", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label24.Location = new System.Drawing.Point(134, 273);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(30, 25);
-            this.label24.TabIndex = 136;
-            this.label24.Text = "(5)";
-            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label27
-            // 
-            this.label27.Font = new System.Drawing.Font("Coolvetica", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label27.Location = new System.Drawing.Point(3, 304);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(170, 30);
-            this.label27.TabIndex = 21;
-            this.label27.Text = "Prezzo€";
-            // 
             // flpLibri
             // 
             this.flpLibri.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.flpLibri.Controls.Add(this.flpnlLibro);
             this.flpLibri.Location = new System.Drawing.Point(412, 170);
             this.flpLibri.Name = "flpLibri";
             this.flpLibri.Size = new System.Drawing.Size(707, 671);
@@ -540,10 +447,6 @@
             this.flpAutore.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
-            this.flpnlLibro.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            this.flpLibri.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -579,13 +482,6 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button btnVaiPaginaAvanti;
-        private System.Windows.Forms.FlowLayoutPanel flpnlLibro;
-        private System.Windows.Forms.PictureBox pictureBox9;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.LinkLabel linkLabel4;
-        private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label label27;
         private System.Windows.Forms.FlowLayoutPanel flpLibri;
     }
 }

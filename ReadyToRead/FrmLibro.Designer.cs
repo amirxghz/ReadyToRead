@@ -31,8 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLibro));
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnIndietro = new System.Windows.Forms.Button();
-            this.btnAggiungiWishList = new System.Windows.Forms.Button();
-            this.btnAggiungiAlCarrello = new System.Windows.Forms.Button();
             this.tcInfo = new System.Windows.Forms.TabControl();
             this.tpDescrizione = new System.Windows.Forms.TabPage();
             this.rtbDescrizione = new System.Windows.Forms.RichTextBox();
@@ -58,20 +56,7 @@
             this.label38 = new System.Windows.Forms.Label();
             this.tpValutazioni = new System.Windows.Forms.TabPage();
             this.flpRecensioni = new System.Windows.Forms.FlowLayoutPanel();
-            this.pnlRecensione = new System.Windows.Forms.Panel();
-            this.rtbTestoRecensione = new System.Windows.Forms.RichTextBox();
-            this.pbValutazioneRecensione = new System.Windows.Forms.PictureBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.lblNomeUtente = new System.Windows.Forms.Label();
-            this.pbFotoProfilo = new System.Windows.Forms.PictureBox();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnScriviRecensione = new System.Windows.Forms.Button();
             this.lblNumeroRecensioniTotali = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
@@ -90,69 +75,32 @@
             this.progressBar4 = new System.Windows.Forms.ProgressBar();
             this.lblNumeroValutazioni1Stelle = new System.Windows.Forms.Label();
             this.lblMediaValutazioni = new System.Windows.Forms.Label();
-            this.pbValutazione = new System.Windows.Forms.PictureBox();
-            this.pbDisponibilità = new System.Windows.Forms.PictureBox();
             this.lblDisponibilità = new System.Windows.Forms.Label();
             this.nudNumeroLibri = new System.Windows.Forms.NumericUpDown();
             this.lblTitolo = new System.Windows.Forms.Label();
             this.llblAutore = new System.Windows.Forms.LinkLabel();
             this.lblPrezzo = new System.Windows.Forms.Label();
-            this.pbLibro = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
-            this.pnlLibroSuggerito = new System.Windows.Forms.Panel();
-            this.lblGenereLibroSuggerito = new System.Windows.Forms.Label();
-            this.lblNumeroValutazioniLibroSuggerito = new System.Windows.Forms.Label();
-            this.pbValutazioneLibroSuggerito = new System.Windows.Forms.PictureBox();
-            this.lblPrezzoLibroSuggerito = new System.Windows.Forms.Label();
-            this.llblAutoreLibroSuggerito = new System.Windows.Forms.LinkLabel();
-            this.lblTitoloLibroSuggerito = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.label12 = new System.Windows.Forms.Label();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.label16 = new System.Windows.Forms.Label();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.btnAggiungiWishList = new System.Windows.Forms.Button();
+            this.btnAggiungiAlCarrello = new System.Windows.Forms.Button();
+            this.btnScriviRecensione = new System.Windows.Forms.Button();
+            this.pbValutazione = new System.Windows.Forms.PictureBox();
+            this.pbDisponibilità = new System.Windows.Forms.PictureBox();
+            this.pbLibro = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.tcInfo.SuspendLayout();
             this.tpDescrizione.SuspendLayout();
             this.tpDettagli.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.tpValutazioni.SuspendLayout();
-            this.flpRecensioni.SuspendLayout();
-            this.pnlRecensione.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbValutazioneRecensione)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbFotoProfilo)).BeginInit();
-            this.panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             this.panel2.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudNumeroLibri)).BeginInit();
+            this.flowLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbValutazione)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbDisponibilità)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudNumeroLibri)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLibro)).BeginInit();
-            this.flowLayoutPanel2.SuspendLayout();
-            this.pnlLibroSuggerito.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbValutazioneLibroSuggerito)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            this.panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -187,34 +135,6 @@
             this.btnIndietro.UseVisualStyleBackColor = false;
             this.btnIndietro.Click += new System.EventHandler(this.btnIndietro_Click);
             // 
-            // btnAggiungiWishList
-            // 
-            this.btnAggiungiWishList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAggiungiWishList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.btnAggiungiWishList.Image = ((System.Drawing.Image)(resources.GetObject("btnAggiungiWishList.Image")));
-            this.btnAggiungiWishList.Location = new System.Drawing.Point(753, 52);
-            this.btnAggiungiWishList.Name = "btnAggiungiWishList";
-            this.btnAggiungiWishList.Size = new System.Drawing.Size(50, 50);
-            this.btnAggiungiWishList.TabIndex = 76;
-            this.btnAggiungiWishList.UseVisualStyleBackColor = false;
-            // 
-            // btnAggiungiAlCarrello
-            // 
-            this.btnAggiungiAlCarrello.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAggiungiAlCarrello.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(84)))), ((int)(((byte)(97)))));
-            this.btnAggiungiAlCarrello.Font = new System.Drawing.Font("Coolvetica", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAggiungiAlCarrello.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.btnAggiungiAlCarrello.Image = ((System.Drawing.Image)(resources.GetObject("btnAggiungiAlCarrello.Image")));
-            this.btnAggiungiAlCarrello.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAggiungiAlCarrello.Location = new System.Drawing.Point(510, 428);
-            this.btnAggiungiAlCarrello.Name = "btnAggiungiAlCarrello";
-            this.btnAggiungiAlCarrello.Size = new System.Drawing.Size(293, 44);
-            this.btnAggiungiAlCarrello.TabIndex = 75;
-            this.btnAggiungiAlCarrello.Text = "Aggiungi al Carrello";
-            this.btnAggiungiAlCarrello.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAggiungiAlCarrello.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnAggiungiAlCarrello.UseVisualStyleBackColor = false;
-            // 
             // tcInfo
             // 
             this.tcInfo.Controls.Add(this.tpDescrizione);
@@ -242,7 +162,7 @@
             this.rtbDescrizione.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
             this.rtbDescrizione.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbDescrizione.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.rtbDescrizione.Font = new System.Drawing.Font("Coolvetica", 14.15F);
+            this.rtbDescrizione.Font = new System.Drawing.Font("Coolvetica", 14.1F);
             this.rtbDescrizione.Location = new System.Drawing.Point(3, 6);
             this.rtbDescrizione.Name = "rtbDescrizione";
             this.rtbDescrizione.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
@@ -498,142 +418,10 @@
             // 
             // flpRecensioni
             // 
-            this.flpRecensioni.Controls.Add(this.pnlRecensione);
-            this.flpRecensioni.Controls.Add(this.panel5);
             this.flpRecensioni.Location = new System.Drawing.Point(340, 7);
             this.flpRecensioni.Name = "flpRecensioni";
             this.flpRecensioni.Size = new System.Drawing.Size(470, 290);
             this.flpRecensioni.TabIndex = 1;
-            // 
-            // pnlRecensione
-            // 
-            this.pnlRecensione.Controls.Add(this.rtbTestoRecensione);
-            this.pnlRecensione.Controls.Add(this.pbValutazioneRecensione);
-            this.pnlRecensione.Controls.Add(this.label4);
-            this.pnlRecensione.Controls.Add(this.lblNomeUtente);
-            this.pnlRecensione.Controls.Add(this.pbFotoProfilo);
-            this.pnlRecensione.Location = new System.Drawing.Point(3, 3);
-            this.pnlRecensione.Name = "pnlRecensione";
-            this.pnlRecensione.Size = new System.Drawing.Size(467, 172);
-            this.pnlRecensione.TabIndex = 1;
-            // 
-            // rtbTestoRecensione
-            // 
-            this.rtbTestoRecensione.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.rtbTestoRecensione.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbTestoRecensione.Font = new System.Drawing.Font("Coolvetica", 12F);
-            this.rtbTestoRecensione.Location = new System.Drawing.Point(4, 91);
-            this.rtbTestoRecensione.Name = "rtbTestoRecensione";
-            this.rtbTestoRecensione.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.rtbTestoRecensione.Size = new System.Drawing.Size(452, 78);
-            this.rtbTestoRecensione.TabIndex = 2;
-            this.rtbTestoRecensione.Text = resources.GetString("rtbTestoRecensione.Text");
-            // 
-            // pbValutazioneRecensione
-            // 
-            this.pbValutazioneRecensione.Image = ((System.Drawing.Image)(resources.GetObject("pbValutazioneRecensione.Image")));
-            this.pbValutazioneRecensione.Location = new System.Drawing.Point(4, 60);
-            this.pbValutazioneRecensione.Name = "pbValutazioneRecensione";
-            this.pbValutazioneRecensione.Size = new System.Drawing.Size(125, 25);
-            this.pbValutazioneRecensione.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbValutazioneRecensione.TabIndex = 76;
-            this.pbValutazioneRecensione.TabStop = false;
-            // 
-            // label4
-            // 
-            this.label4.Font = new System.Drawing.Font("Coolvetica", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label4.Location = new System.Drawing.Point(60, 29);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(360, 25);
-            this.label4.TabIndex = 76;
-            this.label4.Text = "11/11/2025";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // lblNomeUtente
-            // 
-            this.lblNomeUtente.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNomeUtente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.lblNomeUtente.Location = new System.Drawing.Point(60, 4);
-            this.lblNomeUtente.Name = "lblNomeUtente";
-            this.lblNomeUtente.Size = new System.Drawing.Size(360, 25);
-            this.lblNomeUtente.TabIndex = 75;
-            this.lblNomeUtente.Text = "Francesco Stasi";
-            // 
-            // pbFotoProfilo
-            // 
-            this.pbFotoProfilo.Image = ((System.Drawing.Image)(resources.GetObject("pbFotoProfilo.Image")));
-            this.pbFotoProfilo.Location = new System.Drawing.Point(4, 4);
-            this.pbFotoProfilo.Name = "pbFotoProfilo";
-            this.pbFotoProfilo.Size = new System.Drawing.Size(50, 50);
-            this.pbFotoProfilo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbFotoProfilo.TabIndex = 0;
-            this.pbFotoProfilo.TabStop = false;
-            // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.richTextBox2);
-            this.panel5.Controls.Add(this.pictureBox6);
-            this.panel5.Controls.Add(this.label17);
-            this.panel5.Controls.Add(this.label18);
-            this.panel5.Controls.Add(this.pictureBox7);
-            this.panel5.Location = new System.Drawing.Point(3, 181);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(467, 172);
-            this.panel5.TabIndex = 77;
-            // 
-            // richTextBox2
-            // 
-            this.richTextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.richTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox2.Font = new System.Drawing.Font("Coolvetica", 12F);
-            this.richTextBox2.Location = new System.Drawing.Point(4, 91);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.richTextBox2.Size = new System.Drawing.Size(452, 78);
-            this.richTextBox2.TabIndex = 2;
-            this.richTextBox2.Text = resources.GetString("richTextBox2.Text");
-            // 
-            // pictureBox6
-            // 
-            this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
-            this.pictureBox6.Location = new System.Drawing.Point(4, 60);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(125, 25);
-            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox6.TabIndex = 76;
-            this.pictureBox6.TabStop = false;
-            // 
-            // label17
-            // 
-            this.label17.Font = new System.Drawing.Font("Coolvetica", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label17.Location = new System.Drawing.Point(60, 29);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(360, 25);
-            this.label17.TabIndex = 76;
-            this.label17.Text = "11/11/2025";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // label18
-            // 
-            this.label18.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label18.Location = new System.Drawing.Point(60, 4);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(360, 25);
-            this.label18.TabIndex = 75;
-            this.label18.Text = "Francesco Stasi";
-            // 
-            // pictureBox7
-            // 
-            this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
-            this.pictureBox7.Location = new System.Drawing.Point(4, 4);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(50, 50);
-            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox7.TabIndex = 0;
-            this.pictureBox7.TabStop = false;
             // 
             // panel2
             // 
@@ -647,23 +435,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(327, 291);
             this.panel2.TabIndex = 0;
-            // 
-            // btnScriviRecensione
-            // 
-            this.btnScriviRecensione.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnScriviRecensione.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(84)))), ((int)(((byte)(97)))));
-            this.btnScriviRecensione.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnScriviRecensione.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.btnScriviRecensione.Image = ((System.Drawing.Image)(resources.GetObject("btnScriviRecensione.Image")));
-            this.btnScriviRecensione.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnScriviRecensione.Location = new System.Drawing.Point(42, 251);
-            this.btnScriviRecensione.Name = "btnScriviRecensione";
-            this.btnScriviRecensione.Size = new System.Drawing.Size(237, 37);
-            this.btnScriviRecensione.TabIndex = 75;
-            this.btnScriviRecensione.Text = "Scrivi una recensione";
-            this.btnScriviRecensione.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnScriviRecensione.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnScriviRecensione.UseVisualStyleBackColor = false;
             // 
             // lblNumeroRecensioniTotali
             // 
@@ -871,25 +642,6 @@
             this.lblMediaValutazioni.Text = "5/5";
             this.lblMediaValutazioni.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // pbValutazione
-            // 
-            this.pbValutazione.Image = ((System.Drawing.Image)(resources.GetObject("pbValutazione.Image")));
-            this.pbValutazione.Location = new System.Drawing.Point(3, 46);
-            this.pbValutazione.Name = "pbValutazione";
-            this.pbValutazione.Size = new System.Drawing.Size(324, 32);
-            this.pbValutazione.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbValutazione.TabIndex = 0;
-            this.pbValutazione.TabStop = false;
-            // 
-            // pbDisponibilità
-            // 
-            this.pbDisponibilità.BackColor = System.Drawing.Color.LimeGreen;
-            this.pbDisponibilità.Location = new System.Drawing.Point(426, 149);
-            this.pbDisponibilità.Name = "pbDisponibilità";
-            this.pbDisponibilità.Size = new System.Drawing.Size(25, 25);
-            this.pbDisponibilità.TabIndex = 67;
-            this.pbDisponibilità.TabStop = false;
-            // 
             // lblDisponibilità
             // 
             this.lblDisponibilità.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -954,23 +706,10 @@
             this.lblPrezzo.TabIndex = 64;
             this.lblPrezzo.Text = "Prezzo€";
             // 
-            // pbLibro
-            // 
-            this.pbLibro.BackColor = System.Drawing.Color.Black;
-            this.pbLibro.Location = new System.Drawing.Point(75, 52);
-            this.pbLibro.Name = "pbLibro";
-            this.pbLibro.Size = new System.Drawing.Size(340, 418);
-            this.pbLibro.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbLibro.TabIndex = 61;
-            this.pbLibro.TabStop = false;
-            // 
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(84)))), ((int)(((byte)(97)))));
             this.flowLayoutPanel2.Controls.Add(this.label6);
-            this.flowLayoutPanel2.Controls.Add(this.pnlLibroSuggerito);
-            this.flowLayoutPanel2.Controls.Add(this.panel3);
-            this.flowLayoutPanel2.Controls.Add(this.panel4);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Right;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(881, 0);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
@@ -989,287 +728,79 @@
             this.label6.Text = "Potrebbero anche piacerti...";
             this.label6.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // pnlLibroSuggerito
+            // btnAggiungiWishList
             // 
-            this.pnlLibroSuggerito.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.pnlLibroSuggerito.Controls.Add(this.lblGenereLibroSuggerito);
-            this.pnlLibroSuggerito.Controls.Add(this.lblNumeroValutazioniLibroSuggerito);
-            this.pnlLibroSuggerito.Controls.Add(this.pbValutazioneLibroSuggerito);
-            this.pnlLibroSuggerito.Controls.Add(this.lblPrezzoLibroSuggerito);
-            this.pnlLibroSuggerito.Controls.Add(this.llblAutoreLibroSuggerito);
-            this.pnlLibroSuggerito.Controls.Add(this.lblTitoloLibroSuggerito);
-            this.pnlLibroSuggerito.Controls.Add(this.pictureBox1);
-            this.pnlLibroSuggerito.Location = new System.Drawing.Point(3, 67);
-            this.pnlLibroSuggerito.Name = "pnlLibroSuggerito";
-            this.pnlLibroSuggerito.Size = new System.Drawing.Size(386, 240);
-            this.pnlLibroSuggerito.TabIndex = 76;
+            this.btnAggiungiWishList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAggiungiWishList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
+            this.btnAggiungiWishList.Image = ((System.Drawing.Image)(resources.GetObject("btnAggiungiWishList.Image")));
+            this.btnAggiungiWishList.Location = new System.Drawing.Point(753, 52);
+            this.btnAggiungiWishList.Name = "btnAggiungiWishList";
+            this.btnAggiungiWishList.Size = new System.Drawing.Size(50, 50);
+            this.btnAggiungiWishList.TabIndex = 76;
+            this.btnAggiungiWishList.UseVisualStyleBackColor = false;
             // 
-            // lblGenereLibroSuggerito
+            // btnAggiungiAlCarrello
             // 
-            this.lblGenereLibroSuggerito.BackColor = System.Drawing.Color.Transparent;
-            this.lblGenereLibroSuggerito.Font = new System.Drawing.Font("Coolvetica Cond", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGenereLibroSuggerito.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.lblGenereLibroSuggerito.Location = new System.Drawing.Point(183, 129);
-            this.lblGenereLibroSuggerito.Name = "lblGenereLibroSuggerito";
-            this.lblGenereLibroSuggerito.Size = new System.Drawing.Size(144, 20);
-            this.lblGenereLibroSuggerito.TabIndex = 75;
-            this.lblGenereLibroSuggerito.Text = "Genere: Horror";
+            this.btnAggiungiAlCarrello.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAggiungiAlCarrello.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(84)))), ((int)(((byte)(97)))));
+            this.btnAggiungiAlCarrello.Font = new System.Drawing.Font("Coolvetica", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAggiungiAlCarrello.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.btnAggiungiAlCarrello.Image = ((System.Drawing.Image)(resources.GetObject("btnAggiungiAlCarrello.Image")));
+            this.btnAggiungiAlCarrello.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAggiungiAlCarrello.Location = new System.Drawing.Point(510, 428);
+            this.btnAggiungiAlCarrello.Name = "btnAggiungiAlCarrello";
+            this.btnAggiungiAlCarrello.Size = new System.Drawing.Size(293, 44);
+            this.btnAggiungiAlCarrello.TabIndex = 75;
+            this.btnAggiungiAlCarrello.Text = "Aggiungi al Carrello";
+            this.btnAggiungiAlCarrello.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAggiungiAlCarrello.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnAggiungiAlCarrello.UseVisualStyleBackColor = false;
             // 
-            // lblNumeroValutazioniLibroSuggerito
+            // btnScriviRecensione
             // 
-            this.lblNumeroValutazioniLibroSuggerito.Font = new System.Drawing.Font("Coolvetica", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNumeroValutazioniLibroSuggerito.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.lblNumeroValutazioniLibroSuggerito.Location = new System.Drawing.Point(313, 67);
-            this.lblNumeroValutazioniLibroSuggerito.Name = "lblNumeroValutazioniLibroSuggerito";
-            this.lblNumeroValutazioniLibroSuggerito.Size = new System.Drawing.Size(30, 25);
-            this.lblNumeroValutazioniLibroSuggerito.TabIndex = 76;
-            this.lblNumeroValutazioniLibroSuggerito.Text = "(5)";
-            this.lblNumeroValutazioniLibroSuggerito.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnScriviRecensione.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnScriviRecensione.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(84)))), ((int)(((byte)(97)))));
+            this.btnScriviRecensione.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnScriviRecensione.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.btnScriviRecensione.Image = ((System.Drawing.Image)(resources.GetObject("btnScriviRecensione.Image")));
+            this.btnScriviRecensione.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnScriviRecensione.Location = new System.Drawing.Point(42, 251);
+            this.btnScriviRecensione.Name = "btnScriviRecensione";
+            this.btnScriviRecensione.Size = new System.Drawing.Size(237, 37);
+            this.btnScriviRecensione.TabIndex = 75;
+            this.btnScriviRecensione.Text = "Scrivi una recensione";
+            this.btnScriviRecensione.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnScriviRecensione.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnScriviRecensione.UseVisualStyleBackColor = false;
             // 
-            // pbValutazioneLibroSuggerito
+            // pbValutazione
             // 
-            this.pbValutazioneLibroSuggerito.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.pbValutazioneLibroSuggerito.Image = ((System.Drawing.Image)(resources.GetObject("pbValutazioneLibroSuggerito.Image")));
-            this.pbValutazioneLibroSuggerito.Location = new System.Drawing.Point(182, 67);
-            this.pbValutazioneLibroSuggerito.Name = "pbValutazioneLibroSuggerito";
-            this.pbValutazioneLibroSuggerito.Size = new System.Drawing.Size(125, 25);
-            this.pbValutazioneLibroSuggerito.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbValutazioneLibroSuggerito.TabIndex = 77;
-            this.pbValutazioneLibroSuggerito.TabStop = false;
+            this.pbValutazione.Image = ((System.Drawing.Image)(resources.GetObject("pbValutazione.Image")));
+            this.pbValutazione.Location = new System.Drawing.Point(3, 46);
+            this.pbValutazione.Name = "pbValutazione";
+            this.pbValutazione.Size = new System.Drawing.Size(324, 32);
+            this.pbValutazione.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbValutazione.TabIndex = 0;
+            this.pbValutazione.TabStop = false;
             // 
-            // lblPrezzoLibroSuggerito
+            // pbDisponibilità
             // 
-            this.lblPrezzoLibroSuggerito.BackColor = System.Drawing.Color.Transparent;
-            this.lblPrezzoLibroSuggerito.Font = new System.Drawing.Font("Coolvetica", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPrezzoLibroSuggerito.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.lblPrezzoLibroSuggerito.Location = new System.Drawing.Point(180, 95);
-            this.lblPrezzoLibroSuggerito.Name = "lblPrezzoLibroSuggerito";
-            this.lblPrezzoLibroSuggerito.Size = new System.Drawing.Size(112, 34);
-            this.lblPrezzoLibroSuggerito.TabIndex = 75;
-            this.lblPrezzoLibroSuggerito.Text = "Prezzo€";
+            this.pbDisponibilità.BackColor = System.Drawing.Color.LimeGreen;
+            this.pbDisponibilità.Location = new System.Drawing.Point(426, 149);
+            this.pbDisponibilità.Name = "pbDisponibilità";
+            this.pbDisponibilità.Size = new System.Drawing.Size(25, 25);
+            this.pbDisponibilità.TabIndex = 67;
+            this.pbDisponibilità.TabStop = false;
             // 
-            // llblAutoreLibroSuggerito
+            // pbLibro
             // 
-            this.llblAutoreLibroSuggerito.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.llblAutoreLibroSuggerito.BackColor = System.Drawing.Color.Transparent;
-            this.llblAutoreLibroSuggerito.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.llblAutoreLibroSuggerito.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.llblAutoreLibroSuggerito.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(84)))), ((int)(((byte)(97)))));
-            this.llblAutoreLibroSuggerito.Location = new System.Drawing.Point(182, 41);
-            this.llblAutoreLibroSuggerito.Name = "llblAutoreLibroSuggerito";
-            this.llblAutoreLibroSuggerito.Size = new System.Drawing.Size(72, 29);
-            this.llblAutoreLibroSuggerito.TabIndex = 75;
-            this.llblAutoreLibroSuggerito.TabStop = true;
-            this.llblAutoreLibroSuggerito.Text = "Autore";
-            // 
-            // lblTitoloLibroSuggerito
-            // 
-            this.lblTitoloLibroSuggerito.Font = new System.Drawing.Font("Coolvetica", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitoloLibroSuggerito.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.lblTitoloLibroSuggerito.Location = new System.Drawing.Point(182, 3);
-            this.lblTitoloLibroSuggerito.Name = "lblTitoloLibroSuggerito";
-            this.lblTitoloLibroSuggerito.Size = new System.Drawing.Size(234, 38);
-            this.lblTitoloLibroSuggerito.TabIndex = 75;
-            this.lblTitoloLibroSuggerito.Text = "Titolo Libro";
-            this.lblTitoloLibroSuggerito.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Black;
-            this.pictureBox1.Location = new System.Drawing.Point(5, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(171, 234);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 75;
-            this.pictureBox1.TabStop = false;
-            // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.panel3.Controls.Add(this.label8);
-            this.panel3.Controls.Add(this.label10);
-            this.panel3.Controls.Add(this.pictureBox2);
-            this.panel3.Controls.Add(this.label11);
-            this.panel3.Controls.Add(this.linkLabel1);
-            this.panel3.Controls.Add(this.label12);
-            this.panel3.Controls.Add(this.pictureBox3);
-            this.panel3.Location = new System.Drawing.Point(3, 313);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(386, 240);
-            this.panel3.TabIndex = 78;
-            // 
-            // label8
-            // 
-            this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.Font = new System.Drawing.Font("Coolvetica Cond", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label8.Location = new System.Drawing.Point(183, 129);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(144, 20);
-            this.label8.TabIndex = 75;
-            this.label8.Text = "Genere: Horror";
-            // 
-            // label10
-            // 
-            this.label10.Font = new System.Drawing.Font("Coolvetica", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label10.Location = new System.Drawing.Point(313, 67);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(30, 25);
-            this.label10.TabIndex = 76;
-            this.label10.Text = "(5)";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(182, 67);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(125, 25);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 77;
-            this.pictureBox2.TabStop = false;
-            // 
-            // label11
-            // 
-            this.label11.BackColor = System.Drawing.Color.Transparent;
-            this.label11.Font = new System.Drawing.Font("Coolvetica", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label11.Location = new System.Drawing.Point(180, 95);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(112, 34);
-            this.label11.TabIndex = 75;
-            this.label11.Text = "Prezzo€";
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.linkLabel1.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.linkLabel1.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(84)))), ((int)(((byte)(97)))));
-            this.linkLabel1.Location = new System.Drawing.Point(182, 41);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(72, 29);
-            this.linkLabel1.TabIndex = 75;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Autore";
-            // 
-            // label12
-            // 
-            this.label12.Font = new System.Drawing.Font("Coolvetica", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label12.Location = new System.Drawing.Point(182, 3);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(234, 38);
-            this.label12.TabIndex = 75;
-            this.label12.Text = "Titolo Libro";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.BackColor = System.Drawing.Color.Black;
-            this.pictureBox3.Location = new System.Drawing.Point(5, 3);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(171, 234);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 75;
-            this.pictureBox3.TabStop = false;
-            // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.panel4.Controls.Add(this.label13);
-            this.panel4.Controls.Add(this.label14);
-            this.panel4.Controls.Add(this.pictureBox4);
-            this.panel4.Controls.Add(this.label15);
-            this.panel4.Controls.Add(this.linkLabel2);
-            this.panel4.Controls.Add(this.label16);
-            this.panel4.Controls.Add(this.pictureBox5);
-            this.panel4.Location = new System.Drawing.Point(3, 559);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(386, 240);
-            this.panel4.TabIndex = 79;
-            // 
-            // label13
-            // 
-            this.label13.BackColor = System.Drawing.Color.Transparent;
-            this.label13.Font = new System.Drawing.Font("Coolvetica Cond", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label13.Location = new System.Drawing.Point(183, 129);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(144, 20);
-            this.label13.TabIndex = 75;
-            this.label13.Text = "Genere: Horror";
-            // 
-            // label14
-            // 
-            this.label14.Font = new System.Drawing.Font("Coolvetica", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label14.Location = new System.Drawing.Point(313, 67);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(30, 25);
-            this.label14.TabIndex = 76;
-            this.label14.Text = "(5)";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(182, 67);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(125, 25);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox4.TabIndex = 77;
-            this.pictureBox4.TabStop = false;
-            // 
-            // label15
-            // 
-            this.label15.BackColor = System.Drawing.Color.Transparent;
-            this.label15.Font = new System.Drawing.Font("Coolvetica", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label15.Location = new System.Drawing.Point(180, 95);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(112, 34);
-            this.label15.TabIndex = 75;
-            this.label15.Text = "Prezzo€";
-            // 
-            // linkLabel2
-            // 
-            this.linkLabel2.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.linkLabel2.BackColor = System.Drawing.Color.Transparent;
-            this.linkLabel2.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.linkLabel2.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(84)))), ((int)(((byte)(97)))));
-            this.linkLabel2.Location = new System.Drawing.Point(182, 41);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(72, 29);
-            this.linkLabel2.TabIndex = 75;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "Autore";
-            // 
-            // label16
-            // 
-            this.label16.Font = new System.Drawing.Font("Coolvetica", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.label16.Location = new System.Drawing.Point(182, 3);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(234, 38);
-            this.label16.TabIndex = 75;
-            this.label16.Text = "Titolo Libro";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.BackColor = System.Drawing.Color.Black;
-            this.pictureBox5.Location = new System.Drawing.Point(5, 3);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(171, 234);
-            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox5.TabIndex = 75;
-            this.pictureBox5.TabStop = false;
+            this.pbLibro.BackColor = System.Drawing.Color.Black;
+            this.pbLibro.Location = new System.Drawing.Point(75, 52);
+            this.pbLibro.Name = "pbLibro";
+            this.pbLibro.Size = new System.Drawing.Size(340, 418);
+            this.pbLibro.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbLibro.TabIndex = 61;
+            this.pbLibro.TabStop = false;
             // 
             // FrmLibro
             // 
@@ -1296,29 +827,13 @@
             this.tpDettagli.ResumeLayout(false);
             this.flowLayoutPanel3.ResumeLayout(false);
             this.tpValutazioni.ResumeLayout(false);
-            this.flpRecensioni.ResumeLayout(false);
-            this.pnlRecensione.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbValutazioneRecensione)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbFotoProfilo)).EndInit();
-            this.panel5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.panel2.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nudNumeroLibri)).EndInit();
+            this.flowLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbValutazione)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbDisponibilità)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudNumeroLibri)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLibro)).EndInit();
-            this.flowLayoutPanel2.ResumeLayout(false);
-            this.pnlLibroSuggerito.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbValutazioneLibroSuggerito)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            this.panel4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1354,18 +869,6 @@
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.TabPage tpValutazioni;
         private System.Windows.Forms.FlowLayoutPanel flpRecensioni;
-        private System.Windows.Forms.Panel pnlRecensione;
-        private System.Windows.Forms.RichTextBox rtbTestoRecensione;
-        private System.Windows.Forms.PictureBox pbValutazioneRecensione;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label lblNomeUtente;
-        private System.Windows.Forms.PictureBox pbFotoProfilo;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.RichTextBox richTextBox2;
-        private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnScriviRecensione;
         private System.Windows.Forms.Label lblNumeroRecensioniTotali;
@@ -1396,29 +899,5 @@
         private System.Windows.Forms.PictureBox pbLibro;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Panel pnlLibroSuggerito;
-        private System.Windows.Forms.Label lblGenereLibroSuggerito;
-        private System.Windows.Forms.Label lblNumeroValutazioniLibroSuggerito;
-        private System.Windows.Forms.PictureBox pbValutazioneLibroSuggerito;
-        private System.Windows.Forms.Label lblPrezzoLibroSuggerito;
-        private System.Windows.Forms.LinkLabel llblAutoreLibroSuggerito;
-        private System.Windows.Forms.Label lblTitoloLibroSuggerito;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.LinkLabel linkLabel2;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.PictureBox pictureBox5;
     }
 }
