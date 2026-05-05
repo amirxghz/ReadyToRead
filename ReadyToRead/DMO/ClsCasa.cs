@@ -22,7 +22,7 @@ namespace ReadyToRead
             SAS,
             SPA
         }
-
+        long _ID;
         string _ragioneSociale;
         int _indirizzoSedeLegaleID;
         int _indirizzoSedeOperativaID;
@@ -35,6 +35,7 @@ namespace ReadyToRead
         public eTIPO_AZIENDA TipoAzienda { get => _tipoAzienda; set => _tipoAzienda = value; }
         public bool Esclusiva { get => _esclusiva; set => _esclusiva = value; }
         public eTIPO_CASA Tipologia { get => _tipologia; set => _tipologia = value; }
+        public long ID { get => _ID; set => _ID = value; }
 
         public ClsCasa()
         {

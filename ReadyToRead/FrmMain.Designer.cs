@@ -30,10 +30,19 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.flpSideBar = new System.Windows.Forms.FlowLayoutPanel();
+            this.pbUtente = new System.Windows.Forms.PictureBox();
             this.lblMsgBenvenuto = new System.Windows.Forms.Label();
+            this.btnDashboard = new System.Windows.Forms.Button();
+            this.btnEsplora = new System.Windows.Forms.Button();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnMenuProfilo = new System.Windows.Forms.Button();
+            this.btnCarrello = new System.Windows.Forms.Button();
+            this.btnWishList = new System.Windows.Forms.Button();
             this.flpContentUtente = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnProfilo = new System.Windows.Forms.Button();
+            this.btnDisconnetti = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.pbLogo = new System.Windows.Forms.PictureBox();
             this.lblTitolo = new System.Windows.Forms.Label();
             this.flpCarrello = new System.Windows.Forms.FlowLayoutPanel();
             this.flpLibriOrdinati = new System.Windows.Forms.FlowLayoutPanel();
@@ -46,22 +55,13 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.btnAcquistaOra = new System.Windows.Forms.Button();
-            this.pbUtente = new System.Windows.Forms.PictureBox();
-            this.btnDashboard = new System.Windows.Forms.Button();
-            this.btnEsplora = new System.Windows.Forms.Button();
-            this.pbLogo = new System.Windows.Forms.PictureBox();
-            this.btnMenuProfilo = new System.Windows.Forms.Button();
-            this.btnCarrello = new System.Windows.Forms.Button();
-            this.btnWishList = new System.Windows.Forms.Button();
-            this.btnProfilo = new System.Windows.Forms.Button();
-            this.btnDisconnetti = new System.Windows.Forms.Button();
             this.flpSideBar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbUtente)).BeginInit();
             this.flowLayoutPanel3.SuspendLayout();
             this.flpContentUtente.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
-            this.flpCarrello.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbUtente)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
+            this.flpCarrello.SuspendLayout();
             this.SuspendLayout();
             // 
             // flpSideBar
@@ -78,6 +78,17 @@
             this.flpSideBar.Size = new System.Drawing.Size(190, 681);
             this.flpSideBar.TabIndex = 15;
             // 
+            // pbUtente
+            // 
+            this.pbUtente.BackColor = System.Drawing.Color.Transparent;
+            this.pbUtente.Image = ((System.Drawing.Image)(resources.GetObject("pbUtente.Image")));
+            this.pbUtente.Location = new System.Drawing.Point(3, 3);
+            this.pbUtente.Name = "pbUtente";
+            this.pbUtente.Size = new System.Drawing.Size(182, 100);
+            this.pbUtente.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbUtente.TabIndex = 5;
+            this.pbUtente.TabStop = false;
+            // 
             // lblMsgBenvenuto
             // 
             this.lblMsgBenvenuto.Font = new System.Drawing.Font("Coolvetica", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -88,6 +99,40 @@
             this.lblMsgBenvenuto.TabIndex = 13;
             this.lblMsgBenvenuto.Text = "Benritrovato, \r\nNome Utente";
             this.lblMsgBenvenuto.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // btnDashboard
+            // 
+            this.btnDashboard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
+            this.btnDashboard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.btnDashboard.Image = ((System.Drawing.Image)(resources.GetObject("btnDashboard.Image")));
+            this.btnDashboard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDashboard.Location = new System.Drawing.Point(11, 180);
+            this.btnDashboard.Margin = new System.Windows.Forms.Padding(11, 10, 11, 10);
+            this.btnDashboard.Name = "btnDashboard";
+            this.btnDashboard.Size = new System.Drawing.Size(179, 50);
+            this.btnDashboard.TabIndex = 1;
+            this.btnDashboard.Text = "Dashboard";
+            this.btnDashboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDashboard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnDashboard.UseVisualStyleBackColor = false;
+            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
+            // 
+            // btnEsplora
+            // 
+            this.btnEsplora.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
+            this.btnEsplora.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.btnEsplora.Image = ((System.Drawing.Image)(resources.GetObject("btnEsplora.Image")));
+            this.btnEsplora.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEsplora.Location = new System.Drawing.Point(11, 250);
+            this.btnEsplora.Margin = new System.Windows.Forms.Padding(11, 10, 11, 10);
+            this.btnEsplora.Name = "btnEsplora";
+            this.btnEsplora.Size = new System.Drawing.Size(179, 50);
+            this.btnEsplora.TabIndex = 7;
+            this.btnEsplora.Text = "Esplora";
+            this.btnEsplora.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEsplora.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnEsplora.UseVisualStyleBackColor = false;
+            this.btnEsplora.Click += new System.EventHandler(this.btnEsplora_Click);
             // 
             // flowLayoutPanel3
             // 
@@ -102,6 +147,45 @@
             this.flowLayoutPanel3.Size = new System.Drawing.Size(351, 50);
             this.flowLayoutPanel3.TabIndex = 17;
             // 
+            // btnMenuProfilo
+            // 
+            this.btnMenuProfilo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMenuProfilo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
+            this.btnMenuProfilo.Image = ((System.Drawing.Image)(resources.GetObject("btnMenuProfilo.Image")));
+            this.btnMenuProfilo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnMenuProfilo.Location = new System.Drawing.Point(159, 3);
+            this.btnMenuProfilo.Name = "btnMenuProfilo";
+            this.btnMenuProfilo.Size = new System.Drawing.Size(189, 50);
+            this.btnMenuProfilo.TabIndex = 10;
+            this.btnMenuProfilo.Text = "Nome Utente";
+            this.btnMenuProfilo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnMenuProfilo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnMenuProfilo.UseVisualStyleBackColor = false;
+            this.btnMenuProfilo.Click += new System.EventHandler(this.btnMenuProfilo_Click);
+            // 
+            // btnCarrello
+            // 
+            this.btnCarrello.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCarrello.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
+            this.btnCarrello.Image = ((System.Drawing.Image)(resources.GetObject("btnCarrello.Image")));
+            this.btnCarrello.Location = new System.Drawing.Point(103, 3);
+            this.btnCarrello.Name = "btnCarrello";
+            this.btnCarrello.Size = new System.Drawing.Size(50, 50);
+            this.btnCarrello.TabIndex = 8;
+            this.btnCarrello.UseVisualStyleBackColor = false;
+            this.btnCarrello.Click += new System.EventHandler(this.btnCarrello_Click);
+            // 
+            // btnWishList
+            // 
+            this.btnWishList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnWishList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
+            this.btnWishList.Image = ((System.Drawing.Image)(resources.GetObject("btnWishList.Image")));
+            this.btnWishList.Location = new System.Drawing.Point(47, 3);
+            this.btnWishList.Name = "btnWishList";
+            this.btnWishList.Size = new System.Drawing.Size(50, 50);
+            this.btnWishList.TabIndex = 9;
+            this.btnWishList.UseVisualStyleBackColor = false;
+            // 
             // flpContentUtente
             // 
             this.flpContentUtente.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -114,6 +198,40 @@
             this.flpContentUtente.TabIndex = 18;
             this.flpContentUtente.Visible = false;
             // 
+            // btnProfilo
+            // 
+            this.btnProfilo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
+            this.btnProfilo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.btnProfilo.Image = ((System.Drawing.Image)(resources.GetObject("btnProfilo.Image")));
+            this.btnProfilo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnProfilo.Location = new System.Drawing.Point(11, 10);
+            this.btnProfilo.Margin = new System.Windows.Forms.Padding(11, 10, 11, 10);
+            this.btnProfilo.Name = "btnProfilo";
+            this.btnProfilo.Size = new System.Drawing.Size(174, 34);
+            this.btnProfilo.TabIndex = 14;
+            this.btnProfilo.Text = "Area Privata";
+            this.btnProfilo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnProfilo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnProfilo.UseVisualStyleBackColor = false;
+            this.btnProfilo.Click += new System.EventHandler(this.btnProfilo_Click);
+            // 
+            // btnDisconnetti
+            // 
+            this.btnDisconnetti.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
+            this.btnDisconnetti.ForeColor = System.Drawing.Color.Red;
+            this.btnDisconnetti.Image = ((System.Drawing.Image)(resources.GetObject("btnDisconnetti.Image")));
+            this.btnDisconnetti.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDisconnetti.Location = new System.Drawing.Point(11, 64);
+            this.btnDisconnetti.Margin = new System.Windows.Forms.Padding(11, 10, 11, 10);
+            this.btnDisconnetti.Name = "btnDisconnetti";
+            this.btnDisconnetti.Size = new System.Drawing.Size(174, 34);
+            this.btnDisconnetti.TabIndex = 15;
+            this.btnDisconnetti.Text = "Disconnetti";
+            this.btnDisconnetti.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDisconnetti.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnDisconnetti.UseVisualStyleBackColor = false;
+            this.btnDisconnetti.Click += new System.EventHandler(this.btnDisconnetti_Click);
+            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
@@ -125,6 +243,16 @@
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1454, 60);
             this.flowLayoutPanel1.TabIndex = 16;
+            // 
+            // pbLogo
+            // 
+            this.pbLogo.Image = ((System.Drawing.Image)(resources.GetObject("pbLogo.Image")));
+            this.pbLogo.Location = new System.Drawing.Point(3, 3);
+            this.pbLogo.Name = "pbLogo";
+            this.pbLogo.Size = new System.Drawing.Size(113, 50);
+            this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbLogo.TabIndex = 7;
+            this.pbLogo.TabStop = false;
             // 
             // lblTitolo
             // 
@@ -271,134 +399,6 @@
             this.btnAcquistaOra.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAcquistaOra.UseVisualStyleBackColor = false;
             // 
-            // pbUtente
-            // 
-            this.pbUtente.BackColor = System.Drawing.Color.Transparent;
-            this.pbUtente.Image = ((System.Drawing.Image)(resources.GetObject("pbUtente.Image")));
-            this.pbUtente.Location = new System.Drawing.Point(3, 3);
-            this.pbUtente.Name = "pbUtente";
-            this.pbUtente.Size = new System.Drawing.Size(182, 100);
-            this.pbUtente.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbUtente.TabIndex = 5;
-            this.pbUtente.TabStop = false;
-            // 
-            // btnDashboard
-            // 
-            this.btnDashboard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.btnDashboard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.btnDashboard.Image = ((System.Drawing.Image)(resources.GetObject("btnDashboard.Image")));
-            this.btnDashboard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDashboard.Location = new System.Drawing.Point(11, 180);
-            this.btnDashboard.Margin = new System.Windows.Forms.Padding(11, 10, 11, 10);
-            this.btnDashboard.Name = "btnDashboard";
-            this.btnDashboard.Size = new System.Drawing.Size(179, 50);
-            this.btnDashboard.TabIndex = 1;
-            this.btnDashboard.Text = "Dashboard";
-            this.btnDashboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDashboard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnDashboard.UseVisualStyleBackColor = false;
-            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
-            // 
-            // btnEsplora
-            // 
-            this.btnEsplora.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.btnEsplora.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.btnEsplora.Image = ((System.Drawing.Image)(resources.GetObject("btnEsplora.Image")));
-            this.btnEsplora.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEsplora.Location = new System.Drawing.Point(11, 250);
-            this.btnEsplora.Margin = new System.Windows.Forms.Padding(11, 10, 11, 10);
-            this.btnEsplora.Name = "btnEsplora";
-            this.btnEsplora.Size = new System.Drawing.Size(179, 50);
-            this.btnEsplora.TabIndex = 7;
-            this.btnEsplora.Text = "Esplora";
-            this.btnEsplora.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEsplora.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnEsplora.UseVisualStyleBackColor = false;
-            this.btnEsplora.Click += new System.EventHandler(this.btnEsplora_Click);
-            // 
-            // pbLogo
-            // 
-            this.pbLogo.Image = ((System.Drawing.Image)(resources.GetObject("pbLogo.Image")));
-            this.pbLogo.Location = new System.Drawing.Point(3, 3);
-            this.pbLogo.Name = "pbLogo";
-            this.pbLogo.Size = new System.Drawing.Size(113, 50);
-            this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbLogo.TabIndex = 7;
-            this.pbLogo.TabStop = false;
-            // 
-            // btnMenuProfilo
-            // 
-            this.btnMenuProfilo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMenuProfilo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.btnMenuProfilo.Image = ((System.Drawing.Image)(resources.GetObject("btnMenuProfilo.Image")));
-            this.btnMenuProfilo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnMenuProfilo.Location = new System.Drawing.Point(159, 3);
-            this.btnMenuProfilo.Name = "btnMenuProfilo";
-            this.btnMenuProfilo.Size = new System.Drawing.Size(189, 50);
-            this.btnMenuProfilo.TabIndex = 10;
-            this.btnMenuProfilo.Text = "Nome Utente";
-            this.btnMenuProfilo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnMenuProfilo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnMenuProfilo.UseVisualStyleBackColor = false;
-            this.btnMenuProfilo.Click += new System.EventHandler(this.btnMenuProfilo_Click);
-            // 
-            // btnCarrello
-            // 
-            this.btnCarrello.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCarrello.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.btnCarrello.Image = ((System.Drawing.Image)(resources.GetObject("btnCarrello.Image")));
-            this.btnCarrello.Location = new System.Drawing.Point(103, 3);
-            this.btnCarrello.Name = "btnCarrello";
-            this.btnCarrello.Size = new System.Drawing.Size(50, 50);
-            this.btnCarrello.TabIndex = 8;
-            this.btnCarrello.UseVisualStyleBackColor = false;
-            this.btnCarrello.Click += new System.EventHandler(this.btnCarrello_Click);
-            // 
-            // btnWishList
-            // 
-            this.btnWishList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnWishList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.btnWishList.Image = ((System.Drawing.Image)(resources.GetObject("btnWishList.Image")));
-            this.btnWishList.Location = new System.Drawing.Point(47, 3);
-            this.btnWishList.Name = "btnWishList";
-            this.btnWishList.Size = new System.Drawing.Size(50, 50);
-            this.btnWishList.TabIndex = 9;
-            this.btnWishList.UseVisualStyleBackColor = false;
-            // 
-            // btnProfilo
-            // 
-            this.btnProfilo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.btnProfilo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.btnProfilo.Image = ((System.Drawing.Image)(resources.GetObject("btnProfilo.Image")));
-            this.btnProfilo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnProfilo.Location = new System.Drawing.Point(11, 10);
-            this.btnProfilo.Margin = new System.Windows.Forms.Padding(11, 10, 11, 10);
-            this.btnProfilo.Name = "btnProfilo";
-            this.btnProfilo.Size = new System.Drawing.Size(174, 34);
-            this.btnProfilo.TabIndex = 14;
-            this.btnProfilo.Text = "Area Privata";
-            this.btnProfilo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnProfilo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnProfilo.UseVisualStyleBackColor = false;
-            this.btnProfilo.Click += new System.EventHandler(this.btnProfilo_Click);
-            // 
-            // btnDisconnetti
-            // 
-            this.btnDisconnetti.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.btnDisconnetti.ForeColor = System.Drawing.Color.Red;
-            this.btnDisconnetti.Image = ((System.Drawing.Image)(resources.GetObject("btnDisconnetti.Image")));
-            this.btnDisconnetti.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDisconnetti.Location = new System.Drawing.Point(11, 64);
-            this.btnDisconnetti.Margin = new System.Windows.Forms.Padding(11, 10, 11, 10);
-            this.btnDisconnetti.Name = "btnDisconnetti";
-            this.btnDisconnetti.Size = new System.Drawing.Size(174, 34);
-            this.btnDisconnetti.TabIndex = 15;
-            this.btnDisconnetti.Text = "Disconnetti";
-            this.btnDisconnetti.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDisconnetti.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnDisconnetti.UseVisualStyleBackColor = false;
-            this.btnDisconnetti.Click += new System.EventHandler(this.btnDisconnetti_Click);
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
@@ -417,13 +417,13 @@
             this.Text = "FrmMain";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.flpSideBar.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbUtente)).EndInit();
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flpContentUtente.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.flpCarrello.ResumeLayout(false);
             this.flpCarrello.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbUtente)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.ResumeLayout(false);
 
         }

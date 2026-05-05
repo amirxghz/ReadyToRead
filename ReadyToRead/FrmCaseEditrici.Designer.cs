@@ -29,6 +29,12 @@
         private void InitializeComponent()
         {
             this.pnlDetails = new System.Windows.Forms.Panel();
+            this.tbPassword = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.tbUsername = new System.Windows.Forms.TextBox();
             this.lblDomanda = new System.Windows.Forms.Label();
             this.btnAnnulla = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
@@ -39,18 +45,18 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tbSedeOperativa = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbSedeLegale = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
-            this.tbEmail = new System.Windows.Forms.TextBox();
-            this.rbtnNo = new System.Windows.Forms.RadioButton();
-            this.rbtnSi = new System.Windows.Forms.RadioButton();
-            this.cbAutorecbAutore = new System.Windows.Forms.ComboBox();
+            this.tbRagioneSociale = new System.Windows.Forms.TextBox();
+            this.btnNo = new System.Windows.Forms.RadioButton();
+            this.btnSi = new System.Windows.Forms.RadioButton();
+            this.cbTipoAzienda = new System.Windows.Forms.ComboBox();
             this.btnSalva = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.rtbDescrizione = new System.Windows.Forms.RichTextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tbFiltroNome = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -58,30 +64,24 @@
             this.btnVisualizza = new System.Windows.Forms.Button();
             this.btnElimina = new System.Windows.Forms.Button();
             this.btnModifica = new System.Windows.Forms.Button();
-            this.lvLibri = new System.Windows.Forms.ListView();
+            this.lvCase = new System.Windows.Forms.ListView();
             this.chISBN = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.tbCognome = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.tbNome = new System.Windows.Forms.TextBox();
             this.pnlDetails.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlDetails
             // 
-            this.pnlDetails.Controls.Add(this.tbCognome);
+            this.pnlDetails.Controls.Add(this.tbPassword);
             this.pnlDetails.Controls.Add(this.label15);
             this.pnlDetails.Controls.Add(this.label21);
             this.pnlDetails.Controls.Add(this.label16);
             this.pnlDetails.Controls.Add(this.label20);
-            this.pnlDetails.Controls.Add(this.tbNome);
+            this.pnlDetails.Controls.Add(this.tbUsername);
             this.pnlDetails.Controls.Add(this.lblDomanda);
             this.pnlDetails.Controls.Add(this.btnAnnulla);
             this.pnlDetails.Controls.Add(this.label12);
@@ -92,24 +92,88 @@
             this.pnlDetails.Controls.Add(this.label8);
             this.pnlDetails.Controls.Add(this.label5);
             this.pnlDetails.Controls.Add(this.label6);
-            this.pnlDetails.Controls.Add(this.textBox2);
+            this.pnlDetails.Controls.Add(this.tbSedeOperativa);
             this.pnlDetails.Controls.Add(this.label1);
             this.pnlDetails.Controls.Add(this.label2);
-            this.pnlDetails.Controls.Add(this.textBox1);
+            this.pnlDetails.Controls.Add(this.tbSedeLegale);
             this.pnlDetails.Controls.Add(this.label23);
             this.pnlDetails.Controls.Add(this.label24);
-            this.pnlDetails.Controls.Add(this.tbEmail);
-            this.pnlDetails.Controls.Add(this.rbtnNo);
-            this.pnlDetails.Controls.Add(this.rbtnSi);
-            this.pnlDetails.Controls.Add(this.cbAutorecbAutore);
+            this.pnlDetails.Controls.Add(this.tbRagioneSociale);
+            this.pnlDetails.Controls.Add(this.btnNo);
+            this.pnlDetails.Controls.Add(this.btnSi);
+            this.pnlDetails.Controls.Add(this.cbTipoAzienda);
             this.pnlDetails.Controls.Add(this.btnSalva);
-            this.pnlDetails.Controls.Add(this.richTextBox1);
+            this.pnlDetails.Controls.Add(this.rtbDescrizione);
             this.pnlDetails.Dock = System.Windows.Forms.DockStyle.Right;
             this.pnlDetails.Location = new System.Drawing.Point(855, 0);
             this.pnlDetails.Margin = new System.Windows.Forms.Padding(2);
             this.pnlDetails.Name = "pnlDetails";
             this.pnlDetails.Size = new System.Drawing.Size(425, 720);
             this.pnlDetails.TabIndex = 86;
+            // 
+            // tbPassword
+            // 
+            this.tbPassword.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPassword.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.tbPassword.Location = new System.Drawing.Point(56, 178);
+            this.tbPassword.Name = "tbPassword";
+            this.tbPassword.Size = new System.Drawing.Size(321, 30);
+            this.tbPassword.TabIndex = 234;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.Gray;
+            this.label15.Location = new System.Drawing.Point(25, 90);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(99, 23);
+            this.label15.TabIndex = 236;
+            this.label15.Text = "Username*";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.BackColor = System.Drawing.Color.Transparent;
+            this.label21.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.ForeColor = System.Drawing.Color.Black;
+            this.label21.Location = new System.Drawing.Point(24, 181);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(32, 23);
+            this.label21.TabIndex = 235;
+            this.label21.Text = "🪪";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.BackColor = System.Drawing.Color.Transparent;
+            this.label16.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.Color.Black;
+            this.label16.Location = new System.Drawing.Point(24, 119);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(32, 23);
+            this.label16.TabIndex = 238;
+            this.label16.Text = "🪪";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.ForeColor = System.Drawing.Color.Gray;
+            this.label20.Location = new System.Drawing.Point(25, 152);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(94, 23);
+            this.label20.TabIndex = 233;
+            this.label20.Text = "Password*";
+            // 
+            // tbUsername
+            // 
+            this.tbUsername.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbUsername.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.tbUsername.Location = new System.Drawing.Point(56, 119);
+            this.tbUsername.Name = "tbUsername";
+            this.tbUsername.Size = new System.Drawing.Size(321, 30);
+            this.tbUsername.TabIndex = 237;
             // 
             // lblDomanda
             // 
@@ -135,6 +199,7 @@
             this.btnAnnulla.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAnnulla.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAnnulla.UseVisualStyleBackColor = false;
+            this.btnAnnulla.Click += new System.EventHandler(this.btnAnnulla_Click);
             // 
             // label12
             // 
@@ -228,14 +293,14 @@
             this.label6.TabIndex = 91;
             this.label6.Text = "@";
             // 
-            // textBox2
+            // tbSedeOperativa
             // 
-            this.textBox2.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.textBox2.Location = new System.Drawing.Point(59, 361);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(321, 33);
-            this.textBox2.TabIndex = 90;
+            this.tbSedeOperativa.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbSedeOperativa.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.tbSedeOperativa.Location = new System.Drawing.Point(59, 361);
+            this.tbSedeOperativa.Name = "tbSedeOperativa";
+            this.tbSedeOperativa.Size = new System.Drawing.Size(321, 33);
+            this.tbSedeOperativa.TabIndex = 90;
             // 
             // label1
             // 
@@ -260,14 +325,14 @@
             this.label2.TabIndex = 88;
             this.label2.Text = "@";
             // 
-            // textBox1
+            // tbSedeLegale
             // 
-            this.textBox1.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.textBox1.Location = new System.Drawing.Point(59, 299);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(321, 33);
-            this.textBox1.TabIndex = 87;
+            this.tbSedeLegale.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbSedeLegale.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.tbSedeLegale.Location = new System.Drawing.Point(59, 299);
+            this.tbSedeLegale.Name = "tbSedeLegale";
+            this.tbSedeLegale.Size = new System.Drawing.Size(321, 33);
+            this.tbSedeLegale.TabIndex = 87;
             // 
             // label23
             // 
@@ -292,46 +357,46 @@
             this.label24.TabIndex = 85;
             this.label24.Text = "@";
             // 
-            // tbEmail
+            // tbRagioneSociale
             // 
-            this.tbEmail.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbEmail.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.tbEmail.Location = new System.Drawing.Point(59, 237);
-            this.tbEmail.Name = "tbEmail";
-            this.tbEmail.Size = new System.Drawing.Size(318, 33);
-            this.tbEmail.TabIndex = 84;
+            this.tbRagioneSociale.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbRagioneSociale.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.tbRagioneSociale.Location = new System.Drawing.Point(59, 237);
+            this.tbRagioneSociale.Name = "tbRagioneSociale";
+            this.tbRagioneSociale.Size = new System.Drawing.Size(318, 33);
+            this.tbRagioneSociale.TabIndex = 84;
             // 
-            // rbtnNo
+            // btnNo
             // 
-            this.rbtnNo.AutoSize = true;
-            this.rbtnNo.Location = new System.Drawing.Point(107, 493);
-            this.rbtnNo.Margin = new System.Windows.Forms.Padding(2);
-            this.rbtnNo.Name = "rbtnNo";
-            this.rbtnNo.Size = new System.Drawing.Size(49, 27);
-            this.rbtnNo.TabIndex = 81;
-            this.rbtnNo.TabStop = true;
-            this.rbtnNo.Text = "No";
-            this.rbtnNo.UseVisualStyleBackColor = true;
+            this.btnNo.AutoSize = true;
+            this.btnNo.Location = new System.Drawing.Point(107, 493);
+            this.btnNo.Margin = new System.Windows.Forms.Padding(2);
+            this.btnNo.Name = "btnNo";
+            this.btnNo.Size = new System.Drawing.Size(49, 27);
+            this.btnNo.TabIndex = 81;
+            this.btnNo.TabStop = true;
+            this.btnNo.Text = "No";
+            this.btnNo.UseVisualStyleBackColor = true;
             // 
-            // rbtnSi
+            // btnSi
             // 
-            this.rbtnSi.AutoSize = true;
-            this.rbtnSi.Location = new System.Drawing.Point(59, 493);
-            this.rbtnSi.Margin = new System.Windows.Forms.Padding(2);
-            this.rbtnSi.Name = "rbtnSi";
-            this.rbtnSi.Size = new System.Drawing.Size(43, 27);
-            this.rbtnSi.TabIndex = 80;
-            this.rbtnSi.TabStop = true;
-            this.rbtnSi.Text = "Si";
-            this.rbtnSi.UseVisualStyleBackColor = true;
+            this.btnSi.AutoSize = true;
+            this.btnSi.Location = new System.Drawing.Point(59, 493);
+            this.btnSi.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSi.Name = "btnSi";
+            this.btnSi.Size = new System.Drawing.Size(43, 27);
+            this.btnSi.TabIndex = 80;
+            this.btnSi.TabStop = true;
+            this.btnSi.Text = "Si";
+            this.btnSi.UseVisualStyleBackColor = true;
             // 
-            // cbAutorecbAutore
+            // cbTipoAzienda
             // 
-            this.cbAutorecbAutore.FormattingEnabled = true;
-            this.cbAutorecbAutore.Location = new System.Drawing.Point(59, 424);
-            this.cbAutorecbAutore.Name = "cbAutorecbAutore";
-            this.cbAutorecbAutore.Size = new System.Drawing.Size(321, 31);
-            this.cbAutorecbAutore.TabIndex = 79;
+            this.cbTipoAzienda.FormattingEnabled = true;
+            this.cbTipoAzienda.Location = new System.Drawing.Point(59, 424);
+            this.cbTipoAzienda.Name = "cbTipoAzienda";
+            this.cbTipoAzienda.Size = new System.Drawing.Size(321, 31);
+            this.cbTipoAzienda.TabIndex = 79;
             // 
             // btnSalva
             // 
@@ -342,14 +407,15 @@
             this.btnSalva.TabIndex = 76;
             this.btnSalva.Text = "➕Aggiungi";
             this.btnSalva.UseVisualStyleBackColor = true;
+            this.btnSalva.Click += new System.EventHandler(this.btnSalva_Click);
             // 
-            // richTextBox1
+            // rtbDescrizione
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(59, 551);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(321, 96);
-            this.richTextBox1.TabIndex = 67;
-            this.richTextBox1.Text = "";
+            this.rtbDescrizione.Location = new System.Drawing.Point(59, 551);
+            this.rtbDescrizione.Name = "rtbDescrizione";
+            this.rtbDescrizione.Size = new System.Drawing.Size(321, 96);
+            this.rtbDescrizione.TabIndex = 67;
+            this.rtbDescrizione.Text = "";
             // 
             // panel2
             // 
@@ -359,7 +425,7 @@
             this.panel2.Controls.Add(this.btnVisualizza);
             this.panel2.Controls.Add(this.btnElimina);
             this.panel2.Controls.Add(this.btnModifica);
-            this.panel2.Controls.Add(this.lvLibri);
+            this.panel2.Controls.Add(this.lvCase);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
@@ -373,6 +439,7 @@
             this.tbFiltroNome.Name = "tbFiltroNome";
             this.tbFiltroNome.Size = new System.Drawing.Size(302, 30);
             this.tbFiltroNome.TabIndex = 191;
+            this.tbFiltroNome.TextChanged += new System.EventHandler(this.tbFiltroNome_TextChanged);
             // 
             // label3
             // 
@@ -406,6 +473,7 @@
             this.btnVisualizza.TabIndex = 188;
             this.btnVisualizza.Text = "👁️Visualizza";
             this.btnVisualizza.UseVisualStyleBackColor = true;
+            this.btnVisualizza.Click += new System.EventHandler(this.btnVisualizza_Click);
             // 
             // btnElimina
             // 
@@ -416,6 +484,7 @@
             this.btnElimina.TabIndex = 187;
             this.btnElimina.Text = "🗑️Elimina";
             this.btnElimina.UseVisualStyleBackColor = true;
+            this.btnElimina.Click += new System.EventHandler(this.btnElimina_Click);
             // 
             // btnModifica
             // 
@@ -426,24 +495,25 @@
             this.btnModifica.TabIndex = 186;
             this.btnModifica.Text = "✍️Modifica";
             this.btnModifica.UseVisualStyleBackColor = true;
+            this.btnModifica.Click += new System.EventHandler(this.btnModifica_Click);
             // 
-            // lvLibri
+            // lvCase
             // 
-            this.lvLibri.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvCase.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chISBN,
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4});
-            this.lvLibri.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lvLibri.FullRowSelect = true;
-            this.lvLibri.HideSelection = false;
-            this.lvLibri.Location = new System.Drawing.Point(36, 105);
-            this.lvLibri.Name = "lvLibri";
-            this.lvLibri.Size = new System.Drawing.Size(670, 425);
-            this.lvLibri.TabIndex = 48;
-            this.lvLibri.UseCompatibleStateImageBehavior = false;
-            this.lvLibri.View = System.Windows.Forms.View.Details;
+            this.lvCase.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lvCase.FullRowSelect = true;
+            this.lvCase.HideSelection = false;
+            this.lvCase.Location = new System.Drawing.Point(36, 105);
+            this.lvCase.Name = "lvCase";
+            this.lvCase.Size = new System.Drawing.Size(670, 425);
+            this.lvCase.TabIndex = 48;
+            this.lvCase.UseCompatibleStateImageBehavior = false;
+            this.lvCase.View = System.Windows.Forms.View.Details;
             // 
             // chISBN
             // 
@@ -470,70 +540,6 @@
             this.columnHeader4.Text = "Esclusività";
             this.columnHeader4.Width = 100;
             // 
-            // tbCognome
-            // 
-            this.tbCognome.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbCognome.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.tbCognome.Location = new System.Drawing.Point(56, 178);
-            this.tbCognome.Name = "tbCognome";
-            this.tbCognome.Size = new System.Drawing.Size(321, 30);
-            this.tbCognome.TabIndex = 234;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.ForeColor = System.Drawing.Color.Gray;
-            this.label15.Location = new System.Drawing.Point(25, 90);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(99, 23);
-            this.label15.TabIndex = 236;
-            this.label15.Text = "Username*";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.BackColor = System.Drawing.Color.Transparent;
-            this.label21.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.ForeColor = System.Drawing.Color.Black;
-            this.label21.Location = new System.Drawing.Point(24, 181);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(32, 23);
-            this.label21.TabIndex = 235;
-            this.label21.Text = "🪪";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.BackColor = System.Drawing.Color.Transparent;
-            this.label16.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.ForeColor = System.Drawing.Color.Black;
-            this.label16.Location = new System.Drawing.Point(24, 119);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(32, 23);
-            this.label16.TabIndex = 238;
-            this.label16.Text = "🪪";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.ForeColor = System.Drawing.Color.Gray;
-            this.label20.Location = new System.Drawing.Point(25, 152);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(94, 23);
-            this.label20.TabIndex = 233;
-            this.label20.Text = "Password*";
-            // 
-            // tbNome
-            // 
-            this.tbNome.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbNome.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.tbNome.Location = new System.Drawing.Point(56, 119);
-            this.tbNome.Name = "tbNome";
-            this.tbNome.Size = new System.Drawing.Size(321, 30);
-            this.tbNome.TabIndex = 237;
-            // 
             // FrmCaseEditrici
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
@@ -552,6 +558,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmCasaEditrice";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.FrmCaseEditrici_Load);
             this.pnlDetails.ResumeLayout(false);
             this.pnlDetails.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -571,20 +578,20 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tbSedeOperativa;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbSedeLegale;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.TextBox tbEmail;
-        private System.Windows.Forms.RadioButton rbtnNo;
-        private System.Windows.Forms.RadioButton rbtnSi;
-        private System.Windows.Forms.ComboBox cbAutorecbAutore;
+        private System.Windows.Forms.TextBox tbRagioneSociale;
+        private System.Windows.Forms.RadioButton btnNo;
+        private System.Windows.Forms.RadioButton btnSi;
+        private System.Windows.Forms.ComboBox cbTipoAzienda;
         private System.Windows.Forms.Button btnSalva;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox rtbDescrizione;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ListView lvLibri;
+        private System.Windows.Forms.ListView lvCase;
         private System.Windows.Forms.ColumnHeader chISBN;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
@@ -598,11 +605,11 @@
         private System.Windows.Forms.Button btnVisualizza;
         private System.Windows.Forms.Button btnElimina;
         private System.Windows.Forms.Button btnModifica;
-        private System.Windows.Forms.TextBox tbCognome;
+        private System.Windows.Forms.TextBox tbPassword;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.TextBox tbNome;
+        private System.Windows.Forms.TextBox tbUsername;
     }
 }

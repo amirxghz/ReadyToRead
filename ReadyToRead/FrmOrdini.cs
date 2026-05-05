@@ -16,5 +16,35 @@ namespace ReadyToRead
         {
             InitializeComponent();
         }
+
+        private void cbOrdina_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbFiltroCliente_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbStatoOrdine_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtpData_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnApplicaFiltri_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

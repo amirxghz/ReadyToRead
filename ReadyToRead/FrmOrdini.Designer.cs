@@ -30,14 +30,14 @@
         {
             this.lvOrdini = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chAutore = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chCasaEditrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chGenere = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label3 = new System.Windows.Forms.Label();
             this.tbFiltroCliente = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cbStatoOrdine = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dtpData = new System.Windows.Forms.DateTimePicker();
@@ -50,7 +50,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnApplicaFiltri = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnReset = new System.Windows.Forms.Button();
             this.cbOrdina = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudMinPrezzo)).BeginInit();
@@ -82,6 +82,11 @@
             this.columnHeader1.Text = "Nome";
             this.columnHeader1.Width = 116;
             // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Cliente";
+            this.columnHeader2.Width = 196;
+            // 
             // chAutore
             // 
             this.chAutore.DisplayIndex = 3;
@@ -99,6 +104,12 @@
             this.chGenere.DisplayIndex = 5;
             this.chGenere.Text = "Totale";
             this.chGenere.Width = 120;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.DisplayIndex = 2;
+            this.columnHeader3.Text = "Contatto";
+            this.columnHeader3.Width = 165;
             // 
             // label3
             // 
@@ -119,6 +130,7 @@
             this.tbFiltroCliente.Name = "tbFiltroCliente";
             this.tbFiltroCliente.Size = new System.Drawing.Size(302, 30);
             this.tbFiltroCliente.TabIndex = 231;
+            this.tbFiltroCliente.TextChanged += new System.EventHandler(this.tbFiltroCliente_TextChanged);
             // 
             // label4
             // 
@@ -131,17 +143,6 @@
             this.label4.TabIndex = 230;
             this.label4.Text = "Cerca per Nome Cliente";
             // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Cliente";
-            this.columnHeader2.Width = 196;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.DisplayIndex = 2;
-            this.columnHeader3.Text = "Contatto";
-            this.columnHeader3.Width = 165;
-            // 
             // cbStatoOrdine
             // 
             this.cbStatoOrdine.FormattingEnabled = true;
@@ -149,6 +150,7 @@
             this.cbStatoOrdine.Name = "cbStatoOrdine";
             this.cbStatoOrdine.Size = new System.Drawing.Size(208, 31);
             this.cbStatoOrdine.TabIndex = 234;
+            this.cbStatoOrdine.SelectedIndexChanged += new System.EventHandler(this.cbStatoOrdine_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -168,6 +170,7 @@
             this.dtpData.Name = "dtpData";
             this.dtpData.Size = new System.Drawing.Size(208, 30);
             this.dtpData.TabIndex = 236;
+            this.dtpData.ValueChanged += new System.EventHandler(this.dtpData_ValueChanged);
             // 
             // label2
             // 
@@ -257,7 +260,7 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.btnApplicaFiltri);
-            this.flowLayoutPanel1.Controls.Add(this.button1);
+            this.flowLayoutPanel1.Controls.Add(this.btnReset);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(52, 300);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(208, 83);
@@ -277,21 +280,23 @@
             this.btnApplicaFiltri.Text = "Applica";
             this.btnApplicaFiltri.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnApplicaFiltri.UseVisualStyleBackColor = false;
+            this.btnApplicaFiltri.Click += new System.EventHandler(this.btnApplicaFiltri_Click);
             // 
-            // button1
+            // btnReset
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
-            this.button1.Font = new System.Drawing.Font("Coolvetica", 14.25F);
-            this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(3, 43);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(205, 33);
-            this.button1.TabIndex = 91;
-            this.button1.Text = "Reset";
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
+            this.btnReset.Font = new System.Drawing.Font("Coolvetica", 14.25F);
+            this.btnReset.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.btnReset.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnReset.Location = new System.Drawing.Point(3, 43);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(205, 33);
+            this.btnReset.TabIndex = 91;
+            this.btnReset.Text = "Reset";
+            this.btnReset.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnReset.UseVisualStyleBackColor = false;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // cbOrdina
             // 
@@ -303,6 +308,7 @@
             this.cbOrdina.Name = "cbOrdina";
             this.cbOrdina.Size = new System.Drawing.Size(238, 31);
             this.cbOrdina.TabIndex = 246;
+            this.cbOrdina.SelectedIndexChanged += new System.EventHandler(this.cbOrdina_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -340,7 +346,7 @@
             this.Controls.Add(this.label4);
             this.Font = new System.Drawing.Font("Coolvetica", 14.25F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.MaximumSize = new System.Drawing.Size(1920, 1080);
             this.MinimumSize = new System.Drawing.Size(1280, 720);
             this.Name = "FrmOrdini";
@@ -379,7 +385,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button btnApplicaFiltri;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.ComboBox cbOrdina;
         private System.Windows.Forms.Label label5;
     }

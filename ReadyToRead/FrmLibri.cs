@@ -116,5 +116,41 @@ namespace ReadyToRead
         private void ResetCampi()
         {
         }
+
+        private void btnAssegnaEbook_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "File Testo|*.txt;*.docx;*.doc;*.rtf";
+                ofd.Title = "Seleziona un file di testo per l'e-book(solo txt, docx, doc e rtf)";
+
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        //assegna al libro selezionato il file di testo
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Errore nel caricamento del file di testo: " + ex.Message, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void btnAggiungiAutore_Click(object sender, EventArgs e)
+        {
+            //vai a form autore
+        }
+
+        private void btnAggiungiCasa_Click(object sender, EventArgs e)
+        {
+           //Vai a form casa editrici
+        }
+
+        private void btnAggiungiGenere_Click(object sender, EventArgs e)
+        {
+            //vai a form aggiungi genere
+        }
     }
 }

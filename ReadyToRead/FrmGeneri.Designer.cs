@@ -172,6 +172,7 @@
             this.btnAnnulla.TabIndex = 225;
             this.btnAnnulla.Text = "↩️ Annulla";
             this.btnAnnulla.UseVisualStyleBackColor = true;
+            this.btnAnnulla.Click += new System.EventHandler(this.btnAnnulla_Click);
             // 
             // btnAggiungi
             // 
@@ -182,6 +183,7 @@
             this.btnAggiungi.TabIndex = 224;
             this.btnAggiungi.Text = "➕Aggiungi";
             this.btnAggiungi.UseVisualStyleBackColor = true;
+            this.btnAggiungi.Click += new System.EventHandler(this.btnAggiungi_Click);
             // 
             // tbNome
             // 
@@ -268,6 +270,7 @@
             this.tbFiltroNome.Name = "tbFiltroNome";
             this.tbFiltroNome.Size = new System.Drawing.Size(302, 30);
             this.tbFiltroNome.TabIndex = 227;
+            this.tbFiltroNome.TextChanged += new System.EventHandler(this.tbFiltroNome_TextChanged);
             // 
             // label4
             // 
@@ -289,6 +292,7 @@
             this.btnVisualizza.TabIndex = 188;
             this.btnVisualizza.Text = "👁️Visualizza";
             this.btnVisualizza.UseVisualStyleBackColor = true;
+            this.btnVisualizza.Click += new System.EventHandler(this.btnVisualizza_Click);
             // 
             // btnElimina
             // 
@@ -299,6 +303,7 @@
             this.btnElimina.TabIndex = 187;
             this.btnElimina.Text = "🗑️Elimina";
             this.btnElimina.UseVisualStyleBackColor = true;
+            this.btnElimina.Click += new System.EventHandler(this.btnElimina_Click);
             // 
             // btnModifica
             // 
@@ -309,6 +314,7 @@
             this.btnModifica.TabIndex = 186;
             this.btnModifica.Text = "✍️Modifica";
             this.btnModifica.UseVisualStyleBackColor = true;
+            this.btnModifica.Click += new System.EventHandler(this.btnModifica_Click);
             // 
             // FrmGeneri
             // 
