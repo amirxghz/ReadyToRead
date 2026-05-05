@@ -149,6 +149,7 @@
             this.btnAggiungiCasa.TabIndex = 261;
             this.btnAggiungiCasa.Text = "➕";
             this.btnAggiungiCasa.UseVisualStyleBackColor = true;
+            this.btnAggiungiCasa.Click += new System.EventHandler(this.btnAggiungiCasa_Click);
             // 
             // btnAggiungiGenere
             // 
@@ -159,6 +160,7 @@
             this.btnAggiungiGenere.TabIndex = 260;
             this.btnAggiungiGenere.Text = "➕";
             this.btnAggiungiGenere.UseVisualStyleBackColor = true;
+            this.btnAggiungiGenere.Click += new System.EventHandler(this.btnAggiungiGenere_Click);
             // 
             // btnAggiungiAutore
             // 
@@ -169,6 +171,7 @@
             this.btnAggiungiAutore.TabIndex = 259;
             this.btnAggiungiAutore.Text = "➕";
             this.btnAggiungiAutore.UseVisualStyleBackColor = true;
+            this.btnAggiungiAutore.Click += new System.EventHandler(this.btnAggiungiAutore_Click);
             // 
             // label18
             // 
@@ -606,6 +609,7 @@
             this.btnAssegnaEbook.Text = "📓Assegna File E-Book";
             this.btnAssegnaEbook.UseVisualStyleBackColor = true;
             this.btnAssegnaEbook.Visible = false;
+            this.btnAssegnaEbook.Click += new System.EventHandler(this.btnAssegnaEbook_Click);
             // 
             // lvLibri
             // 

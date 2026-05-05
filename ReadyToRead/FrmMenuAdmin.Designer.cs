@@ -38,6 +38,7 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.pbLogo = new System.Windows.Forms.PictureBox();
             this.lblTitolo = new System.Windows.Forms.Label();
+            this.btnUtenti = new System.Windows.Forms.Button();
             this.flpSideBar.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
@@ -143,6 +144,7 @@
             this.flowLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.flowLayoutPanel1.Controls.Add(this.pbLogo);
             this.flowLayoutPanel1.Controls.Add(this.lblTitolo);
+            this.flowLayoutPanel1.Controls.Add(this.btnUtenti);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -166,10 +168,24 @@
             this.lblTitolo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(84)))), ((int)(((byte)(97)))));
             this.lblTitolo.Location = new System.Drawing.Point(122, 0);
             this.lblTitolo.Name = "lblTitolo";
-            this.lblTitolo.Size = new System.Drawing.Size(1320, 53);
+            this.lblTitolo.Size = new System.Drawing.Size(1146, 53);
             this.lblTitolo.TabIndex = 7;
             this.lblTitolo.Text = "Menu Admin";
             this.lblTitolo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnUtenti
+            // 
+            this.btnUtenti.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(229)))));
+            this.btnUtenti.Font = new System.Drawing.Font("Coolvetica", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUtenti.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnUtenti.Location = new System.Drawing.Point(1276, 5);
+            this.btnUtenti.Margin = new System.Windows.Forms.Padding(5);
+            this.btnUtenti.Name = "btnUtenti";
+            this.btnUtenti.Size = new System.Drawing.Size(171, 48);
+            this.btnUtenti.TabIndex = 236;
+            this.btnUtenti.Text = "👥Utenti";
+            this.btnUtenti.UseVisualStyleBackColor = false;
+            this.btnUtenti.Click += new System.EventHandler(this.btnUtenti_Click);
             // 
             // FrmMenuAdmin
             // 
@@ -205,5 +221,6 @@
         private System.Windows.Forms.PictureBox pbLogo;
         private System.Windows.Forms.Label lblTitolo;
         private System.Windows.Forms.Button btnOrdini;
+        private System.Windows.Forms.Button btnUtenti;
     }
 }

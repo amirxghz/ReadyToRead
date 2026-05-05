@@ -78,5 +78,11 @@ namespace ReadyToRead
             FrmOrdini frmOrdini = new FrmOrdini();
             AprireFormMDI(frmOrdini, btnOrdini, "Ordini");
         }
+
+        private void btnUtenti_Click(object sender, EventArgs e)
+        {
+            FrmUtenti frmUtenti = new FrmUtenti();
+            AprireFormMDI(frmUtenti, btnUtenti, "Utenti");
+        }
     }
 }

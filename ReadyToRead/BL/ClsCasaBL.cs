@@ -88,7 +88,50 @@ namespace ReadyToRead
 
             return houses;
         }
-        
+
+        internal static List<ClsCasa> GetByRagioneSociale(ref MySqlConnection conn, string ragioneSociale, out string errore)
+        {
+            List<ClsCasa> houses = new List<ClsCasa>();
+            errore = string.Empty;
+
+            try
+            {
+                conn.Open();
+
+                string query = "SELECT * FROM houses WHERE ragionesociale LIKE @ragioneSociale";
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@ragioneSociale", "%" + ragioneSociale + "%");
+
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    ClsCasa casa = new ClsCasa();
+                    casa.RagioneSociale = dt.Rows[i]["ragionesociale"].ToString();
+                    casa.IndirizzoSedeLegaleID = Convert.ToInt32(dt.Rows[i]["indirizzosedelegaleID"]);
+                    casa.IndirizzoSedeOperativaID = Convert.ToInt32(dt.Rows[i]["indirizzosedeoperativaID"]);
+                    casa.TipoAzienda = (ClsCasa.eTIPO_AZIENDA)Convert.ToInt32(dt.Rows[i]["tipoAzienda"]);
+                    casa.Esclusiva = Convert.ToBoolean(dt.Rows[i]["esclusiva"]);
+                    casa.Tipologia = (ClsCasa.eTIPO_CASA)Convert.ToInt32(dt.Rows[i]["tipologia"]);
+
+                    houses.Add(casa);
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                errore = ex.Message;
+
+                if (conn.State == ConnectionState.Open)
+                    conn.Close();
+            }
+
+            return houses;
+        }
         #endregion
 
         #region UPDATE
