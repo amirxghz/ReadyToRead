@@ -238,6 +238,12 @@
     <Compile Include="usLibroNelCarrello.Designer.cs">
       <DependentUpon>usLibroNelCarrello.cs</DependentUpon>
     </Compile>
+    <Compile Include="usLibroOrdinato.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="usLibroOrdinato.Designer.cs">
+      <DependentUpon>usLibroOrdinato.cs</DependentUpon>
+    </Compile>
     <Compile Include="usLibroPopolare.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -249,6 +255,12 @@
     </Compile>
     <Compile Include="usLibroTendenza.Designer.cs">
       <DependentUpon>usLibroTendenza.cs</DependentUpon>
+    </Compile>
+    <Compile Include="usLibroWishList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="usLibroWishList.Designer.cs">
+      <DependentUpon>usLibroWishList.cs</DependentUpon>
     </Compile>
     <Compile Include="usRecensione.cs">
       <SubType>UserControl</SubType>
@@ -314,11 +326,17 @@
     <EmbeddedResource Include="usLibroNelCarrello.resx">
       <DependentUpon>usLibroNelCarrello.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="usLibroOrdinato.resx">
+      <DependentUpon>usLibroOrdinato.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="usLibroPopolare.resx">
       <DependentUpon>usLibroPopolare.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="usLibroTendenza.resx">
       <DependentUpon>usLibroTendenza.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="usLibroWishList.resx">
+      <DependentUpon>usLibroWishList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="usRecensione.resx">
       <DependentUpon>usRecensione.cs</DependentUpon>

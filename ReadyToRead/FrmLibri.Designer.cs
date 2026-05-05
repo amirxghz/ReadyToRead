@@ -83,9 +83,6 @@
             this.btnVisualizza = new System.Windows.Forms.Button();
             this.btnElimina = new System.Windows.Forms.Button();
             this.btnModifica = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.tbPathEbook = new System.Windows.Forms.TextBox();
-            this.btnSalvaEbook = new System.Windows.Forms.Button();
             this.pnlDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudQuantita)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPrezzo)).BeginInit();
@@ -584,10 +581,7 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.btnSalvaEbook);
-            this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.btnAssegnaEbook);
-            this.panel2.Controls.Add(this.tbPathEbook);
             this.panel2.Controls.Add(this.lvLibri);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.tbFiltroNome);
@@ -715,39 +709,6 @@
             this.btnModifica.UseVisualStyleBackColor = true;
             this.btnModifica.Click += new System.EventHandler(this.btnModifica_Click);
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(44, 679);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(34, 25);
-            this.label6.TabIndex = 263;
-            this.label6.Text = "🔖";
-            this.label6.Visible = false;
-            // 
-            // tbPathEbook
-            // 
-            this.tbPathEbook.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPathEbook.Location = new System.Drawing.Point(76, 676);
-            this.tbPathEbook.Name = "tbPathEbook";
-            this.tbPathEbook.Size = new System.Drawing.Size(155, 30);
-            this.tbPathEbook.TabIndex = 262;
-            this.tbPathEbook.Visible = false;
-            // 
-            // btnSalvaEbook
-            // 
-            this.btnSalvaEbook.Font = new System.Drawing.Font("Coolvetica", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSalvaEbook.Location = new System.Drawing.Point(237, 674);
-            this.btnSalvaEbook.Name = "btnSalvaEbook";
-            this.btnSalvaEbook.Size = new System.Drawing.Size(24, 31);
-            this.btnSalvaEbook.TabIndex = 262;
-            this.btnSalvaEbook.Text = "☑️ù";
-            this.btnSalvaEbook.UseVisualStyleBackColor = true;
-            this.btnSalvaEbook.Visible = false;
-            // 
             // FrmLibri
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
@@ -835,8 +796,5 @@
         private System.Windows.Forms.Button btnAggiungiGenere;
         private System.Windows.Forms.Button btnAggiungiAutore;
         private System.Windows.Forms.Button btnAssegnaEbook;
-        private System.Windows.Forms.Button btnSalvaEbook;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox tbPathEbook;
     }
 }
