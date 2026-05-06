@@ -29,6 +29,7 @@ namespace ReadyToRead
         eTIPO_AZIENDA _tipoAzienda;
         bool _esclusiva;
         eTIPO_CASA _tipologia;
+        long _utenteID;
         public string RagioneSociale { get => _ragioneSociale; set => _ragioneSociale = value; }
         public int IndirizzoSedeLegaleID { get => _indirizzoSedeLegaleID; set => _indirizzoSedeLegaleID = value; }
         public int IndirizzoSedeOperativaID { get => _indirizzoSedeOperativaID; set => _indirizzoSedeOperativaID = value; }
@@ -36,6 +37,7 @@ namespace ReadyToRead
         public bool Esclusiva { get => _esclusiva; set => _esclusiva = value; }
         public eTIPO_CASA Tipologia { get => _tipologia; set => _tipologia = value; }
         public long ID { get => _ID; set => _ID = value; }
+        public long UtenteID { get => _utenteID; set => _utenteID = value; }
 
         public ClsCasa()
         {

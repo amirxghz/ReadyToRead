@@ -29,7 +29,9 @@ namespace ReadyToRead
         }
         private void PopolaComboBox()
         {
+            cbComuneNascita.Items.Clear();
             cbComuneNascita.DataSource = Enum.GetValues(typeof(ClsUtente.eCOMUNE));
+            cbComuneNascita.SelectedIndex = -1;
         }
 
         private void CaricaUtenti()

@@ -35,7 +35,6 @@ namespace ReadyToRead
         }
         private void PopolaComboBox()
         {
-            cbCittà.DataSource = Enum.GetValues(typeof(ClsUtente.eCOMUNE));
             cbVerificato.DataSource= Enum.GetValues(typeof(eFILTRO));
         }
 
@@ -74,7 +73,7 @@ namespace ReadyToRead
             rbM.Checked = false;
             rbF.Checked = false;
             dtmDataDiNascita.Value = DateTime.Now;
-            cbCittà.SelectedIndex = -1;
+            tbCittà.Clear();
             _modalitaModifica = false;
             _autoreSelezionato = null;
             lblTitolo.Text = "Crea Autore";
@@ -91,8 +90,7 @@ namespace ReadyToRead
             autore.ÈVerificato = rbVerificato.Checked;
             autore.DataDiNascita = dtmDataDiNascita.Value;
             autore.Sesso = rbM.Checked ? ClsUtente.eSESSO.m : ClsUtente.eSESSO.f;
-            if (cbCittà.SelectedItem != null)
-                autore.ComuneDiNascita = (ClsUtente.eCOMUNE)cbCittà.SelectedItem;
+            autore.CittaNascita = tbCittà.Text.Trim();
             return autore;
         }
 
@@ -152,7 +150,7 @@ namespace ReadyToRead
                 dtmDataDiNascita.Value = _autoreSelezionato.DataDiNascita;
                 rbM.Checked = _autoreSelezionato.Sesso == ClsUtente.eSESSO.m;
                 rbF.Checked = _autoreSelezionato.Sesso == ClsUtente.eSESSO.f;
-                cbCittà.SelectedItem = _autoreSelezionato.ComuneDiNascita;
+                tbCittà.Text = _autoreSelezionato.CittaNascita;
             }
         }
 

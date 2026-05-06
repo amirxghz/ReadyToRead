@@ -8,7 +8,10 @@ namespace ReadyToRead
 {
     public class ClsGiftCard: ClsProdotto //amir
     {
+        long _ID;
         private string _nomeDestinatario;
+        string _dedica;
+        long _prodottoID;
 
         public string NomeDestinatario
         {
@@ -21,6 +24,11 @@ namespace ReadyToRead
                     _nomeDestinatario = value;
             }
         }
+
+        public long ID { get => _ID; set => _ID = value; }
+        public string Dedica { get => _dedica; set => _dedica = value; }
+        public long ProdottoID1 { get => _prodottoID; set => _prodottoID = value; }
+
         public ClsGiftCard()
         {
         }

@@ -129,7 +129,7 @@
     <Compile Include="DMO\ClsLibro.cs" />
     <Compile Include="DMO\ClsOrdinare.cs" />
     <Compile Include="DMO\ClsProdotto.cs" />
-    <Compile Include="DMO\ClsRecensione.cs" />
+    <Compile Include="DMO\ClsRecensire.cs" />
     <Compile Include="FrmAutori.cs">
       <SubType>Form</SubType>
     </Compile>

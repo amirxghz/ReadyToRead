@@ -12,7 +12,7 @@ namespace ReadyToRead
     internal static class ClsRecensioneBL
     {
         #region CREATE
-        internal static long Create(ref MySqlConnection conn, ClsRecensione recensione, out string errore)
+        internal static long Create(ref MySqlConnection conn, ClsRecensire recensione, out string errore)
         {
             long ID = 0;
             errore = String.Empty;
@@ -48,10 +48,10 @@ namespace ReadyToRead
         #endregion
 
         #region READ
-        internal static List<ClsRecensione> GetAll(ref MySqlConnection conn, out string errore)
+        internal static List<ClsRecensire> GetAll(ref MySqlConnection conn, out string errore)
         {
             DataTable dt = null;
-            List<ClsRecensione> recensioni = new List<ClsRecensione>();
+            List<ClsRecensire> recensioni = new List<ClsRecensire>();
             errore = string.Empty;
 
             try
@@ -66,7 +66,7 @@ namespace ReadyToRead
 
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    ClsRecensione recensione = new ClsRecensione();
+                    ClsRecensire recensione = new ClsRecensire();
                     recensione.Titolo = dt.Rows[i]["titolo"].ToString();
                     recensione.Descrizione = dt.Rows[i]["descrizione"].ToString();
                     recensioni.Add(recensione);
@@ -82,10 +82,10 @@ namespace ReadyToRead
             return recensioni;
         }
         
-        internal static List<ClsRecensione> GetByValutazione(ref MySqlConnection conn, int valutazione, out string errore)
+        internal static List<ClsRecensire> GetByValutazione(ref MySqlConnection conn, int valutazione, out string errore)
         {
             DataTable dt = null;
-            List<ClsRecensione> recensioni = new List<ClsRecensione>();
+            List<ClsRecensire> recensioni = new List<ClsRecensire>();
             errore = string.Empty;
 
             if (valutazione < 1 || valutazione > 5)
@@ -107,7 +107,7 @@ namespace ReadyToRead
 
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        ClsRecensione recensione = new ClsRecensione();
+                        ClsRecensire recensione = new ClsRecensire();
                         recensione.Titolo = dt.Rows[i]["titolo"].ToString();
                         recensione.Descrizione = dt.Rows[i]["descrizione"].ToString();
                         recensioni.Add(recensione);
@@ -126,7 +126,7 @@ namespace ReadyToRead
         #endregion
 
         #region UPDATE
-        internal static long Update(ref MySqlConnection conn, long ID, ClsRecensione recensione, out string errore)
+        internal static long Update(ref MySqlConnection conn, long ID, ClsRecensire recensione, out string errore)
         {
             long esito = 0;
             errore = string.Empty;

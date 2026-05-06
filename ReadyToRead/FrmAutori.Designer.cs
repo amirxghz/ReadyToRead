@@ -41,7 +41,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.cbCittà = new System.Windows.Forms.ComboBox();
             this.rbF = new System.Windows.Forms.RadioButton();
             this.rbM = new System.Windows.Forms.RadioButton();
             this.label9 = new System.Windows.Forms.Label();
@@ -72,6 +71,7 @@
             this.btnVisualizza = new System.Windows.Forms.Button();
             this.btnElimina = new System.Windows.Forms.Button();
             this.btnModifica = new System.Windows.Forms.Button();
+            this.tbCittà = new System.Windows.Forms.TextBox();
             this.pnlDetails.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -90,7 +90,6 @@
             this.pnlDetails.Controls.Add(this.label2);
             this.pnlDetails.Controls.Add(this.label7);
             this.pnlDetails.Controls.Add(this.label8);
-            this.pnlDetails.Controls.Add(this.cbCittà);
             this.pnlDetails.Controls.Add(this.rbF);
             this.pnlDetails.Controls.Add(this.rbM);
             this.pnlDetails.Controls.Add(this.label9);
@@ -107,6 +106,7 @@
             this.pnlDetails.Controls.Add(this.btnAggiungi);
             this.pnlDetails.Controls.Add(this.tbNome);
             this.pnlDetails.Controls.Add(this.lblTitolo);
+            this.pnlDetails.Controls.Add(this.tbCittà);
             this.pnlDetails.Dock = System.Windows.Forms.DockStyle.Right;
             this.pnlDetails.Location = new System.Drawing.Point(855, 0);
             this.pnlDetails.Margin = new System.Windows.Forms.Padding(2);
@@ -249,15 +249,6 @@
             this.label8.Size = new System.Drawing.Size(118, 23);
             this.label8.TabIndex = 249;
             this.label8.Text = "Città Nascita";
-            // 
-            // cbCittà
-            // 
-            this.cbCittà.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbCittà.FormattingEnabled = true;
-            this.cbCittà.Location = new System.Drawing.Point(59, 531);
-            this.cbCittà.Name = "cbCittà";
-            this.cbCittà.Size = new System.Drawing.Size(322, 31);
-            this.cbCittà.TabIndex = 248;
             // 
             // rbF
             // 
@@ -576,6 +567,15 @@
             this.btnModifica.UseVisualStyleBackColor = true;
             this.btnModifica.Click += new System.EventHandler(this.btnModifica_Click);
             // 
+            // tbCittà
+            // 
+            this.tbCittà.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbCittà.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.tbCittà.Location = new System.Drawing.Point(59, 532);
+            this.tbCittà.Name = "tbCittà";
+            this.tbCittà.Size = new System.Drawing.Size(321, 30);
+            this.tbCittà.TabIndex = 264;
+            // 
             // FrmAutori
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
@@ -626,7 +626,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox cbCittà;
         private System.Windows.Forms.RadioButton rbF;
         private System.Windows.Forms.RadioButton rbM;
         private System.Windows.Forms.Label label9;
@@ -650,5 +649,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox cbVerificato;
+        private System.Windows.Forms.TextBox tbCittà;
     }
 }
