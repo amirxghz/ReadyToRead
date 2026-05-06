@@ -117,7 +117,7 @@
     <Compile Include="BL\ClsGenereBL.cs" />
     <Compile Include="BL\ClsGiftCardBL.cs" />
     <Compile Include="BL\ClsLibroBL.cs" />
-    <Compile Include="BL\ClsOrdineBL.cs" />
+    <Compile Include="BL\ClsOrdinareBL.cs" />
     <Compile Include="BL\ClsRecensioneBL.cs" />
     <Compile Include="BL\ClsUtenteBL.cs" />
     <Compile Include="DMO\ClsAdmin.cs" />
@@ -127,7 +127,7 @@
     <Compile Include="DMO\ClsGenere.cs" />
     <Compile Include="DMO\ClsGiftCard.cs" />
     <Compile Include="DMO\ClsLibro.cs" />
-    <Compile Include="DMO\ClsOrdine.cs" />
+    <Compile Include="DMO\ClsOrdinare.cs" />
     <Compile Include="DMO\ClsProdotto.cs" />
     <Compile Include="DMO\ClsRecensione.cs" />
     <Compile Include="FrmAutori.cs">

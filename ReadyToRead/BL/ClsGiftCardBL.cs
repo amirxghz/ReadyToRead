@@ -19,7 +19,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string sql = @"INSERT INTO giftcards (nomeDestinatario, nome, prezzo, descrizione, lingua) 
                              VALUES (@nomeDestinatario, @nome, @prezzo, @descrizione, @lingua)";
@@ -30,7 +31,7 @@ namespace ReadyToRead
                 cmd.Parameters.AddWithValue("@nome", giftCard.Nome ?? "");
                 cmd.Parameters.AddWithValue("@prezzo", giftCard.Prezzo);
                 cmd.Parameters.AddWithValue("@descrizione", giftCard.Descrizione ?? "");
-                cmd.Parameters.AddWithValue("@lingua", string.Join(",", giftCard.Lingua ?? new List<string>()));
+                cmd.Parameters.AddWithValue("@lingua", giftCard.Lingua ?? "");
 
                 int numRec = cmd.ExecuteNonQuery();
                 if (numRec == 1)
@@ -57,7 +58,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string query = "SELECT * FROM giftcards";
 
@@ -73,8 +75,7 @@ namespace ReadyToRead
                     giftCard.Nome = dt.Rows[i]["nome"].ToString();
                     giftCard.Prezzo = (float)dt.Rows[i]["prezzo"];
                     giftCard.Descrizione = dt.Rows[i]["descrizione"].ToString();
-                    string lingue = dt.Rows[i]["lingua"].ToString();
-                    giftCard.Lingua = new List<string>(lingue.Split(','));
+                    giftCard.Lingua = dt.Rows[i]["lingua"].ToString();
                     giftCards.Add(giftCard);
                 }
 
@@ -100,7 +101,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string query = "SELECT * FROM giftcards WHERE nomeDestinatario LIKE @nome";
 
@@ -118,8 +120,7 @@ namespace ReadyToRead
                         giftCard.Nome = dt.Rows[i]["nome"].ToString();
                         giftCard.Prezzo = (float)dt.Rows[i]["prezzo"];
                         giftCard.Descrizione = dt.Rows[i]["descrizione"].ToString();
-                        string lingue = dt.Rows[i]["lingua"].ToString();
-                        giftCard.Lingua = new List<string>(lingue.Split(','));
+                        giftCard.Lingua = dt.Rows[i]["lingua"].ToString();
                         giftCards.Add(giftCard);
                     }
 
@@ -147,7 +148,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string sql = @"UPDATE giftcards SET nomeDestinatario=@nomeDestinatario, nome=@nome, prezzo=@prezzo, 
                                  descrizione=@descrizione, lingua=@lingua 
@@ -160,7 +162,7 @@ namespace ReadyToRead
                     cmd.Parameters.AddWithValue("@nome", giftCard.Nome ?? "");
                     cmd.Parameters.AddWithValue("@prezzo", giftCard.Prezzo);
                     cmd.Parameters.AddWithValue("@descrizione", giftCard.Descrizione ?? "");
-                    cmd.Parameters.AddWithValue("@lingua", string.Join(",", giftCard.Lingua ?? new List<string>()));
+                    cmd.Parameters.AddWithValue("@lingua", giftCard.Lingua ?? "");
 
                     esito = cmd.ExecuteNonQuery();
                     conn.Close();
@@ -187,7 +189,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string sql = "DELETE FROM giftcards WHERE prodottoID=@ID";
 
@@ -215,7 +218,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string query = "SELECT COUNT(*) FROM giftcards";
 

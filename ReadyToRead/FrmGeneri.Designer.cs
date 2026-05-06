@@ -40,9 +40,9 @@
             this.btnAnnulla = new System.Windows.Forms.Button();
             this.btnAggiungi = new System.Windows.Forms.Button();
             this.tbNome = new System.Windows.Forms.TextBox();
-            this.lblDomanda = new System.Windows.Forms.Label();
+            this.lblTitolo = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.lvLibri = new System.Windows.Forms.ListView();
+            this.lvGeneri = new System.Windows.Forms.ListView();
             this.chISBN = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chAutore = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chGenere = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -69,7 +69,7 @@
             this.pnlDetails.Controls.Add(this.btnAnnulla);
             this.pnlDetails.Controls.Add(this.btnAggiungi);
             this.pnlDetails.Controls.Add(this.tbNome);
-            this.pnlDetails.Controls.Add(this.lblDomanda);
+            this.pnlDetails.Controls.Add(this.lblTitolo);
             this.pnlDetails.Dock = System.Windows.Forms.DockStyle.Right;
             this.pnlDetails.Location = new System.Drawing.Point(855, 0);
             this.pnlDetails.Margin = new System.Windows.Forms.Padding(2);
@@ -194,19 +194,19 @@
             this.tbNome.Size = new System.Drawing.Size(321, 30);
             this.tbNome.TabIndex = 231;
             // 
-            // lblDomanda
+            // lblTitolo
             // 
-            this.lblDomanda.AutoSize = true;
-            this.lblDomanda.Font = new System.Drawing.Font("Coolvetica", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDomanda.Location = new System.Drawing.Point(15, 41);
-            this.lblDomanda.Name = "lblDomanda";
-            this.lblDomanda.Size = new System.Drawing.Size(180, 38);
-            this.lblDomanda.TabIndex = 192;
-            this.lblDomanda.Text = "Crea Genere";
+            this.lblTitolo.AutoSize = true;
+            this.lblTitolo.Font = new System.Drawing.Font("Coolvetica", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitolo.Location = new System.Drawing.Point(15, 41);
+            this.lblTitolo.Name = "lblTitolo";
+            this.lblTitolo.Size = new System.Drawing.Size(180, 38);
+            this.lblTitolo.TabIndex = 192;
+            this.lblTitolo.Text = "Crea Genere";
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.lvLibri);
+            this.panel2.Controls.Add(this.lvGeneri);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.tbFiltroNome);
             this.panel2.Controls.Add(this.label4);
@@ -220,21 +220,21 @@
             this.panel2.Size = new System.Drawing.Size(835, 720);
             this.panel2.TabIndex = 91;
             // 
-            // lvLibri
+            // lvGeneri
             // 
-            this.lvLibri.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvGeneri.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chISBN,
             this.chAutore,
             this.chGenere});
-            this.lvLibri.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lvLibri.FullRowSelect = true;
-            this.lvLibri.HideSelection = false;
-            this.lvLibri.Location = new System.Drawing.Point(40, 105);
-            this.lvLibri.Name = "lvLibri";
-            this.lvLibri.Size = new System.Drawing.Size(666, 345);
-            this.lvLibri.TabIndex = 229;
-            this.lvLibri.UseCompatibleStateImageBehavior = false;
-            this.lvLibri.View = System.Windows.Forms.View.Details;
+            this.lvGeneri.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lvGeneri.FullRowSelect = true;
+            this.lvGeneri.HideSelection = false;
+            this.lvGeneri.Location = new System.Drawing.Point(40, 105);
+            this.lvGeneri.Name = "lvGeneri";
+            this.lvGeneri.Size = new System.Drawing.Size(666, 345);
+            this.lvGeneri.TabIndex = 229;
+            this.lvGeneri.UseCompatibleStateImageBehavior = false;
+            this.lvGeneri.View = System.Windows.Forms.View.Details;
             // 
             // chISBN
             // 
@@ -334,6 +334,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FrmGeneri";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmGeneri_FormClosing);
+            this.Load += new System.EventHandler(this.FrmGeneri_Load);
             this.pnlDetails.ResumeLayout(false);
             this.pnlDetails.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -353,9 +355,9 @@
         private System.Windows.Forms.Button btnAnnulla;
         private System.Windows.Forms.Button btnAggiungi;
         private System.Windows.Forms.TextBox tbNome;
-        private System.Windows.Forms.Label lblDomanda;
+        private System.Windows.Forms.Label lblTitolo;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ListView lvLibri;
+        private System.Windows.Forms.ListView lvGeneri;
         private System.Windows.Forms.ColumnHeader chISBN;
         private System.Windows.Forms.ColumnHeader chAutore;
         private System.Windows.Forms.ColumnHeader chGenere;

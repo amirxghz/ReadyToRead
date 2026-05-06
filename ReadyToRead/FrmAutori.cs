@@ -79,6 +79,8 @@ namespace ReadyToRead
             _autoreSelezionato = null;
             lblTitolo.Text = "Crea Autore";
             btnAggiungi.Text = "➕Aggiungi";
+            if (Program._chiudiForm)
+                this.Close();
         }
 
         private ClsAutore LeggiCampi()
@@ -100,45 +102,40 @@ namespace ReadyToRead
         }
         private void GestisciAutore(bool modificaAutore)
         {
-            try
-            {
-                ClsAutore autore = LeggiCampi();
-                string errore;
+            ClsAutore autore = LeggiCampi();
+            string errore;
 
-                if (!modificaAutore) //Aggiungi
+            if (!modificaAutore) //Aggiungi
+            {
+                long id = ClsAutoreBL.Create(ref Program.conn, autore, out errore);
+                if (!string.IsNullOrEmpty(errore))
+                    MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else if (id > 0)
                 {
-                    long id = ClsAutoreBL.Create(ref Program.conn, autore, out errore);
+                    MessageBox.Show("Autore aggiunto con successo!", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ResetCampi();
+                    CaricaAutori();
+                }
+            }
+            else //modifica
+            {
+                if (_autoreSelezionato == null)
+                    MessageBox.Show("Seleziona un autore da modificare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                else
+                {
+                    long esito = ClsAutoreBL.Update(ref Program.conn, _autoreSelezionato.UtenteID, autore, out errore);
                     if (!string.IsNullOrEmpty(errore))
                         MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    else if (id > 0)
+                    else if (esito > 0)
                     {
-                        MessageBox.Show("Autore aggiunto con successo!", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Autore modificato con successo!", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ResetCampi();
                         CaricaAutori();
                     }
                 }
-                else //modifica
-                {
-                    if (_autoreSelezionato == null)
-                        MessageBox.Show("Seleziona un autore da modificare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    else
-                    {
-                        long esito = ClsAutoreBL.Update(ref Program.conn, _autoreSelezionato.UtenteID, autore, out errore);
-                        if (!string.IsNullOrEmpty(errore))
-                            MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        else if (esito > 0)
-                        {
-                            MessageBox.Show("Autore modificato con successo!", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            ResetCampi();
-                            CaricaAutori();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Errore: " + ex.Message, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            }       
+            if (Program._chiudiForm)
+                this.Close();
         }
 
         private void btnVisualizza_Click(object sender, EventArgs e)
@@ -272,6 +269,11 @@ namespace ReadyToRead
                 MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
                 PopolaListView(filtrati);
+        }
+
+        private void FrmAutori_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Program._chiudiForm = false;
         }
     }
 }

@@ -71,6 +71,10 @@ namespace ReadyToRead
             _idSelezionato = -1;
             lblDomanda.Text = "Crea Casa Editrice";
             btnSalva.Text = "➕Aggiungi";
+
+
+            if (Program._chiudiForm)
+                this.Close();
         }
 
         private ClsCasa LeggiCampi()
@@ -176,7 +180,6 @@ namespace ReadyToRead
         }
         private void GestisciCasa(bool modificaCasa)
         {
-
             ClsCasa casa = LeggiCampi();
             string errore;
 
@@ -209,6 +212,9 @@ namespace ReadyToRead
                     }
                 }
             }
+
+            if (Program._chiudiForm)
+                this.Close();
         }
 
         private void btnAnnulla_Click(object sender, EventArgs e)
@@ -216,5 +222,9 @@ namespace ReadyToRead
             ResetCampi();
         }
 
+        private void FrmCaseEditrici_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Program._chiudiForm = false;
+        }
     }
 }

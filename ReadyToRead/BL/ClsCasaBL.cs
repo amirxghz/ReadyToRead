@@ -19,8 +19,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
-
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
                 string sql = @"INSERT INTO houses (ragioneSociale, indirizzoSedeLegaleID, indirizzoSedeOperativaID, tipoAzienda, esclusiva, tipologia) 
                              VALUES (@ragioneSociale, @indirizzoSedeLegaleID, @indirizzoSedeOperativaID, @tipoAzienda, @esclusiva, @tipologia)";
 
@@ -59,8 +59,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
-
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
                 string query = "SELECT * FROM houses";
 
                 MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
@@ -96,8 +96,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
-
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
                 string query = "SELECT * FROM houses WHERE ragionesociale LIKE @ragioneSociale";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -146,8 +146,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
-
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
                     string sql = @"UPDATE houses SET ragioneSociale=@ragioneSociale, 
                                 indirizzoSedeLegaleID=@indirizzoSedeLegaleID, 
                                 indirizzoSedeOperativaID=@indirizzoSedeOperativaID, 
@@ -191,8 +191,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
-
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
                     string sql = "DELETE FROM houses WHERE ID=@ID";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
@@ -219,8 +219,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
-
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
                 string query = "SELECT COUNT(*) FROM houses";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);

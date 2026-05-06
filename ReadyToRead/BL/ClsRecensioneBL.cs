@@ -19,7 +19,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string sql = @"INSERT INTO recensire (titolo, descrizione, valutazione, username) 
                              VALUES (@titolo, @descrizione, @valutazione, @username)";
@@ -55,8 +56,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
-
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
                 string query = "SELECT * FROM recensire";
 
                 MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
@@ -93,7 +94,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string query = "SELECT * FROM recensire WHERE valutazione=@valutazione";
 
@@ -135,7 +137,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string sql = @"UPDATE recensire SET titolo=@titolo, descrizione=@descrizione 
                                  WHERE ID=@ID";
@@ -171,8 +174,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
-
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
                     string sql = "DELETE FROM recensire WHERE ID=@ID";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
@@ -199,8 +202,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
-
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
                 string query = "SELECT COUNT(*) FROM recensire";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);

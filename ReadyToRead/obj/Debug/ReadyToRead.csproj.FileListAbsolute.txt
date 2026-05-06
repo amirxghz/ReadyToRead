@@ -160,3 +160,12 @@ C:\Users\amirg\OneDrive\Desktop\ReadyToRead\ReadyToRead\bin\Debug\System.Securit
 C:\Users\amirg\OneDrive\Desktop\ReadyToRead\ReadyToRead\bin\Debug\System.Security.Permissions.xml
 C:\Users\amirg\OneDrive\Desktop\ReadyToRead\ReadyToRead\bin\Debug\System.Security.Principal.Windows.xml
 C:\Users\amirg\OneDrive\Desktop\ReadyToRead\ReadyToRead\obj\Debug\ReadyToRead.csprojAssemblyReference.cache
+C:\Users\amirg\OneDrive\Desktop\ReadyToRead\ReadyToRead\obj\Debug\ReadyToRead.FrmUtenti.resources
+C:\Users\amirg\OneDrive\Desktop\ReadyToRead\ReadyToRead\obj\Debug\ReadyToRead.usLibro.resources
+C:\Users\amirg\OneDrive\Desktop\ReadyToRead\ReadyToRead\obj\Debug\ReadyToRead.usLibroConsigliato.resources
+C:\Users\amirg\OneDrive\Desktop\ReadyToRead\ReadyToRead\obj\Debug\ReadyToRead.usLibroNelCarrello.resources
+C:\Users\amirg\OneDrive\Desktop\ReadyToRead\ReadyToRead\obj\Debug\ReadyToRead.usLibroOrdinato.resources
+C:\Users\amirg\OneDrive\Desktop\ReadyToRead\ReadyToRead\obj\Debug\ReadyToRead.usLibroPopolare.resources
+C:\Users\amirg\OneDrive\Desktop\ReadyToRead\ReadyToRead\obj\Debug\ReadyToRead.usLibroTendenza.resources
+C:\Users\amirg\OneDrive\Desktop\ReadyToRead\ReadyToRead\obj\Debug\ReadyToRead.usLibroWishList.resources
+C:\Users\amirg\OneDrive\Desktop\ReadyToRead\ReadyToRead\obj\Debug\ReadyToRead.usRecensione.resources

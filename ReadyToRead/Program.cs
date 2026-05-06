@@ -10,7 +10,7 @@ namespace ReadyToRead
     {
         public static Image _fotoProfilo = Properties.Resources.Pfp;
         public static List<ClsLibro> _libri = new List<ClsLibro>();
-
+        public static bool _chiudiForm = false;
         public static MySqlConnection conn;
 
         [STAThread]

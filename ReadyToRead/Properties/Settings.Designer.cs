@@ -25,7 +25,8 @@ namespace ReadyToRead.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Database=readytoread;Uid=root;Pwd=root;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;user=root;database=readytoread;port=3306;password=root;SslMode=N" +
+            "one;")]
         public string dbConnString {
             get {
                 return ((string)(this["dbConnString"]));

@@ -9,24 +9,24 @@ using ReadyToRead;
 
 namespace ReadyToRead
 {
-    internal static class ClsOrdineBL
+    internal static class ClsOrdinareBL
     {
         #region CREATE
-        internal static long Create(ref MySqlConnection conn, ClsOrdine ordine, out string errore)
+        internal static long Create(ref MySqlConnection conn, ClsOrdinare ordine, out string errore)
         {
             long ID = 0;
             errore = String.Empty;
 
             try
             {
-                conn.Open();
-
-                string sql = @"INSERT INTO ordini (ordineID, statoOrdine, totale, destinazione) 
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+                string sql = @"INSERT INTO ordinare (ID, statoOrdine, totale, destinazione) 
                              VALUES (@ordineID, @statoOrdine, @totale, @destinazione)";
 
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
 
-                cmd.Parameters.AddWithValue("@ordineID", ordine.OrdineID ?? "");
+                cmd.Parameters.AddWithValue("@ordineID", ordine.ID);
                 cmd.Parameters.AddWithValue("@statoOrdine", "NON_SPEDITO");
                 cmd.Parameters.AddWithValue("@totale", ordine.Totale);
                 cmd.Parameters.AddWithValue("@destinazione", ordine.Destinazione ?? "");
@@ -48,10 +48,10 @@ namespace ReadyToRead
 
         #region READ
       
-        internal static ClsOrdine GetByOrdineID(ref MySqlConnection conn, string ordineID, out string errore)
+        internal static ClsOrdinare GetByOrdineID(ref MySqlConnection conn, string ordineID, out string errore)
         {
             DataTable dt = null;
-            ClsOrdine ordine = null;
+            ClsOrdinare ordine = null;
             errore = string.Empty;
 
             if (string.IsNullOrEmpty(ordineID))
@@ -60,20 +60,21 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
-                    string query = "SELECT * FROM ordini WHERE ordineID=@ordineID";
+                    string query = "SELECT * FROM ordinare WHERE ID=@ID";
 
                     MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
-                    da.SelectCommand.Parameters.AddWithValue("@ordineID", ordineID);
+                    da.SelectCommand.Parameters.AddWithValue("@ID", ordineID);
 
                     dt = new DataTable();
                     da.Fill(dt);
 
                     if (dt.Rows.Count == 1)
                     {
-                        ordine = new ClsOrdine();
-                        ordine.OrdineID = dt.Rows[0]["ordineID"].ToString();
+                        ordine = new ClsOrdinare();
+                        ordine.ID = (long)dt.Rows[0]["ID"];
                         ordine.Totale = (decimal)dt.Rows[0]["totale"];
                         ordine.Destinazione = dt.Rows[0]["destinazione"].ToString();
                     }
@@ -88,17 +89,18 @@ namespace ReadyToRead
 
             return ordine;
         }
-        internal static List<ClsOrdine> GetAll(ref MySqlConnection conn, out string errore)
+        internal static List<ClsOrdinare> GetAll(ref MySqlConnection conn, out string errore)
         {
             DataTable dt = null;
-            List<ClsOrdine> ordini = new List<ClsOrdine>();
+            List<ClsOrdinare> ordini = new List<ClsOrdinare>();
             errore = string.Empty;
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
-                string query = "SELECT * FROM ordini";
+                string query = "SELECT * FROM ordinare";
 
                 MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
                 dt = new DataTable();
@@ -106,8 +108,8 @@ namespace ReadyToRead
 
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    ClsOrdine ordine = new ClsOrdine();
-                    ordine.OrdineID = dt.Rows[i]["ordineID"].ToString();
+                    ClsOrdinare ordine = new ClsOrdinare();
+                    ordine.ID = (long)dt.Rows[i]["ID"];
                     ordine.Totale = (decimal)dt.Rows[i]["totale"];
                     ordine.Destinazione = dt.Rows[i]["destinazione"].ToString();
                     ordini.Add(ordine);
@@ -123,10 +125,10 @@ namespace ReadyToRead
             return ordini;
         }
         
-        internal static List<ClsOrdine> GetByStato(ref MySqlConnection conn, string stato, out string errore)
+        internal static List<ClsOrdinare> GetByStato(ref MySqlConnection conn, string stato, out string errore)
         {
             DataTable dt = null;
-            List<ClsOrdine> ordini = new List<ClsOrdine>();
+            List<ClsOrdinare> ordini = new List<ClsOrdinare>();
             errore = string.Empty;
 
             if (string.IsNullOrEmpty(stato))
@@ -137,7 +139,7 @@ namespace ReadyToRead
                 {
                     conn.Open();
 
-                    string query = "SELECT * FROM ordini WHERE statoOrdine=@stato";
+                    string query = "SELECT * FROM ordinare WHERE statoOrdine=@stato";
 
                     MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
                     da.SelectCommand.Parameters.AddWithValue("@stato", stato);
@@ -147,8 +149,8 @@ namespace ReadyToRead
 
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        ClsOrdine ordine = new ClsOrdine();
-                        ordine.OrdineID = dt.Rows[i]["ordineID"].ToString();
+                        ClsOrdinare ordine = new ClsOrdinare();
+                        ordine.ID = (long)dt.Rows[i]["ID"];
                         ordine.Totale = (decimal)dt.Rows[i]["totale"];
                         ordine.Destinazione = dt.Rows[i]["destinazione"].ToString();
                         ordini.Add(ordine);
@@ -164,10 +166,10 @@ namespace ReadyToRead
 
             return ordini;
         }
-        internal static List<ClsOrdine> GetByDestinazione(ref MySqlConnection conn, string destinazione, out string errore)
+        internal static List<ClsOrdinare> GetByDestinazione(ref MySqlConnection conn, string destinazione, out string errore)
         {
             DataTable dt = null;
-            List<ClsOrdine> ordini = new List<ClsOrdine>();
+            List<ClsOrdinare> ordini = new List<ClsOrdinare>();
             errore = string.Empty;
 
             if (string.IsNullOrEmpty(destinazione))
@@ -176,9 +178,10 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
-                    string query = "SELECT * FROM ordini WHERE destinazione LIKE @destinazione";
+                    string query = "SELECT * FROM ordinare WHERE destinazione LIKE @destinazione";
 
                     MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
                     da.SelectCommand.Parameters.AddWithValue("@destinazione", "%" + destinazione + "%");
@@ -188,8 +191,8 @@ namespace ReadyToRead
 
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        ClsOrdine ordine = new ClsOrdine();
-                        ordine.OrdineID = dt.Rows[i]["ordineID"].ToString();
+                        ClsOrdinare ordine = new ClsOrdinare();
+                        ordine.ID = (long)dt.Rows[i]["ID"];
                         ordine.Totale = (decimal)dt.Rows[i]["totale"];
                         ordine.Destinazione = dt.Rows[i]["destinazione"].ToString();
                         ordini.Add(ordine);
@@ -208,7 +211,7 @@ namespace ReadyToRead
         #endregion
 
         #region UPDATE
-        internal static long Update(ref MySqlConnection conn, string ordineID, ClsOrdine ordine, out string errore)
+        internal static long Update(ref MySqlConnection conn, string ordineID, ClsOrdinare ordine, out string errore)
         {
             long esito = 0;
             errore = string.Empty;
@@ -219,14 +222,15 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
-                    string sql = @"UPDATE ordini SET statoOrdine=@statoOrdine, totale=@totale, destinazione=@destinazione 
-                                 WHERE ordineID=@ordineID";
+                    string sql = @"UPDATE ordinare SET statoOrdine=@statoOrdine, totale=@totale, destinazione=@destinazione 
+                                 WHERE ID=@ordineID";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
 
-                    cmd.Parameters.AddWithValue("@ordineID", ordineID);
+                    cmd.Parameters.AddWithValue("@ID", ordine.ID);
                     cmd.Parameters.AddWithValue("@statoOrdine", "NON_SPEDITO");
                     cmd.Parameters.AddWithValue("@totale", ordine.Totale);
                     cmd.Parameters.AddWithValue("@destinazione", ordine.Destinazione ?? "");
@@ -254,13 +258,14 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
-                    string sql = "UPDATE ordini SET statoOrdine=@statoOrdine WHERE ordineID=@ordineID";
+                    string sql = "UPDATE ordinare SET statoOrdine=@statoOrdine WHERE ID=@ordineID";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
 
-                    cmd.Parameters.AddWithValue("@ordineID", ordineID);
+                    cmd.Parameters.AddWithValue("@ID", ordineID);
                     cmd.Parameters.AddWithValue("@statoOrdine", nuovoStato);
 
                     esito = cmd.ExecuteNonQuery();
@@ -288,12 +293,13 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
-                    string sql = "DELETE FROM ordini WHERE ordineID=@ordineID";
+                    string sql = "DELETE FROM ordinare WHERE ID=@ordineID";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@ordineID", ordineID);
+                    cmd.Parameters.AddWithValue("@ID", ordineID);
 
                     esito = cmd.ExecuteNonQuery();
                     conn.Close();
@@ -316,9 +322,10 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
-                string query = "SELECT COUNT(*) FROM ordini";
+                string query = "SELECT COUNT(*) FROM ordinare";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 object risultato = cmd.ExecuteScalar();

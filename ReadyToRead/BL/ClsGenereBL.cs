@@ -19,7 +19,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string sql = @"INSERT INTO generi (nome, descrizione, target, tipologia) 
                              VALUES (@nome, @descrizione, @target, @tipologia)";
@@ -55,7 +56,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string query = "SELECT * FROM generi";
 
@@ -94,8 +96,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
-
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
                     string query = "SELECT * FROM generi WHERE nome LIKE @nome";
 
                     MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
@@ -139,7 +141,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string sql = @"UPDATE generi SET nome=@nome, descrizione=@descrizione, 
                                  target=@target, tipologia=@tipologia 
@@ -178,7 +181,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string sql = "DELETE FROM generi WHERE ID=@ID";
 
@@ -206,7 +210,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string query = "SELECT COUNT(*) FROM generi";
 

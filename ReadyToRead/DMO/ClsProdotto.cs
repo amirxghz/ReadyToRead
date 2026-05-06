@@ -19,14 +19,14 @@ namespace ReadyToRead
         eStatoDisponibilita _disponibilita;
         float _prezzo;
         string _descrizione;
-        List<string> _lingua;
+        string _lingua;
 
         public int ProdottoID { get => _prodottoID; set => _prodottoID = value; }
         public string Nome { get => _nome; set => _nome = value; }
         private eStatoDisponibilita Disponibilita { get => _disponibilita; set => _disponibilita = value; }
         public float Prezzo { get => _prezzo; set => _prezzo = value; }
         public string Descrizione { get => _descrizione; set => _descrizione = value; }
-        public List<string> Lingua { get => _lingua; set => _lingua = value; }
+        public string Lingua { get => _lingua; set => _lingua = value; }
 
         public ClsProdotto()
         {

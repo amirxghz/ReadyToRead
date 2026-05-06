@@ -19,7 +19,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string sql = @"INSERT INTO admins (ID, username, password, email, nome, cognome, dataDiNascita, codiceFiscale, comuneDiNascita, sesso) 
                              VALUES (@ID, @username, @password, @email, @nome, @cognome, @dataDiNascita, @codiceFiscale, @comuneDiNascita, @sesso)";
@@ -61,7 +62,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string query = "SELECT * FROM admins";
 
@@ -101,7 +103,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string query = "SELECT * FROM admins WHERE username LIKE @username";
 
@@ -145,7 +148,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string sql = @"UPDATE admins SET username=@username, password=@password, email=@email 
                                  WHERE ID=@ID";
@@ -182,7 +186,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string sql = "DELETE FROM admins WHERE ID=@ID";
 
@@ -210,7 +215,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string query = "SELECT COUNT(*) FROM admins";
 

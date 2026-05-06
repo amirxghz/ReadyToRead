@@ -150,7 +150,6 @@
             this.cbStatoOrdine.Name = "cbStatoOrdine";
             this.cbStatoOrdine.Size = new System.Drawing.Size(208, 31);
             this.cbStatoOrdine.TabIndex = 234;
-            this.cbStatoOrdine.SelectedIndexChanged += new System.EventHandler(this.cbStatoOrdine_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -170,7 +169,6 @@
             this.dtpData.Name = "dtpData";
             this.dtpData.Size = new System.Drawing.Size(208, 30);
             this.dtpData.TabIndex = 236;
-            this.dtpData.ValueChanged += new System.EventHandler(this.dtpData_ValueChanged);
             // 
             // label2
             // 
@@ -353,6 +351,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmOrdini";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.FrmOrdini_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudMinPrezzo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxPrezzo)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);

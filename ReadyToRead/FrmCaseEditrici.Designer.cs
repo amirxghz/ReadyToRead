@@ -558,6 +558,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmCasaEditrice";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmCaseEditrici_FormClosing);
             this.Load += new System.EventHandler(this.FrmCaseEditrici_Load);
             this.pnlDetails.ResumeLayout(false);
             this.pnlDetails.PerformLayout();

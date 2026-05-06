@@ -69,7 +69,7 @@
             this.label20 = new System.Windows.Forms.Label();
             this.btnAnnulla = new System.Windows.Forms.Button();
             this.btnAggiungi = new System.Windows.Forms.Button();
-            this.lblDomanda = new System.Windows.Forms.Label();
+            this.lblTitolo = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnAssegnaEbook = new System.Windows.Forms.Button();
             this.lvLibri = new System.Windows.Forms.ListView();
@@ -83,6 +83,9 @@
             this.btnVisualizza = new System.Windows.Forms.Button();
             this.btnElimina = new System.Windows.Forms.Button();
             this.btnModifica = new System.Windows.Forms.Button();
+            this.tbISBN = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.pnlDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudQuantita)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPrezzo)).BeginInit();
@@ -93,6 +96,9 @@
             // 
             // pnlDetails
             // 
+            this.pnlDetails.Controls.Add(this.tbISBN);
+            this.pnlDetails.Controls.Add(this.label6);
+            this.pnlDetails.Controls.Add(this.label7);
             this.pnlDetails.Controls.Add(this.btnAggiungiCasa);
             this.pnlDetails.Controls.Add(this.btnAggiungiGenere);
             this.pnlDetails.Controls.Add(this.btnAggiungiAutore);
@@ -132,12 +138,12 @@
             this.pnlDetails.Controls.Add(this.label20);
             this.pnlDetails.Controls.Add(this.btnAnnulla);
             this.pnlDetails.Controls.Add(this.btnAggiungi);
-            this.pnlDetails.Controls.Add(this.lblDomanda);
+            this.pnlDetails.Controls.Add(this.lblTitolo);
             this.pnlDetails.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlDetails.Location = new System.Drawing.Point(839, 0);
+            this.pnlDetails.Location = new System.Drawing.Point(853, 0);
             this.pnlDetails.Margin = new System.Windows.Forms.Padding(2);
             this.pnlDetails.Name = "pnlDetails";
-            this.pnlDetails.Size = new System.Drawing.Size(441, 720);
+            this.pnlDetails.Size = new System.Drawing.Size(427, 720);
             this.pnlDetails.TabIndex = 92;
             // 
             // btnAggiungiCasa
@@ -235,7 +241,7 @@
             // 
             this.rtbDescrizione.Location = new System.Drawing.Point(61, 524);
             this.rtbDescrizione.Name = "rtbDescrizione";
-            this.rtbDescrizione.Size = new System.Drawing.Size(318, 104);
+            this.rtbDescrizione.Size = new System.Drawing.Size(318, 65);
             this.rtbDescrizione.TabIndex = 237;
             this.rtbDescrizione.Text = "";
             // 
@@ -553,7 +559,7 @@
             // btnAnnulla
             // 
             this.btnAnnulla.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAnnulla.Location = new System.Drawing.Point(262, 634);
+            this.btnAnnulla.Location = new System.Drawing.Point(263, 665);
             this.btnAnnulla.Name = "btnAnnulla";
             this.btnAnnulla.Size = new System.Drawing.Size(117, 31);
             this.btnAnnulla.TabIndex = 225;
@@ -564,7 +570,7 @@
             // btnAggiungi
             // 
             this.btnAggiungi.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAggiungi.Location = new System.Drawing.Point(26, 634);
+            this.btnAggiungi.Location = new System.Drawing.Point(27, 665);
             this.btnAggiungi.Name = "btnAggiungi";
             this.btnAggiungi.Size = new System.Drawing.Size(224, 36);
             this.btnAggiungi.TabIndex = 224;
@@ -572,15 +578,15 @@
             this.btnAggiungi.UseVisualStyleBackColor = true;
             this.btnAggiungi.Click += new System.EventHandler(this.btnAggiungi_Click);
             // 
-            // lblDomanda
+            // lblTitolo
             // 
-            this.lblDomanda.AutoSize = true;
-            this.lblDomanda.Font = new System.Drawing.Font("Coolvetica", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDomanda.Location = new System.Drawing.Point(19, 39);
-            this.lblDomanda.Name = "lblDomanda";
-            this.lblDomanda.Size = new System.Drawing.Size(151, 38);
-            this.lblDomanda.TabIndex = 192;
-            this.lblDomanda.Text = "Crea Libro";
+            this.lblTitolo.AutoSize = true;
+            this.lblTitolo.Font = new System.Drawing.Font("Coolvetica", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitolo.Location = new System.Drawing.Point(19, 39);
+            this.lblTitolo.Name = "lblTitolo";
+            this.lblTitolo.Size = new System.Drawing.Size(151, 38);
+            this.lblTitolo.TabIndex = 192;
+            this.lblTitolo.Text = "Crea Libro";
             // 
             // panel2
             // 
@@ -713,6 +719,39 @@
             this.btnModifica.UseVisualStyleBackColor = true;
             this.btnModifica.Click += new System.EventHandler(this.btnModifica_Click);
             // 
+            // tbISBN
+            // 
+            this.tbISBN.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbISBN.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.tbISBN.Location = new System.Drawing.Point(61, 617);
+            this.tbISBN.Name = "tbISBN";
+            this.tbISBN.ReadOnly = true;
+            this.tbISBN.Size = new System.Drawing.Size(317, 33);
+            this.tbISBN.TabIndex = 263;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.Black;
+            this.label6.Location = new System.Drawing.Point(29, 620);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(34, 25);
+            this.label6.TabIndex = 264;
+            this.label6.Text = "🪪";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.Gray;
+            this.label7.Location = new System.Drawing.Point(30, 591);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(47, 23);
+            this.label7.TabIndex = 262;
+            this.label7.Text = "ISBN";
+            // 
             // FrmLibri
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
@@ -758,7 +797,7 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Button btnAnnulla;
         private System.Windows.Forms.Button btnAggiungi;
-        private System.Windows.Forms.Label lblDomanda;
+        private System.Windows.Forms.Label lblTitolo;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ListView lvLibri;
         private System.Windows.Forms.ColumnHeader columnHeader1;
@@ -800,5 +839,8 @@
         private System.Windows.Forms.Button btnAggiungiGenere;
         private System.Windows.Forms.Button btnAggiungiAutore;
         private System.Windows.Forms.Button btnAssegnaEbook;
+        private System.Windows.Forms.TextBox tbISBN;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
     }
 }

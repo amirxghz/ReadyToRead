@@ -19,7 +19,9 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string sql = @"INSERT INTO autori (nome, cognome, èVerificato, username, password, email, dataDiNascita, codiceFiscale, comuneDiNascita, sesso) 
                              VALUES (@nome, @cognome, @èVerificato, @username, @password, @email, @dataDiNascita, @codiceFiscale, @comuneDiNascita, @sesso)";
@@ -61,8 +63,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
-
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
                 string query = "SELECT * FROM autori";
 
                 MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
@@ -103,8 +105,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
-
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
                     string query = "SELECT * FROM autori WHERE cognome LIKE @cognome";
 
                     MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
@@ -143,7 +145,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string query = "SELECT * FROM autori WHERE èVerificato = 1";
 
@@ -186,8 +189,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
-
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
                     string sql = @"UPDATE autori SET nome=@nome, cognome=@cognome, èVerificato=@èVerificato, 
                                  username=@username, password=@password, email=@email, dataDiNascita=@dataDiNascita, 
                                  codiceFiscale=@codiceFiscale, comuneDiNascita=@comuneDiNascita, sesso=@sesso 
@@ -232,8 +235,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
-
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
                     string sql = "DELETE FROM autori WHERE ID=@ID";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
@@ -260,8 +263,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
-
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
                 string query = "SELECT COUNT(*) FROM autori";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);

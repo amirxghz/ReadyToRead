@@ -19,7 +19,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string sql = @"INSERT INTO clienti (email, password, indirizzo, cap, username, nome, cognome, dataDiNascita, codiceFiscale, comuneDiNascita, sesso) 
                              VALUES (@email, @password, @indirizzo, @cap, @username, @nome, @cognome, @dataDiNascita, @codiceFiscale, @comuneDiNascita, @sesso)";
@@ -63,7 +64,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string query = "SELECT * FROM clienti";
 
@@ -106,7 +108,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string query = "SELECT * FROM clienti WHERE email LIKE @email";
 
@@ -152,7 +155,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string query = "SELECT * FROM clienti WHERE cap=@cap";
 
@@ -199,7 +203,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string sql = @"UPDATE cliente SET email=@email, password=@password, indirizzo=@indirizzo, 
                                  cap=@cap, username=@username, nome=@nome, cognome=@cognome, dataDiNascita=@dataDiNascita, 
@@ -246,7 +251,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string sql = "DELETE FROM clienti WHERE ID=@ID";
 
@@ -274,7 +280,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string query = "SELECT COUNT(*) FROM clienti";
 

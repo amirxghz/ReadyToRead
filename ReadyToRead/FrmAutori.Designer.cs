@@ -59,6 +59,8 @@
             this.tbNome = new System.Windows.Forms.TextBox();
             this.lblTitolo = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label13 = new System.Windows.Forms.Label();
+            this.cbVerificato = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tbFiltroNome = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -70,8 +72,6 @@
             this.btnVisualizza = new System.Windows.Forms.Button();
             this.btnElimina = new System.Windows.Forms.Button();
             this.btnModifica = new System.Windows.Forms.Button();
-            this.cbVerificato = new System.Windows.Forms.ComboBox();
-            this.label13 = new System.Windows.Forms.Label();
             this.pnlDetails.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -454,6 +454,26 @@
             this.panel2.Size = new System.Drawing.Size(835, 720);
             this.panel2.TabIndex = 89;
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.Gray;
+            this.label13.Location = new System.Drawing.Point(550, 45);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(158, 23);
+            this.label13.TabIndex = 230;
+            this.label13.Text = "Filtra per verificati";
+            // 
+            // cbVerificato
+            // 
+            this.cbVerificato.FormattingEnabled = true;
+            this.cbVerificato.Location = new System.Drawing.Point(554, 71);
+            this.cbVerificato.Name = "cbVerificato";
+            this.cbVerificato.Size = new System.Drawing.Size(154, 31);
+            this.cbVerificato.TabIndex = 229;
+            this.cbVerificato.SelectedIndexChanged += new System.EventHandler(this.cbVerificato_SelectedIndexChanged);
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -556,26 +576,6 @@
             this.btnModifica.UseVisualStyleBackColor = true;
             this.btnModifica.Click += new System.EventHandler(this.btnModifica_Click);
             // 
-            // cbVerificato
-            // 
-            this.cbVerificato.FormattingEnabled = true;
-            this.cbVerificato.Location = new System.Drawing.Point(554, 71);
-            this.cbVerificato.Name = "cbVerificato";
-            this.cbVerificato.Size = new System.Drawing.Size(154, 31);
-            this.cbVerificato.TabIndex = 229;
-            this.cbVerificato.SelectedIndexChanged += new System.EventHandler(this.cbVerificato_SelectedIndexChanged);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.ForeColor = System.Drawing.Color.Gray;
-            this.label13.Location = new System.Drawing.Point(550, 45);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(158, 23);
-            this.label13.TabIndex = 230;
-            this.label13.Text = "Filtra per verificati";
-            // 
             // FrmAutori
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
@@ -594,6 +594,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmAutori";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmAutori_FormClosing);
             this.Load += new System.EventHandler(this.FrmAutori_Load);
             this.pnlDetails.ResumeLayout(false);
             this.pnlDetails.PerformLayout();

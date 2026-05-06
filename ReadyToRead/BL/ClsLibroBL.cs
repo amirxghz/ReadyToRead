@@ -19,7 +19,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string sql = @"INSERT INTO libri (isbn, annoPubblicazione, numeroPagine, sinossi, edizione, imgCopertina, nome, prezzo, descrizione, lingua) 
                              VALUES (@isbn, @annoPubblicazione, @numeroPagine, @sinossi, @edizione, @imgCopertina, @nome, @prezzo, @descrizione, @lingua)";
@@ -35,7 +36,7 @@ namespace ReadyToRead
                 cmd.Parameters.AddWithValue("@nome", libro.Nome ?? "");
                 cmd.Parameters.AddWithValue("@prezzo", libro.Prezzo);
                 cmd.Parameters.AddWithValue("@descrizione", libro.Descrizione ?? "");
-                cmd.Parameters.AddWithValue("@lingua", string.Join(",", libro.Lingua ?? new List<string>()));
+                cmd.Parameters.AddWithValue("@lingua", libro.Lingua ?? "");
 
                 int numRec = cmd.ExecuteNonQuery();
                 if (numRec == 1)
@@ -61,7 +62,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string query = "SELECT * FROM libri";
 
@@ -103,7 +105,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string query = "SELECT * FROM libri WHERE prezzo BETWEEN @minPrezzo AND @maxPrezzo";
 
@@ -150,7 +153,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string query = "SELECT * FROM libri WHERE isbn=@isbn";
 
@@ -196,7 +200,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string query = "SELECT * FROM libri WHERE nome LIKE @nome";
 
@@ -242,7 +247,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string query = "SELECT * FROM libri WHERE YEAR(annoPubblicazione)=@anno";
 
@@ -289,7 +295,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string sql = @"UPDATE libri SET isbn=@isbn, annoPubblicazione=@annoPubblicazione, numeroPagine=@numeroPagine, 
                                  sinossi=@sinossi, edizione=@edizione, imgCopertina=@imgCopertina, nome=@nome, prezzo=@prezzo, 
@@ -308,7 +315,7 @@ namespace ReadyToRead
                     cmd.Parameters.AddWithValue("@nome", libro.Nome ?? "");
                     cmd.Parameters.AddWithValue("@prezzo", libro.Prezzo);
                     cmd.Parameters.AddWithValue("@descrizione", libro.Descrizione ?? "");
-                    cmd.Parameters.AddWithValue("@lingua", string.Join(",", libro.Lingua ?? new List<string>()));
+                    cmd.Parameters.AddWithValue("@lingua", libro.Lingua ?? "");
 
                     esito = cmd.ExecuteNonQuery();
                     conn.Close();
@@ -335,7 +342,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string sql = "DELETE FROM libri WHERE prodottoID=@ID";
 
@@ -363,7 +371,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string query = "SELECT COUNT(*) FROM libri";
 

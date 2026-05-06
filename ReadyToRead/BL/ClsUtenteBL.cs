@@ -19,7 +19,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string sql = @"INSERT INTO utenti (username, password, nome, cognome, email, dataDiNascita, codiceFiscale, comuneDiNascita, sesso) 
                              VALUES (@username, @password, @nome, @cognome, @email, @dataDiNascita, @codiceFiscale, @comuneDiNascita, @sesso)";
@@ -61,7 +62,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string query = "SELECT * FROM utenti";
 
@@ -100,7 +102,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string query = "SELECT * FROM utenti WHERE username LIKE @username";
 
@@ -146,7 +149,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string sql = @"UPDATE utenti SET username=@username, password=@password, nome=@nome, 
                                  cognome=@cognome, email=@email, dataDiNascita=@dataDiNascita, 
@@ -191,7 +195,8 @@ namespace ReadyToRead
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State != System.Data.ConnectionState.Open)
+                        conn.Open();
 
                     string sql = "DELETE FROM utenti WHERE ID=@ID";
 
@@ -219,7 +224,8 @@ namespace ReadyToRead
 
             try
             {
-                conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
                 string query = "SELECT COUNT(*) FROM utenti";
 
