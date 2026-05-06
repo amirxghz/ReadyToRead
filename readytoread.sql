@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Creato il: Apr 20, 2026 alle 17:13
+-- Creato il: Mag 06, 2026 alle 11:49
 -- Versione del server: 8.2.0
 -- Versione PHP: 8.3.0
 
@@ -41,7 +41,7 @@ CREATE TABLE `admins` (
 CREATE TABLE `autori` (
   `ID` int NOT NULL,
   `verificato` tinyint(1) NOT NULL,
-  `nome_arte` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nome_arte` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `data_morte` date DEFAULT NULL,
   `utenteID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -67,8 +67,8 @@ CREATE TABLE `censire` (
 
 CREATE TABLE `clienti` (
   `ID` int NOT NULL,
-  `indirizzo` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `cap` char(5) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `indirizzo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `cap` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `utenteID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -106,24 +106,18 @@ CREATE TABLE `generare` (
 
 CREATE TABLE `generi` (
   `ID` int NOT NULL,
-  `nome` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `descrizione` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `target` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `nome` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `descrizione` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `target` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tipologia` enum('narrativo','musicale') COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Struttura della tabella `generi_narrativi`
+-- Dump dei dati per la tabella `generi`
 --
 
-CREATE TABLE `generi_narrativi` (
-  `ID` int NOT NULL,
-  `ambientazione` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `tono` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `struttura_narrativa` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `genereID` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `generi` (`ID`, `nome`, `descrizione`, `target`, `tipologia`) VALUES
+(1, 'Giallo', '', 'Giovani Adulti', 'narrativo');
 
 -- --------------------------------------------------------
 
@@ -133,8 +127,8 @@ CREATE TABLE `generi_narrativi` (
 
 CREATE TABLE `gift_cards` (
   `ID` int NOT NULL,
-  `nome_destinatario` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `dedica` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nome_destinatario` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `dedica` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `prodottoID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -146,12 +140,12 @@ CREATE TABLE `gift_cards` (
 
 CREATE TABLE `houses` (
   `ID` int NOT NULL,
-  `indirizzo_sede_legale` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `indirizzo_sede_operativo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `tipo_azienda` enum('SRL','SNC','SAS','SPA') COLLATE utf8mb4_general_ci NOT NULL,
-  `ragione_sociale` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `indirizzo_sede_legale` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `indirizzo_sede_operativo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `tipo_azienda` enum('SRL','SNC','SAS','SPA') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `ragione_sociale` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `esclusiva` tinyint(1) NOT NULL,
-  `tipologia` enum('editrice') COLLATE utf8mb4_general_ci NOT NULL,
+  `tipologia` enum('editrice') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `utenteID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -162,12 +156,12 @@ CREATE TABLE `houses` (
 --
 
 CREATE TABLE `libri` (
-  `isbn` char(13) COLLATE utf8mb4_general_ci NOT NULL,
+  `isbn` char(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `path_copertina` blob,
   `numero_pagine` smallint NOT NULL,
-  `sinossi` text COLLATE utf8mb4_general_ci,
+  `sinossi` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `path_file` blob,
-  `tipo` enum('fisico','ebook') COLLATE utf8mb4_general_ci NOT NULL,
+  `tipo` enum('fisico','ebook') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `prodottoID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -179,9 +173,9 @@ CREATE TABLE `libri` (
 
 CREATE TABLE `ordinare` (
   `ID` int NOT NULL,
-  `stato_ordine` enum('arrivato','spedito','non spedito','') COLLATE utf8mb4_general_ci NOT NULL,
+  `stato_ordine` enum('arrivato','spedito','non spedito','') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `totale` decimal(10,0) NOT NULL,
-  `indirizzo_destinazione` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
+  `indirizzo_destinazione` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `data` date NOT NULL,
   `clienteID` int NOT NULL,
   `prodottoID` int NOT NULL
@@ -196,9 +190,9 @@ CREATE TABLE `ordinare` (
 CREATE TABLE `prodotti` (
   `ID` int NOT NULL,
   `nome` int NOT NULL,
-  `stato_disponibilita` enum('disponibile','preordine','esaurito','') COLLATE utf8mb4_general_ci NOT NULL,
+  `stato_disponibilita` enum('disponibile','preordine','esaurito','') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `prezzo` decimal(10,0) NOT NULL,
-  `descrizione` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `descrizione` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -210,9 +204,9 @@ CREATE TABLE `prodotti` (
 CREATE TABLE `pubblicare` (
   `ID` int NOT NULL,
   `anno_pubblicazione` date NOT NULL,
-  `edizione` varchar(80) COLLATE utf8mb4_general_ci NOT NULL,
+  `edizione` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `casa_editriceID` int NOT NULL,
-  `libroISBN` varchar(13) COLLATE utf8mb4_general_ci NOT NULL
+  `libroISBN` varchar(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -223,9 +217,9 @@ CREATE TABLE `pubblicare` (
 
 CREATE TABLE `recensire` (
   `ID` int NOT NULL,
-  `titolo` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `descrizione` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `valutazione` enum('1','2','3','4','5') COLLATE utf8mb4_general_ci NOT NULL,
+  `titolo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `descrizione` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `valutazione` enum('1','2','3','4','5') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `data_pubblicazione` date NOT NULL,
   `clienteID` int NOT NULL,
   `prodottoID` int NOT NULL
@@ -241,7 +235,7 @@ CREATE TABLE `scrivere` (
   `ID` int NOT NULL,
   `data` date NOT NULL,
   `autoreID` int NOT NULL,
-  `libroISBN` char(13) COLLATE utf8mb4_general_ci NOT NULL
+  `libroISBN` char(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -264,14 +258,14 @@ CREATE TABLE `super_admins` (
 
 CREATE TABLE `utenti` (
   `ID` int NOT NULL,
-  `nome` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `cognome` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `comune_nascita` enum('Jesi','Ancona','Chiaravalle','Senigallia','Rotella') COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nome` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `cognome` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `comune_nascita` enum('Jesi','Ancona','Chiaravalle','Senigallia','Rotella') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `data_nascita` date DEFAULT NULL,
-  `genere` char(1) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `username` varchar(25) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `password` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `email` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `genere` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `username` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `password` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -328,13 +322,6 @@ ALTER TABLE `generare`
 --
 ALTER TABLE `generi`
   ADD PRIMARY KEY (`ID`);
-
---
--- Indici per le tabelle `generi_narrativi`
---
-ALTER TABLE `generi_narrativi`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `genereID` (`genereID`);
 
 --
 -- Indici per le tabelle `gift_cards`
@@ -455,13 +442,7 @@ ALTER TABLE `generare`
 -- AUTO_INCREMENT per la tabella `generi`
 --
 ALTER TABLE `generi`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `generi_narrativi`
---
-ALTER TABLE `generi_narrativi`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT per la tabella `gift_cards`
@@ -547,12 +528,6 @@ ALTER TABLE `controllare`
 ALTER TABLE `generare`
   ADD CONSTRAINT `generare_admins` FOREIGN KEY (`adminID`) REFERENCES `admins` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `generare_autore` FOREIGN KEY (`adminID`) REFERENCES `autori` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Limiti per la tabella `generi_narrativi`
---
-ALTER TABLE `generi_narrativi`
-  ADD CONSTRAINT `narrativo_genere` FOREIGN KEY (`genereID`) REFERENCES `generi` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `gift_cards`
