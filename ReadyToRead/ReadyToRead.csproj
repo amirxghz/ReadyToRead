@@ -113,23 +113,34 @@
     <Compile Include="BL\ClsAdminBL.cs" />
     <Compile Include="BL\ClsAutoreBL.cs" />
     <Compile Include="BL\ClsCasaBL.cs" />
+    <Compile Include="BL\ClsCensireBL.cs" />
     <Compile Include="BL\ClsClienteBL.cs" />
+    <Compile Include="BL\ClsControllareBL.cs" />
+    <Compile Include="BL\ClsGenerareBL.cs" />
     <Compile Include="BL\ClsGenereBL.cs" />
     <Compile Include="BL\ClsGiftCardBL.cs" />
     <Compile Include="BL\ClsLibroBL.cs" />
     <Compile Include="BL\ClsOrdinareBL.cs" />
+    <Compile Include="BL\ClsProdottoBL.cs" />
+    <Compile Include="BL\ClsPubblicareBL.cs" />
     <Compile Include="BL\ClsRecensioneBL.cs" />
+    <Compile Include="BL\ClsScrivereBL.cs" />
     <Compile Include="BL\ClsUtenteBL.cs" />
     <Compile Include="DMO\ClsAdmin.cs" />
     <Compile Include="DMO\ClsAutore.cs" />
     <Compile Include="DMO\ClsCasa.cs" />
+    <Compile Include="DMO\ClsCensire.cs" />
     <Compile Include="DMO\ClsCliente.cs" />
+    <Compile Include="DMO\ClsControllare.cs" />
+    <Compile Include="DMO\ClsGenerare.cs" />
     <Compile Include="DMO\ClsGenere.cs" />
     <Compile Include="DMO\ClsGiftCard.cs" />
     <Compile Include="DMO\ClsLibro.cs" />
     <Compile Include="DMO\ClsOrdinare.cs" />
     <Compile Include="DMO\ClsProdotto.cs" />
+    <Compile Include="DMO\ClsPubblicare.cs" />
     <Compile Include="DMO\ClsRecensire.cs" />
+    <Compile Include="DMO\ClsScrivere.cs" />
     <Compile Include="FrmAutori.cs">
       <SubType>Form</SubType>
     </Compile>
