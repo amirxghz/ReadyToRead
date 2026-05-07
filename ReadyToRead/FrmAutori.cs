@@ -51,8 +51,7 @@ namespace ReadyToRead
         private void PopolaListView(List<ClsAutore> autori)
         {
             lvAutori.Items.Clear();
-            int i = 0;
-            while (i < autori.Count)
+            for (int i =0; i < autori.Count;i++)
             {
                 ClsAutore a = autori[i];
                 ListViewItem lvi = new ListViewItem(a.ÈVerificato ? "✔" : "✘");
@@ -61,7 +60,6 @@ namespace ReadyToRead
                 lvi.SubItems.Add(a.Password);
                 lvi.Tag = a;
                 lvAutori.Items.Add(lvi);
-                i++;
             }
         }
         private void ResetCampi()
@@ -103,7 +101,7 @@ namespace ReadyToRead
             ClsAutore autore = LeggiCampi();
             string errore;
 
-            if (!modificaAutore) //Aggiungi
+            if (!modificaAutore)
             {
                 long id = ClsAutoreBL.Create(ref Program.conn, autore, out errore);
                 if (!string.IsNullOrEmpty(errore))
@@ -115,7 +113,7 @@ namespace ReadyToRead
                     CaricaAutori();
                 }
             }
-            else //modifica
+            else
             {
                 if (_autoreSelezionato == null)
                     MessageBox.Show("Seleziona un autore da modificare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -131,10 +129,12 @@ namespace ReadyToRead
                         CaricaAutori();
                     }
                 }
-            }       
+            }
+
             if (Program._chiudiForm)
                 this.Close();
         }
+
 
         private void btnVisualizza_Click(object sender, EventArgs e)
         {
@@ -272,6 +272,11 @@ namespace ReadyToRead
         private void FrmAutori_FormClosing(object sender, FormClosingEventArgs e)
         {
             Program._chiudiForm = false;
+        }
+
+        private void rbF_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

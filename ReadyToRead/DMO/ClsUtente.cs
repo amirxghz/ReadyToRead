@@ -102,22 +102,8 @@ namespace ReadyToRead
             get => _dataDiNascita;
             set
             {
-                if (!ControllaData(value))
-                    throw new Exception("Data di nascita non valida (età deve essere tra 14 e 104 anni)");
-                else
                     _dataDiNascita = value;
             }
-        }
-
-        private bool ControllaData(DateTime dataDiNascita)
-        {
-            int anni = DateTime.Now.Year - dataDiNascita.Year;
-            if (DateTime.Now.Month < dataDiNascita.Month ||
-                (DateTime.Now.Month == dataDiNascita.Month && DateTime.Now.Day < dataDiNascita.Day))
-            {
-                anni--;
-            }
-            return anni >= 14 && anni < 104;
         }
 
         public string CodiceFiscale

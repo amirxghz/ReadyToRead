@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 //Urbani
 namespace ReadyToRead
 {
-    public abstract class ClsProdotto
+    public class ClsProdotto
     {
-        enum eStatoDisponibilita
+        public enum eStatoDisponibilita
         {
             DISPONIBILE,
             PREORDINE,
@@ -23,7 +23,7 @@ namespace ReadyToRead
 
         public int ProdottoID { get => _prodottoID; set => _prodottoID = value; }
         public string Nome { get => _nome; set => _nome = value; }
-        private eStatoDisponibilita Disponibilita { get => _disponibilita; set => _disponibilita = value; }
+        public eStatoDisponibilita Disponibilita { get => _disponibilita; set => _disponibilita = value; }
         public float Prezzo { get => _prezzo; set => _prezzo = value; }
         public string Descrizione { get => _descrizione; set => _descrizione = value; }
         public string Lingua { get => _lingua; set => _lingua = value; }

@@ -28,7 +28,7 @@ namespace ReadyToRead
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
 
                 cmd.Parameters.AddWithValue("@nome", prodotto.Nome ?? "");
-                cmd.Parameters.AddWithValue("@stato_disponibilita", prodotto.Disponibilita ?? "");
+                cmd.Parameters.AddWithValue("@stato_disponibilita", prodotto.Disponibilita.ToString() ?? "");
                 cmd.Parameters.AddWithValue("@prezzo", prodotto.Prezzo);
                 cmd.Parameters.AddWithValue("@descrizione", prodotto.Descrizione ?? "");
 
@@ -70,7 +70,7 @@ namespace ReadyToRead
                     ClsProdotto prodotto = new ClsProdotto();
                     prodotto.ProdottoID = Convert.ToInt32(dt.Rows[i]["ID"]);
                     prodotto.Nome = dt.Rows[i]["nome"].ToString();
-                    prodotto.Disponibilita = dt.Rows[i]["stato_disponibilita"].ToString();
+                    prodotto.Disponibilita = (ClsProdotto.eStatoDisponibilita)dt.Rows[i]["stato_disponibilita"];
                     prodotto.Prezzo = Convert.ToSingle(dt.Rows[i]["prezzo"]);
                     prodotto.Descrizione = dt.Rows[i]["descrizione"].ToString();
                     prodotti.Add(prodotto);
@@ -114,7 +114,7 @@ namespace ReadyToRead
                         prodotto = new ClsProdotto();
                         prodotto.ProdottoID = Convert.ToInt32(dt.Rows[0]["ID"]);
                         prodotto.Nome = dt.Rows[0]["nome"].ToString();
-                        prodotto.Disponibilita = dt.Rows[0]["stato_disponibilita"].ToString();
+                        prodotto.Disponibilita = (ClsProdotto.eStatoDisponibilita)dt.Rows[0]["stato_disponibilita"];
                         prodotto.Prezzo = Convert.ToSingle(dt.Rows[0]["prezzo"]);
                         prodotto.Descrizione = dt.Rows[0]["descrizione"].ToString();
                     }
@@ -158,7 +158,7 @@ namespace ReadyToRead
                         ClsProdotto prodotto = new ClsProdotto();
                         prodotto.ProdottoID = Convert.ToInt32(dt.Rows[i]["ID"]);
                         prodotto.Nome = dt.Rows[i]["nome"].ToString();
-                        prodotto.Disponibilita = dt.Rows[i]["stato_disponibilita"].ToString();
+                        prodotto.Disponibilita = (ClsProdotto.eStatoDisponibilita)dt.Rows[i]["stato_disponibilita"];
                         prodotto.Prezzo = Convert.ToSingle(dt.Rows[i]["prezzo"]);
                         prodotto.Descrizione = dt.Rows[i]["descrizione"].ToString();
                         prodotti.Add(prodotto);
@@ -199,7 +199,7 @@ namespace ReadyToRead
 
                     cmd.Parameters.AddWithValue("@ID", ID);
                     cmd.Parameters.AddWithValue("@nome", prodotto.Nome ?? "");
-                    cmd.Parameters.AddWithValue("@stato_disponibilita", prodotto.Disponibilita ?? "");
+                    cmd.Parameters.AddWithValue("@stato_disponibilita", prodotto.Disponibilita.ToString() ?? "");
                     cmd.Parameters.AddWithValue("@prezzo", prodotto.Prezzo);
                     cmd.Parameters.AddWithValue("@descrizione", prodotto.Descrizione ?? "");
 
