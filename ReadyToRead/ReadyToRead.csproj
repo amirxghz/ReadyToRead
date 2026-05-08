@@ -112,6 +112,8 @@
   <ItemGroup>
     <Compile Include="BL\ClsAdminBL.cs" />
     <Compile Include="BL\ClsAutoreBL.cs" />
+    <Compile Include="BL\ClsCaratterizzareBL.cs" />
+    <Compile Include="DMO\ClsCaratterizzare.cs" />
     <Compile Include="BL\ClsCasaBL.cs" />
     <Compile Include="BL\ClsCensireBL.cs" />
     <Compile Include="BL\ClsClienteBL.cs" />

@@ -11,37 +11,67 @@ namespace ReadyToRead
 {
     internal static class ClsClienteBL
     {
+        private const string SELECT_BASE =
+            @"SELECT c.ID, c.indirizzo, c.cap, c.utenteID,
+                     u.nome, u.cognome, u.username, u.password, u.email,
+                     u.data_nascita, u.genere, u.comune_nascita
+              FROM clienti c
+              INNER JOIN utenti u ON c.utenteID = u.ID";
+
+        private static ClsCliente CreaClienteDaRiga(DataRow r)
+        {
+            ClsCliente c = new ClsCliente();
+            c.ID = Convert.ToInt64(r["ID"]);
+            c.UtenteID = Convert.ToInt32(r["utenteID"]);
+            c.Indirizzo = r["indirizzo"] == DBNull.Value ? "" : r["indirizzo"].ToString();
+            c.CAP = r["cap"] == DBNull.Value ? "" : r["cap"].ToString();
+            c.Nome = r["nome"] == DBNull.Value ? "" : r["nome"].ToString();
+            c.Cognome = r["cognome"] == DBNull.Value ? "" : r["cognome"].ToString();
+            c.Username = r["username"] == DBNull.Value ? "" : r["username"].ToString();
+            c.Password = r["password"] == DBNull.Value ? "" : r["password"].ToString();
+            c.Email = r["email"] == DBNull.Value ? "" : r["email"].ToString();
+            if (r["data_nascita"] != DBNull.Value)
+                c.DataDiNascita = Convert.ToDateTime(r["data_nascita"]);
+            if (r["genere"] != DBNull.Value)
+                c.Sesso = r["genere"].ToString() == "m" ? ClsUtente.eSESSO.m : ClsUtente.eSESSO.f;
+            if (r["comune_nascita"] != DBNull.Value)
+                c.ComuneDiNascita = (ClsUtente.eCOMUNE)Enum.Parse(typeof(ClsUtente.eCOMUNE), r["comune_nascita"].ToString(), true);
+            return c;
+        }
+
         #region CREATE
         internal static long Create(ref MySqlConnection conn, ClsCliente cliente, out string errore)
         {
-            long ID = 0;
-            errore = String.Empty;
+            long clienteID = 0;
+            errore = string.Empty;
 
             try
             {
-                if (conn.State != System.Data.ConnectionState.Open)
+                if (conn.State != ConnectionState.Open)
                     conn.Open();
 
-                string sql = @"INSERT INTO clienti (email, password, indirizzo, cap, username, nome, cognome, dataDiNascita, codiceFiscale, comuneDiNascita, sesso) 
-                             VALUES (@email, @password, @indirizzo, @cap, @username, @nome, @cognome, @dataDiNascita, @codiceFiscale, @comuneDiNascita, @sesso)";
+                string sqlUtente = @"INSERT INTO utenti (nome, cognome, username, password, email, data_nascita, genere, comune_nascita)
+                                     VALUES (@nome, @cognome, @username, @password, @email, @data_nascita, @genere, @comune_nascita)";
+                MySqlCommand cmdU = new MySqlCommand(sqlUtente, conn);
+                cmdU.Parameters.AddWithValue("@nome", cliente.Nome ?? "");
+                cmdU.Parameters.AddWithValue("@cognome", cliente.Cognome ?? "");
+                cmdU.Parameters.AddWithValue("@username", cliente.Username ?? "");
+                cmdU.Parameters.AddWithValue("@password", cliente.Password ?? "");
+                cmdU.Parameters.AddWithValue("@email", cliente.Email ?? "");
+                cmdU.Parameters.AddWithValue("@data_nascita", cliente.DataDiNascita);
+                cmdU.Parameters.AddWithValue("@genere", cliente.Sesso.ToString());
+                cmdU.Parameters.AddWithValue("@comune_nascita", cliente.ComuneDiNascita.ToString());
+                cmdU.ExecuteNonQuery();
+                long utenteID = cmdU.LastInsertedId;
 
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-
-                cmd.Parameters.AddWithValue("@email", cliente.Email ?? "");
-                cmd.Parameters.AddWithValue("@password", cliente.Password ?? "");
-                cmd.Parameters.AddWithValue("@indirizzo", cliente.Indirizzo ?? "");
-                cmd.Parameters.AddWithValue("@cap", cliente.CAP ?? "");
-                cmd.Parameters.AddWithValue("@username", cliente.Username ?? "");
-                cmd.Parameters.AddWithValue("@nome", cliente.Nome ?? "");
-                cmd.Parameters.AddWithValue("@cognome", cliente.Cognome ?? "");
-                cmd.Parameters.AddWithValue("@dataDiNascita", cliente.DataDiNascita);
-                cmd.Parameters.AddWithValue("@codiceFiscale", cliente.CodiceFiscale ?? "");
-                cmd.Parameters.AddWithValue("@comuneDiNascita", cliente.ComuneDiNascita);
-                cmd.Parameters.AddWithValue("@sesso", cliente.Sesso);
-
-                int numRec = cmd.ExecuteNonQuery();
-                if (numRec == 1)
-                    ID = cmd.LastInsertedId;
+                string sqlCliente = @"INSERT INTO clienti (indirizzo, cap, utenteID)
+                                      VALUES (@indirizzo, @cap, @utenteID)";
+                MySqlCommand cmdC = new MySqlCommand(sqlCliente, conn);
+                cmdC.Parameters.AddWithValue("@indirizzo", cliente.Indirizzo ?? "");
+                cmdC.Parameters.AddWithValue("@cap", cliente.CAP ?? "");
+                cmdC.Parameters.AddWithValue("@utenteID", utenteID);
+                cmdC.ExecuteNonQuery();
+                clienteID = cmdC.LastInsertedId;
 
                 conn.Close();
             }
@@ -50,40 +80,30 @@ namespace ReadyToRead
                 errore = ex.Message;
             }
 
-            return ID;
+            return clienteID;
         }
         #endregion
 
         #region READ
-        
         internal static List<ClsCliente> GetAll(ref MySqlConnection conn, out string errore)
         {
-            DataTable dt = null;
             List<ClsCliente> clienti = new List<ClsCliente>();
             errore = string.Empty;
 
             try
             {
-                if (conn.State != System.Data.ConnectionState.Open)
+                if (conn.State != ConnectionState.Open)
                     conn.Open();
 
-                string query = "SELECT * FROM clienti";
-
-                MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
-                dt = new DataTable();
+                MySqlDataAdapter da = new MySqlDataAdapter(SELECT_BASE, conn);
+                DataTable dt = new DataTable();
                 da.Fill(dt);
 
-                for (int i = 0; i < dt.Rows.Count; i++)
+                int i = 0;
+                while (i < dt.Rows.Count)
                 {
-                    ClsCliente cliente = new ClsCliente();
-                    cliente.Email = dt.Rows[i]["email"].ToString();
-                    cliente.Password = dt.Rows[i]["password"].ToString();
-                    cliente.Indirizzo = dt.Rows[i]["indirizzo"].ToString();
-                    cliente.CAP = dt.Rows[i]["cap"].ToString();
-                    cliente.Username = dt.Rows[i]["username"].ToString();
-                    cliente.Nome = dt.Rows[i]["nome"].ToString();
-                    cliente.Cognome = dt.Rows[i]["cognome"].ToString();
-                    clienti.Add(cliente);
+                    clienti.Add(CreaClienteDaRiga(dt.Rows[i]));
+                    i++;
                 }
 
                 conn.Close();
@@ -98,38 +118,31 @@ namespace ReadyToRead
 
         internal static List<ClsCliente> GetByEmail(ref MySqlConnection conn, string email, out string errore)
         {
-            DataTable dt = null;
             List<ClsCliente> clienti = new List<ClsCliente>();
             errore = string.Empty;
 
             if (string.IsNullOrEmpty(email))
+            {
                 errore = "Email non valida";
+            }
             else
             {
                 try
                 {
-                    if (conn.State != System.Data.ConnectionState.Open)
+                    if (conn.State != ConnectionState.Open)
                         conn.Open();
 
-                    string query = "SELECT * FROM clienti WHERE email LIKE @email";
-
+                    string query = SELECT_BASE + " WHERE u.email LIKE @email";
                     MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
                     da.SelectCommand.Parameters.AddWithValue("@email", "%" + email + "%");
-
-                    dt = new DataTable();
+                    DataTable dt = new DataTable();
                     da.Fill(dt);
 
-                    for (int i = 0; i < dt.Rows.Count; i++)
+                    int i = 0;
+                    while (i < dt.Rows.Count)
                     {
-                        ClsCliente cliente = new ClsCliente();
-                        cliente.Email = dt.Rows[i]["email"].ToString();
-                        cliente.Password = dt.Rows[i]["password"].ToString();
-                        cliente.Indirizzo = dt.Rows[i]["indirizzo"].ToString();
-                        cliente.CAP = dt.Rows[i]["cap"].ToString();
-                        cliente.Username = dt.Rows[i]["username"].ToString();
-                        cliente.Nome = dt.Rows[i]["nome"].ToString();
-                        cliente.Cognome = dt.Rows[i]["cognome"].ToString();
-                        clienti.Add(cliente);
+                        clienti.Add(CreaClienteDaRiga(dt.Rows[i]));
+                        i++;
                     }
 
                     conn.Close();
@@ -145,38 +158,71 @@ namespace ReadyToRead
 
         internal static List<ClsCliente> GetByCAP(ref MySqlConnection conn, string cap, out string errore)
         {
-            DataTable dt = null;
             List<ClsCliente> clienti = new List<ClsCliente>();
             errore = string.Empty;
 
             if (string.IsNullOrEmpty(cap))
+            {
                 errore = "CAP non valido";
+            }
             else
             {
                 try
                 {
-                    if (conn.State != System.Data.ConnectionState.Open)
+                    if (conn.State != ConnectionState.Open)
                         conn.Open();
 
-                    string query = "SELECT * FROM clienti WHERE cap=@cap";
-
+                    string query = SELECT_BASE + " WHERE c.cap=@cap";
                     MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
                     da.SelectCommand.Parameters.AddWithValue("@cap", cap);
-
-                    dt = new DataTable();
+                    DataTable dt = new DataTable();
                     da.Fill(dt);
 
-                    for (int i = 0; i < dt.Rows.Count; i++)
+                    int i = 0;
+                    while (i < dt.Rows.Count)
                     {
-                        ClsCliente cliente = new ClsCliente();
-                        cliente.Email = dt.Rows[i]["email"].ToString();
-                        cliente.Password = dt.Rows[i]["password"].ToString();
-                        cliente.Indirizzo = dt.Rows[i]["indirizzo"].ToString();
-                        cliente.CAP = dt.Rows[i]["cap"].ToString();
-                        cliente.Username = dt.Rows[i]["username"].ToString();
-                        cliente.Nome = dt.Rows[i]["nome"].ToString();
-                        cliente.Cognome = dt.Rows[i]["cognome"].ToString();
-                        clienti.Add(cliente);
+                        clienti.Add(CreaClienteDaRiga(dt.Rows[i]));
+                        i++;
+                    }
+
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    errore = ex.Message;
+                }
+            }
+
+            return clienti;
+        }
+
+        internal static List<ClsCliente> GetByNominativo(ref MySqlConnection conn, string testo, out string errore)
+        {
+            List<ClsCliente> clienti = new List<ClsCliente>();
+            errore = string.Empty;
+
+            if (string.IsNullOrEmpty(testo))
+            {
+                errore = "Testo non valido";
+            }
+            else
+            {
+                try
+                {
+                    if (conn.State != ConnectionState.Open)
+                        conn.Open();
+
+                    string query = SELECT_BASE + " WHERE u.nome LIKE @testo OR u.cognome LIKE @testo";
+                    MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
+                    da.SelectCommand.Parameters.AddWithValue("@testo", "%" + testo + "%");
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    int i = 0;
+                    while (i < dt.Rows.Count)
+                    {
+                        clienti.Add(CreaClienteDaRiga(dt.Rows[i]));
+                        i++;
                     }
 
                     conn.Close();
@@ -192,41 +238,45 @@ namespace ReadyToRead
         #endregion
 
         #region UPDATE
-        internal static long Update(ref MySqlConnection conn, long ID, ClsCliente cliente, out string errore)
+        internal static long Update(ref MySqlConnection conn, long clienteID, ClsCliente cliente, out string errore)
         {
             long esito = 0;
             errore = string.Empty;
 
-            if (ID <= 0)
+            if (clienteID <= 0)
+            {
                 errore = "ID non valido";
+            }
             else
             {
                 try
                 {
-                    if (conn.State != System.Data.ConnectionState.Open)
+                    if (conn.State != ConnectionState.Open)
                         conn.Open();
 
-                    string sql = @"UPDATE cliente SET email=@email, password=@password, indirizzo=@indirizzo, 
-                                 cap=@cap, username=@username, nome=@nome, cognome=@cognome, dataDiNascita=@dataDiNascita, 
-                                 codiceFiscale=@codiceFiscale, comuneDiNascita=@comuneDiNascita, sesso=@sesso 
-                                 WHERE ID=@ID";
+                    string sqlUtente = @"UPDATE utenti SET nome=@nome, cognome=@cognome, username=@username,
+                                         password=@password, email=@email, data_nascita=@data_nascita,
+                                         genere=@genere, comune_nascita=@comune_nascita
+                                         WHERE ID=(SELECT utenteID FROM clienti WHERE ID=@clienteID)";
+                    MySqlCommand cmdU = new MySqlCommand(sqlUtente, conn);
+                    cmdU.Parameters.AddWithValue("@clienteID", clienteID);
+                    cmdU.Parameters.AddWithValue("@nome", cliente.Nome ?? "");
+                    cmdU.Parameters.AddWithValue("@cognome", cliente.Cognome ?? "");
+                    cmdU.Parameters.AddWithValue("@username", cliente.Username ?? "");
+                    cmdU.Parameters.AddWithValue("@password", cliente.Password ?? "");
+                    cmdU.Parameters.AddWithValue("@email", cliente.Email ?? "");
+                    cmdU.Parameters.AddWithValue("@data_nascita", cliente.DataDiNascita);
+                    cmdU.Parameters.AddWithValue("@genere", cliente.Sesso.ToString());
+                    cmdU.Parameters.AddWithValue("@comune_nascita", cliente.ComuneDiNascita.ToString());
+                    cmdU.ExecuteNonQuery();
 
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    string sqlCliente = @"UPDATE clienti SET indirizzo=@indirizzo, cap=@cap WHERE ID=@clienteID";
+                    MySqlCommand cmdC = new MySqlCommand(sqlCliente, conn);
+                    cmdC.Parameters.AddWithValue("@clienteID", clienteID);
+                    cmdC.Parameters.AddWithValue("@indirizzo", cliente.Indirizzo ?? "");
+                    cmdC.Parameters.AddWithValue("@cap", cliente.CAP ?? "");
+                    esito = cmdC.ExecuteNonQuery();
 
-                    cmd.Parameters.AddWithValue("@ID", ID);
-                    cmd.Parameters.AddWithValue("@email", cliente.Email ?? "");
-                    cmd.Parameters.AddWithValue("@password", cliente.Password ?? "");
-                    cmd.Parameters.AddWithValue("@indirizzo", cliente.Indirizzo ?? "");
-                    cmd.Parameters.AddWithValue("@cap", cliente.CAP ?? "");
-                    cmd.Parameters.AddWithValue("@username", cliente.Username ?? "");
-                    cmd.Parameters.AddWithValue("@nome", cliente.Nome ?? "");
-                    cmd.Parameters.AddWithValue("@cognome", cliente.Cognome ?? "");
-                    cmd.Parameters.AddWithValue("@dataDiNascita", cliente.DataDiNascita);
-                    cmd.Parameters.AddWithValue("@codiceFiscale", cliente.CodiceFiscale ?? "");
-                    cmd.Parameters.AddWithValue("@comuneDiNascita", cliente.ComuneDiNascita);
-                    cmd.Parameters.AddWithValue("@sesso", cliente.Sesso);
-
-                    esito = cmd.ExecuteNonQuery();
                     conn.Close();
                 }
                 catch (Exception ex)
@@ -240,26 +290,35 @@ namespace ReadyToRead
         #endregion
 
         #region DELETE
-        internal static long Delete(ref MySqlConnection conn, long ID, out string errore)
+        internal static long Delete(ref MySqlConnection conn, long clienteID, out string errore)
         {
             long esito = 0;
             errore = string.Empty;
 
-            if (ID <= 0)
+            if (clienteID <= 0)
+            {
                 errore = "ID non valido";
+            }
             else
             {
                 try
                 {
-                    if (conn.State != System.Data.ConnectionState.Open)
+                    if (conn.State != ConnectionState.Open)
                         conn.Open();
 
-                    string sql = "DELETE FROM clienti WHERE ID=@ID";
+                    string queryID = "SELECT utenteID FROM clienti WHERE ID=@id";
+                    MySqlCommand cmdSel = new MySqlCommand(queryID, conn);
+                    cmdSel.Parameters.AddWithValue("@id", clienteID);
+                    object res = cmdSel.ExecuteScalar();
 
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@ID", ID);
+                    if (res != null)
+                    {
+                        long utenteID = Convert.ToInt64(res);
+                        MySqlCommand cmdDel = new MySqlCommand("DELETE FROM utenti WHERE ID=@utenteID", conn);
+                        cmdDel.Parameters.AddWithValue("@utenteID", utenteID);
+                        esito = cmdDel.ExecuteNonQuery();
+                    }
 
-                    esito = cmd.ExecuteNonQuery();
                     conn.Close();
                 }
                 catch (Exception ex)
@@ -280,14 +339,11 @@ namespace ReadyToRead
 
             try
             {
-                if (conn.State != System.Data.ConnectionState.Open)
+                if (conn.State != ConnectionState.Open)
                     conn.Open();
 
-                string query = "SELECT COUNT(*) FROM clienti";
-
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM clienti", conn);
                 object risultato = cmd.ExecuteScalar();
-
                 if (risultato != null)
                     count = Convert.ToInt32(risultato);
 

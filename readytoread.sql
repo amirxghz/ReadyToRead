@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Creato il: Mag 06, 2026 alle 11:49
+-- Creato il: Mag 08, 2026 alle 22:48
 -- Versione del server: 8.2.0
 -- Versione PHP: 8.3.0
 
@@ -45,6 +45,18 @@ CREATE TABLE `autori` (
   `data_morte` date DEFAULT NULL,
   `utenteID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `caratterizzare`
+--
+
+CREATE TABLE `caratterizzare` (
+  `ID` int NOT NULL,
+  `libroISBN` char(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `genereID` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -117,7 +129,18 @@ CREATE TABLE `generi` (
 --
 
 INSERT INTO `generi` (`ID`, `nome`, `descrizione`, `target`, `tipologia`) VALUES
-(1, 'Giallo', '', 'Giovani Adulti', 'narrativo');
+(1, 'Giallo', 'incentrato sulla risoluzione di un enigma o crimine (delitto, furto, mistero) attraverso le indagini di un detective o investigatore', '14+', 'narrativo'),
+(2, 'Distopico', 'descrive una società futura, immaginaria o alternativa, organizzata in modo repressivo, totalitario o spaventoso', 'Giovani Adulti', 'narrativo'),
+(4, 'Psicologico', 'si concentra sull\'esplorazione profonda della mente, delle emozioni e dei meccanismi interiori dei personaggi, piuttosto che sull\'azione esterna', 'Giovani Adulti', 'narrativo'),
+(5, 'Battle', 'incentrato su combattimenti spettacolari, crescita dei personaggi e il classico \"viaggio dell\'eroe\"', 'Shoenen', 'narrativo'),
+(6, 'Romantico', 'incentrato su relazioni amorose, crescita emotiva e vita scolastica, si distingue per uno stile artistico elegante, introspettivo ed emozionale, spesso focalizzato sulle insicurezze dei primi amori', 'Shojo', 'narrativo'),
+(7, 'Demenziale', 'forma di comicità basata sull\'assurdo, il nonsense e la parodia estrema, caratterizzata da un\'ironia dissacrante che stravolge le regole logiche per creare risate', 'Kodomo', 'narrativo'),
+(9, 'Storico', 'un tipo di racconto, romanzo o film ambientato in un\'epoca passata, che ricostruisce fedelmente atmosfere, usi e costumi di quel tempo', '14+', 'narrativo'),
+(10, 'Fantasy', 'genere narrativo ambientato in mondi immaginari, caratterizzato da forti elementi magici, creature mitologiche e la lotta tra bene e male', 'Tutte le età', 'narrativo'),
+(11, 'Fantascientifico', 'filone narrativo, sviluppatosi principalmente nel XX secolo, che esplora l\'impatto della scienza, della tecnologia e di futuri ipotetici sulla società e sull\'individuo', 'Tutte le età', 'narrativo'),
+(12, 'Dark Fantasy', 'sottogenere del fantasy che fonde ambientazioni magiche e soprannaturali con temi oscuri, macabri e horror', 'Giovani Adulti', 'narrativo'),
+(13, 'Horror', 'mira a suscitare nel lettore paura, ansia, inquietudine o disgusto attraverso storie che esplorano il lato oscuro, il soprannaturale, la morte o il male', 'Giovani Adulti', 'narrativo'),
+(14, 'Politico', '', 'Giovani Adulti', 'narrativo');
 
 -- --------------------------------------------------------
 
@@ -287,6 +310,14 @@ ALTER TABLE `autori`
   ADD KEY `utenteID` (`utenteID`) USING BTREE;
 
 --
+-- Indici per le tabelle `caratterizzare`
+--
+ALTER TABLE `caratterizzare`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `genereID` (`genereID`),
+  ADD KEY `libroISBN` (`libroISBN`);
+
+--
 -- Indici per le tabelle `censire`
 --
 ALTER TABLE `censire`
@@ -415,6 +446,12 @@ ALTER TABLE `autori`
   MODIFY `ID` int NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT per la tabella `caratterizzare`
+--
+ALTER TABLE `caratterizzare`
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT per la tabella `censire`
 --
 ALTER TABLE `censire`
@@ -442,7 +479,7 @@ ALTER TABLE `generare`
 -- AUTO_INCREMENT per la tabella `generi`
 --
 ALTER TABLE `generi`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT per la tabella `gift_cards`
@@ -501,6 +538,13 @@ ALTER TABLE `utenti`
 --
 -- Limiti per le tabelle scaricate
 --
+
+--
+-- Limiti per la tabella `caratterizzare`
+--
+ALTER TABLE `caratterizzare`
+  ADD CONSTRAINT `genereID` FOREIGN KEY (`genereID`) REFERENCES `generi` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `libroISBN` FOREIGN KEY (`libroISBN`) REFERENCES `libri` (`isbn`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `censire`

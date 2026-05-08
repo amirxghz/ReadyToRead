@@ -8,17 +8,14 @@ namespace ReadyToRead
 {
     public class ClsAdmin:ClsUtente //amir
     {
-        private string _id;
+        private long _id;
         private static int _utenteID;
-        public string ID
+        public long ID
         {
             get => _id;
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new Exception("ID non valido");
-                else
-                    _id = value;
+                _id = value;
             }
         }
 
