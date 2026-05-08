@@ -245,6 +245,68 @@ namespace ReadyToRead
             return count;
         }
         #endregion
+
+        #region LOGIN
+        internal static string Login(string username, string password)
+        {
+            string status = "";
+            string errore = "";
+            ClsUtente utente = GetOneByUsername(ref Program.conn, username, out errore);
+            if(utente != null)
+            {
+                status = "Utente non esistente";
+            }
+            else
+            {
+                string query = "SELECT password FROM utenti WHERE HASHBYTES('SHA2_256', @password) LIKE password";
+
+
+                MySqlDataAdapter da = new MySqlDataAdapter(query, Program.conn);
+
+            }
+            return status;
+        }
+
+        internal static ClsUtente GetOneByUsername(ref MySqlConnection conn, string username, out string errore)
+        {
+            DataTable dt = null;
+            ClsUtente utente = new ClsUtente();
+            errore = string.Empty;
+
+            try
+            {
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
+                string query = "SELECT * FROM utenti WHERE username LIKE @username";
+
+                MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
+                da.SelectCommand.Parameters.AddWithValue("@username", "%" + username + "%");
+
+                dt = new DataTable();
+                da.Fill(dt);
+
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    utente.Username = dt.Rows[i]["username"].ToString();
+                    utente.Password = dt.Rows[i]["password"].ToString();
+                    utente.Nome = dt.Rows[i]["nome"].ToString();
+                    utente.Cognome = dt.Rows[i]["cognome"].ToString();
+                    utente.Email = dt.Rows[i]["email"].ToString();
+                    utente.DataDiNascita = (DateTime)dt.Rows[i]["dataDiNascita"];
+                    utente.CodiceFiscale = dt.Rows[i]["codiceFiscale"].ToString();
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                errore = ex.Message;
+            }
+
+            return utente;
+        }
+        #endregion
     }
 }
 
