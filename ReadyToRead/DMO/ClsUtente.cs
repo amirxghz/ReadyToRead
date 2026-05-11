@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ReadyToRead
 {
-    public class ClsUtente //amir
+    public class ClsUtente
     {
-        #region attributi
         public enum eCOMUNE
         {
+            Nessuno,
             jesi,
             ancona,
             chiaravalle,
@@ -20,22 +20,23 @@ namespace ReadyToRead
         public enum eSESSO
         {
             m,
-            f  
+            f
         }
-        private static int _ID;
-        private static string _username;
-        private static string _password;
-        private static string _nome;
-        private static string _cognome;
-        private static string _email;
-        private static DateTime _dataDiNascita;
-        private static string _codiceFiscale;
-        private static eCOMUNE _comuneDiNascita;
-        private static eSESSO _sesso;
 
-        #endregion
+        private long _ID;
+        private string _username;
+        private string _password;
+        private string _nome;
+        private string _cognome;
+        private string _email;
+        private DateTime _dataDiNascita;
+        private string _codiceFiscale;
+        private eCOMUNE _comuneDiNascita;
+        private eSESSO _sesso;
+        private string _foto_profilo;
 
-        #region proprietà
+        #region Proprietà
+        public long ID { get => _ID; set => _ID = value; }
 
         public string Username
         {
@@ -100,22 +101,13 @@ namespace ReadyToRead
         public DateTime DataDiNascita
         {
             get => _dataDiNascita;
-            set
-            {
-                    _dataDiNascita = value;
-            }
+            set => _dataDiNascita = value;
         }
 
         public string CodiceFiscale
         {
             get => _codiceFiscale;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new Exception("Codice fiscale non può essere vuoto");
-                else
-                    _codiceFiscale = value;
-            }
+            set => _codiceFiscale = value;
         }
 
         public eCOMUNE ComuneDiNascita
@@ -137,18 +129,15 @@ namespace ReadyToRead
                 int anni = DateTime.Now.Year - _dataDiNascita.Year;
                 if (DateTime.Now.Month < _dataDiNascita.Month ||
                     (DateTime.Now.Month == _dataDiNascita.Month && DateTime.Now.Day < _dataDiNascita.Day))
-                {
                     anni--;
-                }
                 return anni;
             }
         }
 
-        public static int ID { get => _ID; set => _ID = value; }
-
+        public string Foto_profilo { get => _foto_profilo; set => _foto_profilo = value; }
         #endregion
 
-        #region Costruttore
+        #region Costruttori
         public ClsUtente()
         {
         }

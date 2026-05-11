@@ -12,28 +12,29 @@ namespace ReadyToRead
 {
     public partial class FrmUtenti : Form
     {
-        List<ClsUtente> _utenti = new List<ClsUtente>();
-        bool _modalitaModifica = false;
-        ClsUtente _utenteSelezionato = null;
-        long _idSelezionato = -1;
+        private List<ClsUtente> _utenti = new List<ClsUtente>();
+        private bool _modalitaModifica = false;
+        private ClsUtente _utenteSelezionato = null;
+        private long _idSelezionato = -1;  
+        private string _password = string.Empty;
 
         public FrmUtenti()
         {
             InitializeComponent();
         }
-
+        
         private void FrmUtenti_Load(object sender, EventArgs e)
         {
             PopolaComboBox();
             CaricaUtenti();
         }
+
         private void PopolaComboBox()
         {
             cbComuneNascita.Items.Clear();
             cbComuneNascita.DataSource = Enum.GetValues(typeof(ClsUtente.eCOMUNE));
             cbComuneNascita.SelectedIndex = -1;
         }
-
         private void CaricaUtenti()
         {
             string errore;
@@ -48,10 +49,10 @@ namespace ReadyToRead
         private void PopolaListView(List<ClsUtente> utenti)
         {
             lvUtenti.Items.Clear();
-            for (int i=0;  i < utenti.Count;i++)
+            for  (int i =0;  i < utenti.Count; i++)
             {
                 ClsUtente u = utenti[i];
-                ListViewItem lvi = new ListViewItem(rbAdmin.Checked ? "Admin" : "Cliente");
+                ListViewItem lvi = new ListViewItem("Utente");
                 lvi.SubItems.Add(u.Nome + " " + u.Cognome);
                 lvi.SubItems.Add(u.Username);
                 lvi.SubItems.Add(u.Email);
@@ -59,7 +60,7 @@ namespace ReadyToRead
                 lvUtenti.Items.Add(lvi);
             }
         }
-
+        
         private void ResetCampi()
         {
             tbNome.Clear();
@@ -77,10 +78,11 @@ namespace ReadyToRead
             _modalitaModifica = false;
             _utenteSelezionato = null;
             _idSelezionato = -1;
+            _password = string.Empty;
             lblTitolo.Text = "Crea Utente";
             btnAggiungi.Text = "➕Aggiungi";
         }
-
+        
         private ClsUtente LeggiCampi()
         {
             ClsUtente utente = new ClsUtente();
@@ -96,15 +98,13 @@ namespace ReadyToRead
             return utente;
         }
 
-        private void btnAggiungi_Click(object sender, EventArgs e)
-        {
-            GestisciUtente(_modalitaModifica);
-        }
         private void GestisciUtente(bool modificaUtente)
         {
             ClsUtente utente = LeggiCampi();
             string errore;
-            utente.CodiceFiscale = CalcolaCF();
+            if ((ClsUtente.eCOMUNE)cbComuneNascita.SelectedItem != ClsUtente.eCOMUNE.Nessuno)
+                utente.CodiceFiscale = CalcolaCF();
+            
 
             if (!modificaUtente)
             {
@@ -136,222 +136,259 @@ namespace ReadyToRead
                 }
             }
         }
+        
+        private void VisualizzaUtente()
+        {
+            if (lvUtenti.SelectedItems.Count == 0)
+                MessageBox.Show("Seleziona un utente da visualizzare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else
+            {
+                _utenteSelezionato = (ClsUtente)lvUtenti.SelectedItems[0].Tag;
+                _idSelezionato = _utenteSelezionato.ID; 
+                tbNome.Text = _utenteSelezionato.Nome;
+                tbCognome.Text = _utenteSelezionato.Cognome;
+                tbUsername.Text = _utenteSelezionato.Username;
+                tbPassword.Text = _password;               
+                tbEmail.Text = _utenteSelezionato.Email;
+                dtpDataDiNascita.Value = _utenteSelezionato.DataDiNascita;
+                rbM.Checked = _utenteSelezionato.Sesso == ClsUtente.eSESSO.m;
+                rbF.Checked = _utenteSelezionato.Sesso == ClsUtente.eSESSO.f;
+                cbComuneNascita.SelectedItem = _utenteSelezionato.ComuneDiNascita;
+                tbCF.Text = _utenteSelezionato.CodiceFiscale ?? "";
+            }
+        }
+        
         #region Calcolo_CF
         private string CalcolaCF()
         {
-            string CF = String.Empty;
+            string CF = string.Empty;
+            if (cbComuneNascita.SelectedItem == null)
+                return CF;
+
             string _codiceFiscaleParziale =
-                                            RestituisciPrimeTreConsonantiCognome(tbCognome.Text) +
-                                            RestituisciPrimaTerzaQuartaConsonanteNome(tbNome.Text) +
-                                            RestituisciUltimeDueCifreAnnoNascita(dtpDataDiNascita.Value.Year) +
-                                            RestituisciLetteraMese(dtpDataDiNascita.Value.Month) +
-                                            RestituisciNumeroGiornoNascita(dtpDataDiNascita.Value.Day) +
-                                            RestituisciCodiceISTAT((ClsUtente.eCOMUNE)cbComuneNascita.SelectedItem);
+                RestituisciPrimeTreConsonantiCognome(tbCognome.Text) +
+                RestituisciPrimaTerzaQuartaConsonanteNome(tbNome.Text) +
+                RestituisciUltimeDueCifreAnnoNascita(dtpDataDiNascita.Value.Year) +
+                RestituisciLetteraMese(dtpDataDiNascita.Value.Month) +
+                RestituisciNumeroGiornoNascita(dtpDataDiNascita.Value.Day) +
+                RestituisciCodiceISTAT((ClsUtente.eCOMUNE)cbComuneNascita.SelectedItem);
 
             char codiceControllo = RestituisciCodiceControllo(_codiceFiscaleParziale);
-            CF= _codiceFiscaleParziale + codiceControllo;
+            CF = _codiceFiscaleParziale + codiceControllo;
             return CF;
         }
-        private char RestituisciCodiceControllo(string _codiceFiscaleParziale)
+
+        private char RestituisciCodiceControllo(string parziale)
         {
-            int[] caratteriDispari = { 1, 0, 5, 7, 9, 13, 15, 17, 19, 21, 1, 0, 5, 7, 9, 13, 15, 17, 19, 21, 2, 4, 18, 20, 11, 3, 6, 8, 12, 14, 16, 10, 22, 25, 24, 23 };
-            int[] caratteriPari = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 };
-            char[] caratteriResto = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+            int[] dispari = { 1, 0, 5, 7, 9, 13, 15, 17, 19, 21, 1, 0, 5, 7, 9, 13, 15, 17, 19, 21, 2, 4, 18, 20, 11, 3, 6, 8, 12, 14, 16, 10, 22, 25, 24, 23 };
+            int[] pari = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 };
+            char[] resto = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+            char[] validi = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
 
-            char[] caratteriValidi = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
-
-            int resto;
             int somma = 0;
-
-            for (int i = 0; i < _codiceFiscaleParziale.Length; i++)
+            int i = 0;
+            while (i < parziale.Length)
             {
-                char carattereAssociato = _codiceFiscaleParziale[i];
-                int j = Array.IndexOf(caratteriValidi, carattereAssociato);
-
+                int j = Array.IndexOf(validi, parziale[i]);
                 if ((i + 1) % 2 == 0)
-                    somma += caratteriPari[j];
+                    somma += pari[j];
                 else
-                    somma += caratteriDispari[j];
+                    somma += dispari[j];
+                i++;
             }
-            resto = somma % 26;
-            return caratteriResto[resto];
+            return resto[somma % 26];
         }
 
         private string RestituisciCodiceISTAT(ClsUtente.eCOMUNE comune)
         {
-            string codiceISTAT = "";
-
-            switch (comune)
-            {
-                case ClsUtente.eCOMUNE.ancona:
-                    codiceISTAT = "A271";
-                    break;
-
-                case ClsUtente.eCOMUNE.jesi:
-                    codiceISTAT = "E388";
-                    break;
-
-                case ClsUtente.eCOMUNE.chiaravalle:
-                    codiceISTAT = "C615";
-                    break;
-
-                case ClsUtente.eCOMUNE.senigallia:
-                    codiceISTAT = "I608";
-                    break;
-
-                case ClsUtente.eCOMUNE.rotella:
-                    codiceISTAT = "H588";
-                    break;
-            }
-
-            return codiceISTAT;
+            string codice = "";
+            if (comune == ClsUtente.eCOMUNE.ancona) codice = "A271";
+            else if (comune == ClsUtente.eCOMUNE.jesi) codice = "E388";
+            else if (comune == ClsUtente.eCOMUNE.chiaravalle) codice = "C615";
+            else if (comune == ClsUtente.eCOMUNE.senigallia) codice = "I608";
+            else if (comune == ClsUtente.eCOMUNE.rotella) codice = "H588";
+            return codice;
         }
 
         private string RestituisciNumeroGiornoNascita(int giorno)
         {
-            decimal numero = 0;
-
-            if (rbM.Checked)
-                numero = giorno;
-            else
-                numero = giorno + 40;
-
-            return Convert.ToString(numero);
+            decimal numero = rbM.Checked ? giorno : giorno + 40;
+            string s = Convert.ToString(numero);
+            return s.PadLeft(2, '0');
         }
 
         private string RestituisciLetteraMese(int mese)
         {
-            string lettera = "";
-            switch (mese)
-            {
-                case 1:
-                    lettera = "A";
-                    break;
-                case 2:
-                    lettera = "B";
-                    break;
-                case 3:
-                    lettera = "C";
-                    break;
-                case 4:
-                    lettera = "D";
-                    break;
-                case 5:
-                    lettera = "E";
-                    break;
-                case 6:
-                    lettera = "H";
-                    break;
-                case 7:
-                    lettera = "L";
-                    break;
-                case 8:
-                    lettera = "M";
-                    break;
-                case 9:
-                    lettera = "P";
-                    break;
-                case 10:
-                    lettera = "R";
-                    break;
-                case 11:
-                    lettera = "S";
-                    break;
-                case 12:
-                    lettera = "T";
-                    break;
-            }
-            return lettera;
+            string[] lettere = { "", "A", "B", "C", "D", "E", "H", "L", "M", "P", "R", "S", "T" };
+            return lettere[mese];
         }
 
-        private string RestituisciUltimeDueCifreAnnoNascita(int cifre)
+        private string RestituisciUltimeDueCifreAnnoNascita(int anno)
         {
-            int valore = 0;
-            valore = cifre;
-
-            string ultimeDueCifre = Convert.ToString(valore);
-            ultimeDueCifre = ultimeDueCifre.Substring(2, 2);
-            return ultimeDueCifre;
+            string s = Convert.ToString(anno);
+            return s.Substring(s.Length - 2, 2);
         }
 
         private string RestituisciPrimeTreConsonantiCognome(string frase)
         {
-            string _cognome = "";
-            int _contatoreConsonanti = 0;
+            string risultato = "";
+            int contatore = 0;
             frase = frase.ToUpper();
-            for (int i = 0; _contatoreConsonanti <= 2 && i < frase.Length; i++)
+            int i = 0;
+            while (contatore < 3 && i < frase.Length)
             {
-                char _carattereFrase = frase[i];
-                if (!(_carattereFrase == 'A' || _carattereFrase == 'E' || _carattereFrase == 'I' || _carattereFrase == 'O' || _carattereFrase == 'U'))
+                char c = frase[i];
+                if (c != 'A' && c != 'E' && c != 'I' && c != 'O' && c != 'U' && char.IsLetter(c))
                 {
-                    _cognome += Convert.ToString(_carattereFrase);
-                    _contatoreConsonanti++;
+                    risultato += c;
+                    contatore++;
                 }
+                i++;
             }
-            return _cognome;
+            return risultato.PadRight(3, 'X');
         }
 
         private string RestituisciPrimaTerzaQuartaConsonanteNome(string frase)
         {
-            string _nome = "";
-            int _contatoreConsonanti = 0;
+            string risultato = "";
+            int contatore = 0;
             frase = frase.ToUpper();
+            char[] arr = frase.ToCharArray();
 
-            char[] _arrayFrase = frase.ToCharArray();
-
-            for (int i = 0; _contatoreConsonanti <= 3 && i < _arrayFrase.Length; i++)
+            int i = 0;
+            while (contatore <= 3 && i < arr.Length)
             {
-                char _carattereFrase = _arrayFrase[i];
-                if (_carattereFrase != ' ')
+                char c = arr[i];
+                if (c != ' ' && !"AEIOU".Contains(c) && char.IsLetter(c))
                 {
-                    if (!"AEIOU".Contains(_carattereFrase))
+                    contatore++;
+                    if (contatore != 2)
                     {
-                        _contatoreConsonanti++;
-                        if (_contatoreConsonanti != 2)
-                        {
-                            _nome += Convert.ToString(_carattereFrase);
-                            _arrayFrase[i] = ' ';
-                        }
+                        risultato += c;
+                        arr[i] = ' ';
                     }
                 }
+                i++;
             }
 
-            for (int i = 0; _contatoreConsonanti <= 3 && i < _arrayFrase.Length; i++)
+            i = 0;
+            while (contatore <= 3 && i < arr.Length)
             {
-                char _carattereFrase = _arrayFrase[i];
-                if (_carattereFrase != ' ')
+                char c = arr[i];
+                if (c != ' ' && !"AEIOU".Contains(c) && char.IsLetter(c))
                 {
-                    if (!"AEIOU".Contains(_carattereFrase))
-                    {
-                        _contatoreConsonanti++;
-                        _nome += Convert.ToString(_carattereFrase);
-                        _arrayFrase[i] = ' ';
-                    }
+                    contatore++;
+                    risultato += c;
+                    arr[i] = ' ';
                 }
+                i++;
             }
 
-            for (int i = 0; _contatoreConsonanti <= 3 && i < _arrayFrase.Length; i++)
+            i = 0;
+            while (contatore <= 3 && i < arr.Length)
             {
-                char _carattereFrase = _arrayFrase[i];
-                if (_carattereFrase != ' ')
+                char c = arr[i];
+                if (c != ' ' && "AEIOU".Contains(c))
                 {
-                    if ("AEIOU".Contains(_carattereFrase))
-                    {
-                        _contatoreConsonanti++;
-                        _nome += Convert.ToString(_carattereFrase);
-                        _arrayFrase[i] = ' ';
-                    }
+                    contatore++;
+                    risultato += c;
+                    arr[i] = ' ';
                 }
+                i++;
             }
 
-            _nome = _nome.PadRight(3, 'X');
-
-            return _nome;
+            return risultato.PadRight(3, 'X');
         }
         #endregion
+        private void btnAggiungi_Click(object sender, EventArgs e)
+        {
+            GestisciUtente(_modalitaModifica);
+        }
+
         private void btnAnnulla_Click(object sender, EventArgs e)
         {
             ResetCampi();
+        }
+
+        private void btnVisualizza_Click(object sender, EventArgs e)
+        {
+            VisualizzaUtente();
+        }
+
+        private void btnModifica_Click(object sender, EventArgs e)
+        {
+            if (lvUtenti.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Seleziona un utente da modificare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                VisualizzaUtente();
+                _modalitaModifica = true;
+                lblTitolo.Text = "Modifica Utente";
+                btnAggiungi.Text = "☑️ Salva";
+            }
+        }
+
+        private void btnElimina_Click(object sender, EventArgs e)
+        {
+            if (lvUtenti.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Seleziona un utente da eliminare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                DialogResult dr = MessageBox.Show("Vuoi eliminare l'utente selezionato?", "Conferma", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (dr == DialogResult.Yes)
+                {
+                    ClsUtente u = (ClsUtente)lvUtenti.SelectedItems[0].Tag;
+                    string errore;
+                    long esito = ClsUtenteBL.Delete(ref Program.conn, u.ID, out errore);
+                    if (!string.IsNullOrEmpty(errore))
+                        MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    else if (esito > 0)
+                    {
+                        MessageBox.Show("Utente eliminato.", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CaricaUtenti();
+                    }
+                }
+            }
+        }
+
+        private void tbFiltroNome_TextChanged(object sender, EventArgs e)
+        {
+            string testo = tbFiltroNome.Text.Trim();
+            if (string.IsNullOrEmpty(testo))
+            {
+                PopolaListView(_utenti);
+            }
+            else
+            {
+                string errore;
+                List<ClsUtente> filtrati = ClsUtenteBL.GetByUsername(ref Program.conn, testo, out errore);
+                if (!string.IsNullOrEmpty(errore))
+                    MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else
+                    PopolaListView(filtrati);
+            }
+        }
+
+        private void tbPassword_TextChanged(object sender, EventArgs e)
+        {
+            _password = tbPassword.Text.Trim();
+        }
+
+        private void btnVisualizzaPassword_MouseDown(object sender, MouseEventArgs e)
+        {
+            btnVisualizzaPassword.ForeColor = Color.DodgerBlue;
+            tbPassword.UseSystemPasswordChar = false;
+        }
+
+        private void btnVisualizzaPassword_MouseUp(object sender, MouseEventArgs e)
+        {
+            btnVisualizzaPassword.ForeColor = Color.Black;
+            tbPassword.UseSystemPasswordChar = true;
         }
 
         private void btnAutore_Click(object sender, EventArgs e)
@@ -366,103 +403,6 @@ namespace ReadyToRead
             Program._chiudiForm = true;
             FrmCaseEditrici frmCase = new FrmCaseEditrici();
             frmCase.ShowDialog();
-        }
-
-        private void btnVisualizza_Click(object sender, EventArgs e)
-        {
-            VisualizzaUtente();
-        }
-
-        private void VisualizzaUtente()
-        {
-            if (lvUtenti.SelectedItems.Count == 0)
-                MessageBox.Show("Seleziona un utente da visualizzare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else
-            {
-                _utenteSelezionato = (ClsUtente)lvUtenti.SelectedItems[0].Tag;
-                _idSelezionato = ClsUtente.ID;
-                tbNome.Text = _utenteSelezionato.Nome;
-                tbCognome.Text = _utenteSelezionato.Cognome;
-                tbUsername.Text = _utenteSelezionato.Username;
-                tbPassword.Text = _password;
-                tbEmail.Text = _utenteSelezionato.Email;
-                dtpDataDiNascita.Value = _utenteSelezionato.DataDiNascita;
-                rbM.Checked = _utenteSelezionato.Sesso == ClsUtente.eSESSO.m;
-                rbF.Checked = _utenteSelezionato.Sesso == ClsUtente.eSESSO.f;
-                cbComuneNascita.SelectedItem = _utenteSelezionato.ComuneDiNascita;
-                tbCF.Text = _utenteSelezionato.CodiceFiscale;
-            }
-        }
-
-        private void btnModifica_Click(object sender, EventArgs e)
-        {
-            if (lvUtenti.SelectedItems.Count == 0)
-                MessageBox.Show("Seleziona un utente da modificare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else
-            {
-                VisualizzaUtente();
-                _modalitaModifica = true;
-                lblTitolo.Text = "Modifica Utente";
-                btnAggiungi.Text = "☑️ Salva";
-            }
-        }
-
-        private void btnElimina_Click(object sender, EventArgs e)
-        {
-            if (lvUtenti.SelectedItems.Count == 0)
-                MessageBox.Show("Seleziona un utente da eliminare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else
-            {
-                DialogResult dr = MessageBox.Show("Vuoi eliminare l'utente selezionato?", "Conferma", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dr == DialogResult.Yes)
-                {
-                    ClsUtente u = (ClsUtente)lvUtenti.SelectedItems[0].Tag;
-                    string errore;
-                    long esito = ClsUtenteBL.Delete(ref Program.conn, _idSelezionato, out errore);
-                    if (!string.IsNullOrEmpty(errore))
-                        MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    else if (esito > 0)
-                    {
-                        MessageBox.Show("Utente eliminato.", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        CaricaUtenti();
-                    }
-                }
-            }
-
-        }
-
-        private void tbFiltroNome_TextChanged(object sender, EventArgs e)
-        {
-            string testo = tbFiltroNome.Text.Trim();
-            if (string.IsNullOrEmpty(testo))
-                PopolaListView(_utenti);
-            else
-            {
-                string errore;
-                List<ClsUtente> filtrati = ClsUtenteBL.GetByUsername(ref Program.conn, testo, out errore);
-                if (!string.IsNullOrEmpty(errore))
-                    MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else
-                    PopolaListView(filtrati);
-            }
-        }
-        
-        string _password = String.Empty;
-        private void tbPassword_TextChanged(object sender, EventArgs e)
-        {
-            _password = tbPassword.Text.Trim();
-        }
-
-        private void btnVisualizzaPassword_MouseUp(object sender, MouseEventArgs e)
-        {
-            btnVisualizzaPassword.ForeColor = Color.Black;
-            tbPassword.UseSystemPasswordChar = true;
-        }
-
-        private void btnVisualizzaPassword_MouseDown(object sender, MouseEventArgs e)
-        {
-            btnVisualizzaPassword.ForeColor = Color.DodgerBlue;
-            tbPassword.UseSystemPasswordChar = false;
         }
     }
 }

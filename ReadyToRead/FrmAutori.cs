@@ -12,15 +12,12 @@ namespace ReadyToRead
 {
     public partial class FrmAutori : Form
     {
-        List<ClsAutore> _autori = new List<ClsAutore>();
-        bool _modalitaModifica = false;
-        ClsAutore _autoreSelezionato = null;
-        enum eFILTRO
-        {
-            Tutti,
-            Verificati,
-            Non_Verificati        
-        }
+        private List<ClsAutore> _autori = new List<ClsAutore>();
+        private bool _modalitaModifica = false;
+        private ClsAutore _autoreSelezionato = null;
+        private long _idSelezionato = -1;   
+
+        enum eFILTRO { Tutti, Verificati, Non_Verificati }
 
         public FrmAutori()
         {
@@ -33,9 +30,10 @@ namespace ReadyToRead
             CaricaAutori();
             cbVerificato.SelectedIndex = 0;
         }
+
         private void PopolaComboBox()
         {
-            cbVerificato.DataSource= Enum.GetValues(typeof(eFILTRO));
+            cbVerificato.DataSource = Enum.GetValues(typeof(eFILTRO));
         }
 
         private void CaricaAutori()
@@ -48,10 +46,12 @@ namespace ReadyToRead
             else
                 PopolaListView(_autori);
         }
+
         private void PopolaListView(List<ClsAutore> autori)
         {
             lvAutori.Items.Clear();
-            for (int i =0; i < autori.Count;i++)
+            int i = 0;
+            while (i < autori.Count)
             {
                 ClsAutore a = autori[i];
                 ListViewItem lvi = new ListViewItem(a.ÈVerificato ? "✔" : "✘");
@@ -60,22 +60,28 @@ namespace ReadyToRead
                 lvi.SubItems.Add(a.Password);
                 lvi.Tag = a;
                 lvAutori.Items.Add(lvi);
+                i++;
             }
         }
+
         private void ResetCampi()
         {
             tbNome.Clear();
             tbCognome.Clear();
+            tbNomeArte.Clear();     
             rbVerificato.Checked = false;
             rbNonVerificato.Checked = false;
             rbM.Checked = false;
             rbF.Checked = false;
             dtmDataDiNascita.Value = DateTime.Now;
+            dateTimePicker1.Value = DateTime.Now;
             tbCittà.Clear();
             _modalitaModifica = false;
             _autoreSelezionato = null;
+            _idSelezionato = -1;
             lblTitolo.Text = "Crea Autore";
             btnAggiungi.Text = "➕Aggiungi";
+
             if (Program._chiudiForm)
                 this.Close();
         }
@@ -85,17 +91,16 @@ namespace ReadyToRead
             ClsAutore autore = new ClsAutore();
             autore.Nome = tbNome.Text.Trim();
             autore.Cognome = tbCognome.Text.Trim();
+            autore.NomeArte = tbNomeArte.Text.Trim();
             autore.ÈVerificato = rbVerificato.Checked;
             autore.DataDiNascita = dtmDataDiNascita.Value;
             autore.Sesso = rbM.Checked ? ClsUtente.eSESSO.m : ClsUtente.eSESSO.f;
-            autore.CittaNascita = tbCittà.Text.Trim();
+            autore.ComuneDiNascita = ClsUtente.eCOMUNE.Nessuno;
+            if (dateTimePicker1.Value.Year < DateTime.Now.Year)
+                autore.DataMorte = dateTimePicker1.Value;
             return autore;
         }
 
-        private void btnAggiungi_Click(object sender, EventArgs e)
-        {
-            GestisciAutore(_modalitaModifica);
-        }
         private void GestisciAutore(bool modificaAutore)
         {
             ClsAutore autore = LeggiCampi();
@@ -119,7 +124,7 @@ namespace ReadyToRead
                     MessageBox.Show("Seleziona un autore da modificare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 else
                 {
-                    long esito = ClsAutoreBL.Update(ref Program.conn, _autoreSelezionato.UtenteID, autore, out errore);
+                    long esito = ClsAutoreBL.Update(ref Program.conn, _idSelezionato, autore, out errore);
                     if (!string.IsNullOrEmpty(errore))
                         MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     else if (esito > 0)
@@ -135,38 +140,49 @@ namespace ReadyToRead
                 this.Close();
         }
 
-
-        private void btnVisualizza_Click(object sender, EventArgs e)
+        private void VisualizzaAutore()
         {
             if (lvAutori.SelectedItems.Count == 0)
                 MessageBox.Show("Seleziona un autore da visualizzare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
             {
                 _autoreSelezionato = (ClsAutore)lvAutori.SelectedItems[0].Tag;
+                _idSelezionato = _autoreSelezionato.ID;  
                 tbNome.Text = _autoreSelezionato.Nome;
                 tbCognome.Text = _autoreSelezionato.Cognome;
+                tbNomeArte.Text = _autoreSelezionato.NomeArte;
                 rbVerificato.Checked = _autoreSelezionato.ÈVerificato;
                 rbNonVerificato.Checked = !_autoreSelezionato.ÈVerificato;
-                dtmDataDiNascita.Value = _autoreSelezionato.DataDiNascita;
+                dtmDataDiNascita.Value =_autoreSelezionato.DataDiNascita;
                 rbM.Checked = _autoreSelezionato.Sesso == ClsUtente.eSESSO.m;
                 rbF.Checked = _autoreSelezionato.Sesso == ClsUtente.eSESSO.f;
-                tbCittà.Text = _autoreSelezionato.CittaNascita;
             }
+        }
+        
+        private void btnAggiungi_Click(object sender, EventArgs e)
+        {
+            GestisciAutore(_modalitaModifica);
+        }
+
+        private void btnVisualizza_Click(object sender, EventArgs e)
+        {
+            VisualizzaAutore();
         }
 
         private void btnModifica_Click(object sender, EventArgs e)
         {
             if (lvAutori.SelectedItems.Count == 0)
+            {
                 MessageBox.Show("Seleziona un autore da modificare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             else
             {
-                btnVisualizza_Click(sender, e);
+                VisualizzaAutore();
                 _modalitaModifica = true;
                 lblTitolo.Text = "Modifica Autore";
                 btnAggiungi.Text = "☑️ Salva";
             }
         }
-
 
         private void btnElimina_Click(object sender, EventArgs e)
         {
@@ -174,42 +190,43 @@ namespace ReadyToRead
                 MessageBox.Show("Seleziona almeno un autore da eliminare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
             {
-                DialogResult dr = MessageBox.Show("Vuoi eliminare gli autori selezionati?","Conferma",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+                DialogResult dr = MessageBox.Show("Vuoi eliminare gli autori selezionati?", "Conferma", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (dr == DialogResult.Yes)
                 {
                     string errore = "";
-                    bool erroreMostrato = false;
+                    bool errMostrato = false;
                     int eliminati = 0;
 
                     ListViewItem[] lvi = new ListViewItem[lvAutori.SelectedItems.Count];
                     lvAutori.SelectedItems.CopyTo(lvi, 0);
 
-                    for (int i = 0; i < lvi.Length; i++)
+                    int i = 0;
+                    while (i < lvi.Length)
                     {
                         if (string.IsNullOrEmpty(errore))
                         {
                             ClsAutore a = (ClsAutore)lvi[i].Tag;
-                            long esito = ClsAutoreBL.Delete(ref Program.conn, a.UtenteID, out errore);
+                            long esito = ClsAutoreBL.Delete(ref Program.conn, a.ID, out errore);
                             if (string.IsNullOrEmpty(errore) && esito > 0)
                                 eliminati++;
                         }
                         else
                         {
-                            if (!erroreMostrato)
+                            if (!errMostrato)
                             {
                                 MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                erroreMostrato = true;
+                                errMostrato = true;
                             }
                         }
+                        i++;
                     }
 
-                    MessageBox.Show($"{eliminati} autore/i eliminato/i.", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(eliminati + " autore/i eliminato/i.", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     CaricaAutori();
                 }
             }
         }
-
 
         private void btnAnnulla_Click(object sender, EventArgs e)
         {
@@ -220,7 +237,9 @@ namespace ReadyToRead
         {
             string testo = tbFiltroNome.Text.Trim();
             if (string.IsNullOrEmpty(testo))
+            {
                 PopolaListView(_autori);
+            }
             else
             {
                 string errore;
@@ -234,31 +253,34 @@ namespace ReadyToRead
 
         private void cbVerificato_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string errore=String.Empty;
+            string errore = string.Empty;
             List<ClsAutore> filtrati = null;
-            if ((eFILTRO)cbVerificato.SelectedItem== eFILTRO.Tutti)
+
+            if ((eFILTRO)cbVerificato.SelectedItem == eFILTRO.Tutti)
                 filtrati = _autori;
             else if ((eFILTRO)cbVerificato.SelectedItem == eFILTRO.Verificati)
                 filtrati = ClsAutoreBL.GetVerificati(ref Program.conn, out errore);
-            else //eFILTRO.Non_Verificati
+            else
             {
                 List<ClsAutore> verificati = ClsAutoreBL.GetVerificati(ref Program.conn, out errore);
 
                 if (string.IsNullOrEmpty(errore))
                 {
                     filtrati = new List<ClsAutore>();
-                    for (int i = 0; i < _autori.Count; i++)
+                    int i = 0;
+                    while (i < _autori.Count)
                     {
                         bool trovato = false;
-
-                        for (int j = 0; j < verificati.Count && !trovato; j++)
+                        int j = 0;
+                        while (j < verificati.Count && !trovato)
                         {
-                            if (_autori[i].UtenteID == verificati[j].UtenteID)
+                            if (_autori[i].ID == verificati[j].ID)
                                 trovato = true;
+                            j++;
                         }
-
                         if (!trovato)
                             filtrati.Add(_autori[i]);
+                        i++;
                     }
                 }
             }
@@ -273,10 +295,6 @@ namespace ReadyToRead
         {
             Program._chiudiForm = false;
         }
-
-        private void rbF_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }

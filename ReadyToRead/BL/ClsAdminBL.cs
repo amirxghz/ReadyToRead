@@ -11,8 +11,10 @@ namespace ReadyToRead
 {
     internal static class ClsAdminBL
     {
+        // admins: ID, utenteID
+        // utenti:  ID, nome, cognome, username, password, email, data_nascita, genere, comune_nascita
         private const string SELECT_BASE =
-            @"SELECT a.ID, a.utenteID,
+            @"SELECT a.ID AS adminID, a.utenteID,
                      u.nome, u.cognome, u.username, u.password, u.email,
                      u.data_nascita, u.genere, u.comune_nascita
               FROM admins a
@@ -21,8 +23,8 @@ namespace ReadyToRead
         private static ClsAdmin CreaAdminDaRiga(DataRow r)
         {
             ClsAdmin a = new ClsAdmin();
-            //a.ID = r["ID"];
-            //a.UtenteID = Convert.ToInt32(r["utenteID"]);
+            a.AdminID = Convert.ToInt64(r["adminID"]);
+            a.UtenteID = Convert.ToInt64(r["utenteID"]);
             a.Nome = r["nome"] == DBNull.Value ? "" : r["nome"].ToString();
             a.Cognome = r["cognome"] == DBNull.Value ? "" : r["cognome"].ToString();
             a.Username = r["username"] == DBNull.Value ? "" : r["username"].ToString();
@@ -153,12 +155,12 @@ namespace ReadyToRead
         #endregion
 
         #region UPDATE
-        internal static long Update(ref MySqlConnection conn, string adminIDStr, ClsAdmin admin, out string errore)
+        internal static long Update(ref MySqlConnection conn, long adminID, ClsAdmin admin, out string errore)
         {
             long esito = 0;
             errore = string.Empty;
 
-            if (string.IsNullOrEmpty(adminIDStr))
+            if (adminID <= 0)
             {
                 errore = "ID non valido";
             }
@@ -174,7 +176,7 @@ namespace ReadyToRead
                                          genere=@genere, comune_nascita=@comune_nascita
                                          WHERE ID=(SELECT utenteID FROM admins WHERE ID=@adminID)";
                     MySqlCommand cmdU = new MySqlCommand(sqlUtente, conn);
-                    cmdU.Parameters.AddWithValue("@adminID", adminIDStr);
+                    cmdU.Parameters.AddWithValue("@adminID", adminID);
                     cmdU.Parameters.AddWithValue("@nome", admin.Nome ?? "");
                     cmdU.Parameters.AddWithValue("@cognome", admin.Cognome ?? "");
                     cmdU.Parameters.AddWithValue("@username", admin.Username ?? "");
@@ -198,12 +200,12 @@ namespace ReadyToRead
         #endregion
 
         #region DELETE
-        internal static long Delete(ref MySqlConnection conn, string adminIDStr, out string errore)
+        internal static long Delete(ref MySqlConnection conn, long adminID, out string errore)
         {
             long esito = 0;
             errore = string.Empty;
 
-            if (string.IsNullOrEmpty(adminIDStr))
+            if (adminID <= 0)
             {
                 errore = "ID non valido";
             }
@@ -216,7 +218,7 @@ namespace ReadyToRead
 
                     string queryID = "SELECT utenteID FROM admins WHERE ID=@id";
                     MySqlCommand cmdSel = new MySqlCommand(queryID, conn);
-                    cmdSel.Parameters.AddWithValue("@id", adminIDStr);
+                    cmdSel.Parameters.AddWithValue("@id", adminID);
                     object res = cmdSel.ExecuteScalar();
 
                     if (res != null)

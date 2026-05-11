@@ -11,31 +11,50 @@ namespace ReadyToRead
 {
     internal static class ClsUtenteBL
     {
+        private static ClsUtente CreaUtenteDaRiga(DataRow r)
+        {
+            ClsUtente u = new ClsUtente();
+            u.ID = Convert.ToInt64(r["ID"]);
+            u.Nome = r["nome"] == DBNull.Value ? "" : r["nome"].ToString();
+            u.Cognome = r["cognome"] == DBNull.Value ? "" : r["cognome"].ToString();
+            u.Username = r["username"] == DBNull.Value ? "" : r["username"].ToString();
+            u.Password = r["password"] == DBNull.Value ? "" : r["password"].ToString();
+            u.Email = r["email"] == DBNull.Value ? "" : r["email"].ToString();
+            if (r["data_nascita"] != DBNull.Value)
+                u.DataDiNascita = Convert.ToDateTime(r["data_nascita"]);
+            if (r["genere"] != DBNull.Value)
+                u.Sesso = r["genere"].ToString() == "m" ? ClsUtente.eSESSO.m : ClsUtente.eSESSO.f;
+            if (r["comune_nascita"] != DBNull.Value)
+                u.ComuneDiNascita = (ClsUtente.eCOMUNE)Enum.Parse(typeof(ClsUtente.eCOMUNE), r["comune_nascita"].ToString(), true);
+            u.Foto_profilo = r["foto_profilo"] == DBNull.Value ? "" : r["foto_profilo"].ToString();
+
+            return u;
+        }
+
         #region CREATE
         internal static long Create(ref MySqlConnection conn, ClsUtente utente, out string errore)
         {
             long ID = 0;
-            errore = String.Empty;
+            errore = string.Empty;
 
             try
             {
-                if (conn.State != System.Data.ConnectionState.Open)
+                if (conn.State != ConnectionState.Open)
                     conn.Open();
 
-                string sql = @"INSERT INTO utenti (username, password, nome, cognome, email, dataDiNascita, codiceFiscale, comuneDiNascita, sesso) 
-                             VALUES (@username, @password, @nome, @cognome, @email, @dataDiNascita, @codiceFiscale, @comuneDiNascita, @sesso)";
+                string sql = @"INSERT INTO utenti (nome, cognome, username, password, email, data_nascita, genere, comune_nascita, foto_profilo)
+                               VALUES (@nome, @cognome, @username, @password, @email, @data_nascita, @genere, @comune_nascita, @foto_profilo)";
 
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
-
-                cmd.Parameters.AddWithValue("@username", utente.Username ?? "");
-                cmd.Parameters.AddWithValue("@password", utente.Password ?? "");
                 cmd.Parameters.AddWithValue("@nome", utente.Nome ?? "");
                 cmd.Parameters.AddWithValue("@cognome", utente.Cognome ?? "");
+                cmd.Parameters.AddWithValue("@username", utente.Username ?? "");
+                cmd.Parameters.AddWithValue("@password", utente.Password ?? "");
                 cmd.Parameters.AddWithValue("@email", utente.Email ?? "");
-                cmd.Parameters.AddWithValue("@dataDiNascita", utente.DataDiNascita);
-                cmd.Parameters.AddWithValue("@codiceFiscale", utente.CodiceFiscale ?? "");
-                cmd.Parameters.AddWithValue("@comuneDiNascita", utente.ComuneDiNascita);
-                cmd.Parameters.AddWithValue("@sesso", utente.Sesso);
+                cmd.Parameters.AddWithValue("@data_nascita", utente.DataDiNascita);
+                cmd.Parameters.AddWithValue("@genere", utente.Sesso.ToString());
+                cmd.Parameters.AddWithValue("@comune_nascita", utente.ComuneDiNascita.ToString());
+                cmd.Parameters.AddWithValue("@foto_profilo", utente.Foto_profilo ?? "");
 
                 int numRec = cmd.ExecuteNonQuery();
                 if (numRec == 1)
@@ -53,35 +72,25 @@ namespace ReadyToRead
         #endregion
 
         #region READ
-        
         internal static List<ClsUtente> GetAll(ref MySqlConnection conn, out string errore)
         {
-            DataTable dt = null;
             List<ClsUtente> utenti = new List<ClsUtente>();
             errore = string.Empty;
 
             try
             {
-                if (conn.State != System.Data.ConnectionState.Open)
+                if (conn.State != ConnectionState.Open)
                     conn.Open();
 
-                string query = "SELECT * FROM utenti";
-
-                MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
-                dt = new DataTable();
+                MySqlDataAdapter da = new MySqlDataAdapter("SELECT * FROM utenti", conn);
+                DataTable dt = new DataTable();
                 da.Fill(dt);
 
-                for (int i = 0; i < dt.Rows.Count; i++)
+                int i = 0;
+                while (i < dt.Rows.Count)
                 {
-                    ClsUtente utente = new ClsUtente();
-                    utente.Username = dt.Rows[i]["username"].ToString();
-                    utente.Password = dt.Rows[i]["password"].ToString();
-                    utente.Nome = dt.Rows[i]["nome"].ToString();
-                    utente.Cognome = dt.Rows[i]["cognome"].ToString();
-                    utente.Email = dt.Rows[i]["email"].ToString();
-                    utente.DataDiNascita = (DateTime)dt.Rows[i]["dataDiNascita"];
-                    utente.CodiceFiscale = dt.Rows[i]["codiceFiscale"].ToString();
-                    utenti.Add(utente);
+                    utenti.Add(CreaUtenteDaRiga(dt.Rows[i]));
+                    i++;
                 }
 
                 conn.Close();
@@ -93,44 +102,42 @@ namespace ReadyToRead
 
             return utenti;
         }
-        
+
         internal static List<ClsUtente> GetByUsername(ref MySqlConnection conn, string username, out string errore)
         {
-            DataTable dt = null;
             List<ClsUtente> utenti = new List<ClsUtente>();
             errore = string.Empty;
 
-            try
+            if (string.IsNullOrEmpty(username))
             {
-                if (conn.State != System.Data.ConnectionState.Open)
-                    conn.Open();
-
-                string query = "SELECT * FROM utenti WHERE username LIKE @username";
-
-                MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
-                da.SelectCommand.Parameters.AddWithValue("@username", "%" + username + "%");
-
-                dt = new DataTable();
-                da.Fill(dt);
-
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    ClsUtente utente = new ClsUtente();
-                    utente.Username = dt.Rows[i]["username"].ToString();
-                    utente.Password = dt.Rows[i]["password"].ToString();
-                    utente.Nome = dt.Rows[i]["nome"].ToString();
-                    utente.Cognome = dt.Rows[i]["cognome"].ToString();
-                    utente.Email = dt.Rows[i]["email"].ToString();
-                    utente.DataDiNascita = (DateTime)dt.Rows[i]["dataDiNascita"];
-                    utente.CodiceFiscale = dt.Rows[i]["codiceFiscale"].ToString();
-                    utenti.Add(utente);
-                }
-
-                conn.Close();
+                errore = "Username non valido";
             }
-            catch (Exception ex)
+            else
             {
-                errore = ex.Message;
+                try
+                {
+                    if (conn.State != ConnectionState.Open)
+                        conn.Open();
+
+                    string query = "SELECT * FROM utenti WHERE username LIKE @username";
+                    MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
+                    da.SelectCommand.Parameters.AddWithValue("@username", "%" + username + "%");
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    int i = 0;
+                    while (i < dt.Rows.Count)
+                    {
+                        utenti.Add(CreaUtenteDaRiga(dt.Rows[i]));
+                        i++;
+                    }
+
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    errore = ex.Message;
+                }
             }
 
             return utenti;
@@ -144,31 +151,32 @@ namespace ReadyToRead
             errore = string.Empty;
 
             if (ID <= 0)
+            {
                 errore = "ID non valido";
+            }
             else
             {
                 try
                 {
-                    if (conn.State != System.Data.ConnectionState.Open)
+                    if (conn.State != ConnectionState.Open)
                         conn.Open();
 
-                    string sql = @"UPDATE utenti SET username=@username, password=@password, nome=@nome, 
-                                 cognome=@cognome, email=@email, dataDiNascita=@dataDiNascita, 
-                                 codiceFiscale=@codiceFiscale, comuneDiNascita=@comuneDiNascita, sesso=@sesso 
-                                 WHERE ID=@ID";
+                    string sql = @"UPDATE utenti SET nome=@nome, cognome=@cognome, username=@username,
+                                   password=@password, email=@email, data_nascita=@data_nascita,
+                                   genere=@genere, comune_nascita=@comune_nascita, foto_profilo=@foto_profilo
+                                   WHERE ID=@ID";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
-
                     cmd.Parameters.AddWithValue("@ID", ID);
-                    cmd.Parameters.AddWithValue("@username", utente.Username ?? "");
-                    cmd.Parameters.AddWithValue("@password", utente.Password ?? "");
                     cmd.Parameters.AddWithValue("@nome", utente.Nome ?? "");
                     cmd.Parameters.AddWithValue("@cognome", utente.Cognome ?? "");
+                    cmd.Parameters.AddWithValue("@username", utente.Username ?? "");
+                    cmd.Parameters.AddWithValue("@password", utente.Password ?? "");
                     cmd.Parameters.AddWithValue("@email", utente.Email ?? "");
-                    cmd.Parameters.AddWithValue("@dataDiNascita", utente.DataDiNascita);
-                    cmd.Parameters.AddWithValue("@codiceFiscale", utente.CodiceFiscale ?? "");
-                    cmd.Parameters.AddWithValue("@comuneDiNascita", utente.ComuneDiNascita);
-                    cmd.Parameters.AddWithValue("@sesso", utente.Sesso);
+                    cmd.Parameters.AddWithValue("@data_nascita", utente.DataDiNascita);
+                    cmd.Parameters.AddWithValue("@genere", utente.Sesso.ToString());
+                    cmd.Parameters.AddWithValue("@comune_nascita", utente.ComuneDiNascita.ToString());
+                    cmd.Parameters.AddWithValue("@foto_profilo", utente.Foto_profilo ?? "");
 
                     esito = cmd.ExecuteNonQuery();
                     conn.Close();
@@ -190,20 +198,20 @@ namespace ReadyToRead
             errore = string.Empty;
 
             if (ID <= 0)
+            {
                 errore = "ID non valido";
+            }
             else
             {
                 try
                 {
-                    if (conn.State != System.Data.ConnectionState.Open)
+                    if (conn.State != ConnectionState.Open)
                         conn.Open();
 
-                    string sql = "DELETE FROM utenti WHERE ID=@ID";
-
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlCommand cmd = new MySqlCommand("DELETE FROM utenti WHERE ID=@ID", conn);
                     cmd.Parameters.AddWithValue("@ID", ID);
-
                     esito = cmd.ExecuteNonQuery();
+
                     conn.Close();
                 }
                 catch (Exception ex)
@@ -224,14 +232,11 @@ namespace ReadyToRead
 
             try
             {
-                if (conn.State != System.Data.ConnectionState.Open)
+                if (conn.State != ConnectionState.Open)
                     conn.Open();
 
-                string query = "SELECT COUNT(*) FROM utenti";
-
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM utenti", conn);
                 object risultato = cmd.ExecuteScalar();
-
                 if (risultato != null)
                     count = Convert.ToInt32(risultato);
 
@@ -245,68 +250,5 @@ namespace ReadyToRead
             return count;
         }
         #endregion
-
-        #region LOGIN
-        internal static string Login(string username, string password)
-        {
-            string status = "";
-            string errore = "";
-            ClsUtente utente = GetOneByUsername(ref Program.conn, username, out errore);
-            if(utente != null)
-            {
-                status = "Utente non esistente";
-            }
-            else
-            {
-                string query = "SELECT password FROM utenti WHERE HASHBYTES('SHA2_256', @password) LIKE password";
-
-
-                MySqlDataAdapter da = new MySqlDataAdapter(query, Program.conn);
-
-            }
-            return status;
-        }
-
-        internal static ClsUtente GetOneByUsername(ref MySqlConnection conn, string username, out string errore)
-        {
-            DataTable dt = null;
-            ClsUtente utente = new ClsUtente();
-            errore = string.Empty;
-
-            try
-            {
-                if (conn.State != System.Data.ConnectionState.Open)
-                    conn.Open();
-
-                string query = "SELECT * FROM utenti WHERE username LIKE @username";
-
-                MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
-                da.SelectCommand.Parameters.AddWithValue("@username", "%" + username + "%");
-
-                dt = new DataTable();
-                da.Fill(dt);
-
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    utente.Username = dt.Rows[i]["username"].ToString();
-                    utente.Password = dt.Rows[i]["password"].ToString();
-                    utente.Nome = dt.Rows[i]["nome"].ToString();
-                    utente.Cognome = dt.Rows[i]["cognome"].ToString();
-                    utente.Email = dt.Rows[i]["email"].ToString();
-                    utente.DataDiNascita = (DateTime)dt.Rows[i]["dataDiNascita"];
-                    utente.CodiceFiscale = dt.Rows[i]["codiceFiscale"].ToString();
-                }
-
-                conn.Close();
-            }
-            catch (Exception ex)
-            {
-                errore = ex.Message;
-            }
-
-            return utente;
-        }
-        #endregion
     }
 }
-

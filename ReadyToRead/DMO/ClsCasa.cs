@@ -24,15 +24,15 @@ namespace ReadyToRead
         }
         long _ID;
         string _ragioneSociale;
-        int _indirizzoSedeLegaleID;
-        int _indirizzoSedeOperativaID;
+        string _indirizzoSedeLegale;
+        string _indirizzoSedeOperativa;
         eTIPO_AZIENDA _tipoAzienda;
         bool _esclusiva;
         eTIPO_CASA _tipologia;
         long _utenteID;
         public string RagioneSociale { get => _ragioneSociale; set => _ragioneSociale = value; }
-        public int IndirizzoSedeLegaleID { get => _indirizzoSedeLegaleID; set => _indirizzoSedeLegaleID = value; }
-        public int IndirizzoSedeOperativaID { get => _indirizzoSedeOperativaID; set => _indirizzoSedeOperativaID = value; }
+        public string IndirizzoSedeLegale { get => _indirizzoSedeLegale; set => _indirizzoSedeLegale = value; }
+        public string IndirizzoSedeOperativa { get => _indirizzoSedeOperativa; set => _indirizzoSedeOperativa = value; }
         public eTIPO_AZIENDA TipoAzienda { get => _tipoAzienda; set => _tipoAzienda = value; }
         public bool Esclusiva { get => _esclusiva; set => _esclusiva = value; }
         public eTIPO_CASA Tipologia { get => _tipologia; set => _tipologia = value; }
