@@ -31,7 +31,7 @@
             this.pnlDetails = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbNomeArte = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
@@ -39,8 +39,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.rbF = new System.Windows.Forms.RadioButton();
-            this.rbM = new System.Windows.Forms.RadioButton();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
@@ -60,6 +58,8 @@
             this.rbVerificato = new System.Windows.Forms.RadioButton();
             this.rbNonVerificato = new System.Windows.Forms.RadioButton();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.rbM = new System.Windows.Forms.RadioButton();
+            this.rbF = new System.Windows.Forms.RadioButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
             this.cbVerificato = new System.Windows.Forms.ComboBox();
@@ -84,7 +84,7 @@
             // 
             this.pnlDetails.Controls.Add(this.label11);
             this.pnlDetails.Controls.Add(this.label12);
-            this.pnlDetails.Controls.Add(this.textBox1);
+            this.pnlDetails.Controls.Add(this.tbNomeArte);
             this.pnlDetails.Controls.Add(this.label5);
             this.pnlDetails.Controls.Add(this.label6);
             this.pnlDetails.Controls.Add(this.dateTimePicker1);
@@ -139,14 +139,14 @@
             this.label12.TabIndex = 263;
             this.label12.Text = "🪪";
             // 
-            // textBox1
+            // tbNomeArte
             // 
-            this.textBox1.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.textBox1.Location = new System.Drawing.Point(53, 169);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(321, 30);
-            this.textBox1.TabIndex = 262;
+            this.tbNomeArte.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbNomeArte.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.tbNomeArte.Location = new System.Drawing.Point(53, 169);
+            this.tbNomeArte.Name = "tbNomeArte";
+            this.tbNomeArte.Size = new System.Drawing.Size(321, 30);
+            this.tbNomeArte.TabIndex = 262;
             // 
             // label5
             // 
@@ -227,31 +227,6 @@
             this.label8.Size = new System.Drawing.Size(118, 23);
             this.label8.TabIndex = 249;
             this.label8.Text = "Città Nascita";
-            // 
-            // rbF
-            // 
-            this.rbF.AutoSize = true;
-            this.rbF.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbF.Location = new System.Drawing.Point(47, 3);
-            this.rbF.Name = "rbF";
-            this.rbF.Size = new System.Drawing.Size(38, 27);
-            this.rbF.TabIndex = 247;
-            this.rbF.TabStop = true;
-            this.rbF.Text = "F";
-            this.rbF.UseVisualStyleBackColor = true;
-            this.rbF.CheckedChanged += new System.EventHandler(this.rbF_CheckedChanged);
-            // 
-            // rbM
-            // 
-            this.rbM.AutoSize = true;
-            this.rbM.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbM.Location = new System.Drawing.Point(3, 3);
-            this.rbM.Name = "rbM";
-            this.rbM.Size = new System.Drawing.Size(41, 27);
-            this.rbM.TabIndex = 246;
-            this.rbM.TabStop = true;
-            this.rbM.Text = "M";
-            this.rbM.UseVisualStyleBackColor = true;
             // 
             // label9
             // 
@@ -456,6 +431,30 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(102, 34);
             this.panel3.TabIndex = 266;
+            // 
+            // rbM
+            // 
+            this.rbM.AutoSize = true;
+            this.rbM.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbM.Location = new System.Drawing.Point(3, 3);
+            this.rbM.Name = "rbM";
+            this.rbM.Size = new System.Drawing.Size(41, 27);
+            this.rbM.TabIndex = 246;
+            this.rbM.TabStop = true;
+            this.rbM.Text = "M";
+            this.rbM.UseVisualStyleBackColor = true;
+            // 
+            // rbF
+            // 
+            this.rbF.AutoSize = true;
+            this.rbF.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbF.Location = new System.Drawing.Point(47, 3);
+            this.rbF.Name = "rbF";
+            this.rbF.Size = new System.Drawing.Size(38, 27);
+            this.rbF.TabIndex = 247;
+            this.rbF.TabStop = true;
+            this.rbF.Text = "F";
+            this.rbF.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
@@ -671,7 +670,7 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbNomeArte;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox cbVerificato;
         private System.Windows.Forms.TextBox tbCittà;

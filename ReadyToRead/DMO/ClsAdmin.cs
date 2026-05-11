@@ -6,27 +6,18 @@ using System.Threading.Tasks;
 
 namespace ReadyToRead
 {
-    public class ClsAdmin:ClsUtente //amir
+    public class ClsAdmin : ClsUtente
     {
-        private string _id;
-        private static int _utenteID;
-        public string ID
-        {
-            get => _id;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new Exception("ID non valido");
-                else
-                    _id = value;
-            }
-        }
+        private long _adminID;
+        private long _utenteID;
 
-        public static int UtenteID { get => _utenteID; set => _utenteID = value; }
+        public long AdminID { get => _adminID; set => _adminID = value; }
+        public long UtenteID { get => _utenteID; set => _utenteID = value; }
 
         public ClsAdmin()
         {
         }
+
         public ClsAdmin(string username, string password, string email)
         {
             Username = username;

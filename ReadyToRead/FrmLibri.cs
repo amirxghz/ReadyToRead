@@ -12,9 +12,14 @@ namespace ReadyToRead
 {
     public partial class FrmLibri : Form
     {
-        private bool _inModifica = false;
-        private ClsLibro _libroSelezionato = null;
-        private long _idSelezionato = -1;
+        bool _inModifica = false;
+        ClsLibro _libroSelezionato = null;
+        long _idSelezionato = -1;
+
+        List<ClsAutore> _autori = new List<ClsAutore>();
+        List<ClsCasa> _case = new List<ClsCasa>();
+        List<ClsGenere> _generi = new List<ClsGenere>();
+
 
         Image _coverLibro = Properties.Resources.cover;
 
@@ -31,37 +36,47 @@ namespace ReadyToRead
         private void PopolaComboBox()
         {
             string erroreA;
-            List<ClsAutore> autori = ClsAutoreBL.GetAll(ref Program.conn, out erroreA);
+            _autori = ClsAutoreBL.GetAll(ref Program.conn, out erroreA);
             if (!string.IsNullOrEmpty(erroreA))
                 MessageBox.Show("Errore caricamento autori: " + erroreA, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-                cbAutore.DataSource = autori;
+                cbAutore.DataSource = new List<ClsAutore>(_autori);
                 cbAutore.DisplayMember = "Cognome";
-                cbAutore.ValueMember = "UtenteID";
+                cbAutore.ValueMember = "ID";
+                cbAutore.SelectedIndex = -1;
             }
 
             string erroreC;
-            List<ClsCasa> houses = ClsCasaBL.GetAll(ref Program.conn, out erroreC);
+            _case = ClsCasaBL.GetAll(ref Program.conn, out erroreC);
             if (!string.IsNullOrEmpty(erroreC))
                 MessageBox.Show("Errore caricamento case editrici: " + erroreC, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-                cbCasaEditrice.DataSource = houses;
+                cbCasaEditrice.DataSource = new List<ClsCasa>(_case);
                 cbCasaEditrice.DisplayMember = "RagioneSociale";
+                cbCasaEditrice.ValueMember = "ID";
+                cbCasaEditrice.SelectedIndex = -1;
             }
 
             string erroreG;
-            List<ClsGenere> generi = ClsGenereBL.GetAll(ref Program.conn, out erroreG);
+            _generi = ClsGenereBL.GetAll(ref Program.conn, out erroreG);
             if (!string.IsNullOrEmpty(erroreG))
                 MessageBox.Show("Errore caricamento generi: " + erroreG, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
                 clbGenere.Items.Clear();
-                for (int i = 0;  i < generi.Count;i++)
-                    clbGenere.Items.Add(generi[i].Nome);
+                int i = 0;
+                while (i < _generi.Count)
+                {
+                    clbGenere.Items.Add(_generi[i]);
+                    i++;
+                }
+                clbGenere.DisplayMember = "Nome";
             }
         }
+
+
 
         private void CaricaLibri()
         {
@@ -77,17 +92,78 @@ namespace ReadyToRead
         private void PopolaListView(List<ClsLibro> libri)
         {
             lvLibri.Items.Clear();
-            for (int i =0;  i < libri.Count;i++)
+            int i = 0;
+            while (i < libri.Count)
             {
                 ClsLibro l = libri[i];
-                ListViewItem lvi = new ListViewItem(l.Nome);
-                lvi.SubItems.Add("");   // autore 
-                lvi.SubItems.Add("");   // casa editrice
-                lvi.SubItems.Add("");   // genere
+
+                string nomeAutore = "";
+                string erroreS;
+                List<ClsScrivere> scritture = ClsScrivereBL.GetByLibroISBN(ref Program.conn, l.Isbn, out erroreS);
+                if (string.IsNullOrEmpty(erroreS) && scritture.Count > 0)
+                {
+                    string erroreA;
+                    long autoreID = scritture[0].AutoreID;
+                    ClsAutore autore = null;
+                    int j = 0;
+                    while (j < _autori.Count && autore == null)
+                    {
+                        if (_autori[j].ID == autoreID)
+                            autore = _autori[j];
+                        j++;
+                    }
+                    if (autore != null)
+                        nomeAutore = autore.Nome + " " + autore.Cognome;
+                }
+
+                string nomeCasa = "";
+                string erroreP;
+                List<ClsPubblicare> pubblicazioni = ClsPubblicareBL.GetByLibroISBN(ref Program.conn, l.Isbn, out erroreP);
+                if (string.IsNullOrEmpty(erroreP) && pubblicazioni.Count > 0)
+                {
+                    long casaID = pubblicazioni[0].CasaEditriceID;
+                    ClsCasa casa = null;
+                    int j = 0;
+                    while (j < _case.Count && casa == null)
+                    {
+                        if (_case[j].ID == casaID)
+                            casa = _case[j];
+                        j++;
+                    }
+                    if (casa != null)
+                        nomeCasa = casa.RagioneSociale;
+                }
+
+                string nomeGenere = "";
+                string erroreG="";
+                List<ClsCaratterizzare> generi = new List<ClsCaratterizzare>();
+                //List<ClsCaratterizzare> generi = ClsCaratterizzareBL.GetByLibroISBN(ref Program.conn, l.Isbn, out erroreG);
+                if (string.IsNullOrEmpty(erroreG) && pubblicazioni.Count > 0)
+                {
+                    long genereID = generi[0].GenereID;
+                    ClsGenere genere = null;
+                    int j = 0;
+                    while (j < _case.Count && genere == null)
+                    {
+                        if (_generi[j].ID == genereID)
+                            genere = _generi[j];
+                        j++;
+                    }
+                    if (genere != null)
+                        nomeGenere = genere.Nome;
+                }
+
+                ListViewItem lvi = new ListViewItem(l.Nome ?? "");
+                lvi.SubItems.Add(nomeAutore);
+                lvi.SubItems.Add(nomeCasa);
+                lvi.SubItems.Add(nomeGenere);
                 lvi.Tag = l;
                 lvLibri.Items.Add(lvi);
+
+                i++;
             }
         }
+
 
         private void ResetCampi()
         {
