@@ -34,7 +34,7 @@
             this.tbNomeArte = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtpDataMorte = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -43,7 +43,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.dtmDataDiNascita = new System.Windows.Forms.DateTimePicker();
+            this.dtpDataDiNascita = new System.Windows.Forms.DateTimePicker();
             this.tbCognome = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
@@ -69,11 +69,12 @@
             this.lvAutori = new System.Windows.Forms.ListView();
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnVisualizza = new System.Windows.Forms.Button();
             this.btnElimina = new System.Windows.Forms.Button();
             this.btnModifica = new System.Windows.Forms.Button();
+            this.chkAttivaDataMorte = new System.Windows.Forms.CheckBox();
             this.pnlDetails.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -82,12 +83,13 @@
             // 
             // pnlDetails
             // 
+            this.pnlDetails.Controls.Add(this.chkAttivaDataMorte);
             this.pnlDetails.Controls.Add(this.label11);
             this.pnlDetails.Controls.Add(this.label12);
             this.pnlDetails.Controls.Add(this.tbNomeArte);
             this.pnlDetails.Controls.Add(this.label5);
             this.pnlDetails.Controls.Add(this.label6);
-            this.pnlDetails.Controls.Add(this.dateTimePicker1);
+            this.pnlDetails.Controls.Add(this.dtpDataMorte);
             this.pnlDetails.Controls.Add(this.label1);
             this.pnlDetails.Controls.Add(this.label2);
             this.pnlDetails.Controls.Add(this.label7);
@@ -96,7 +98,7 @@
             this.pnlDetails.Controls.Add(this.label10);
             this.pnlDetails.Controls.Add(this.label17);
             this.pnlDetails.Controls.Add(this.label22);
-            this.pnlDetails.Controls.Add(this.dtmDataDiNascita);
+            this.pnlDetails.Controls.Add(this.dtpDataDiNascita);
             this.pnlDetails.Controls.Add(this.tbCognome);
             this.pnlDetails.Controls.Add(this.label15);
             this.pnlDetails.Controls.Add(this.label21);
@@ -171,16 +173,17 @@
             this.label6.TabIndex = 260;
             this.label6.Text = "🗓️";
             // 
-            // dateTimePicker1
+            // dtpDataMorte
             // 
-            this.dateTimePicker1.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(61, 411);
-            this.dateTimePicker1.MaxDate = new System.DateTime(2030, 12, 29, 0, 0, 0, 0);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(310, 30);
-            this.dateTimePicker1.TabIndex = 258;
-            this.dateTimePicker1.Value = new System.DateTime(2025, 11, 1, 0, 0, 0, 0);
+            this.dtpDataMorte.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpDataMorte.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpDataMorte.Location = new System.Drawing.Point(61, 411);
+            this.dtpDataMorte.MaxDate = new System.DateTime(2030, 12, 29, 0, 0, 0, 0);
+            this.dtpDataMorte.Name = "dtpDataMorte";
+            this.dtpDataMorte.Size = new System.Drawing.Size(310, 30);
+            this.dtpDataMorte.TabIndex = 258;
+            this.dtpDataMorte.Value = new System.DateTime(2025, 11, 1, 0, 0, 0, 0);
+            this.dtpDataMorte.Visible = false;
             // 
             // label1
             // 
@@ -224,9 +227,9 @@
             this.label8.ForeColor = System.Drawing.Color.Gray;
             this.label8.Location = new System.Drawing.Point(26, 504);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(118, 23);
+            this.label8.Size = new System.Drawing.Size(128, 23);
             this.label8.TabIndex = 249;
-            this.label8.Text = "Città Nascita";
+            this.label8.Text = "Città Nascita*";
             // 
             // label9
             // 
@@ -235,9 +238,9 @@
             this.label9.ForeColor = System.Drawing.Color.Gray;
             this.label9.Location = new System.Drawing.Point(22, 444);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(68, 23);
+            this.label9.Size = new System.Drawing.Size(78, 23);
             this.label9.TabIndex = 244;
-            this.label9.Text = "Genere";
+            this.label9.Text = "Genere*";
             // 
             // label10
             // 
@@ -258,9 +261,9 @@
             this.label17.ForeColor = System.Drawing.Color.Gray;
             this.label17.Location = new System.Drawing.Point(22, 324);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(133, 23);
+            this.label17.Size = new System.Drawing.Size(143, 23);
             this.label17.TabIndex = 234;
-            this.label17.Text = "Data di Nascita";
+            this.label17.Text = "Data di Nascita*";
             // 
             // label22
             // 
@@ -274,16 +277,16 @@
             this.label22.TabIndex = 235;
             this.label22.Text = "🗓️";
             // 
-            // dtmDataDiNascita
+            // dtpDataDiNascita
             // 
-            this.dtmDataDiNascita.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtmDataDiNascita.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtmDataDiNascita.Location = new System.Drawing.Point(61, 348);
-            this.dtmDataDiNascita.MaxDate = new System.DateTime(2030, 12, 29, 0, 0, 0, 0);
-            this.dtmDataDiNascita.Name = "dtmDataDiNascita";
-            this.dtmDataDiNascita.Size = new System.Drawing.Size(310, 30);
-            this.dtmDataDiNascita.TabIndex = 233;
-            this.dtmDataDiNascita.Value = new System.DateTime(2025, 11, 1, 0, 0, 0, 0);
+            this.dtpDataDiNascita.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpDataDiNascita.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpDataDiNascita.Location = new System.Drawing.Point(61, 348);
+            this.dtpDataDiNascita.MaxDate = new System.DateTime(2030, 12, 29, 0, 0, 0, 0);
+            this.dtpDataDiNascita.Name = "dtpDataDiNascita";
+            this.dtpDataDiNascita.Size = new System.Drawing.Size(310, 30);
+            this.dtpDataDiNascita.TabIndex = 233;
+            this.dtpDataDiNascita.Value = new System.DateTime(2025, 11, 1, 0, 0, 0, 0);
             // 
             // tbCognome
             // 
@@ -336,9 +339,9 @@
             this.label20.ForeColor = System.Drawing.Color.Gray;
             this.label20.Location = new System.Drawing.Point(22, 257);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(86, 23);
+            this.label20.Size = new System.Drawing.Size(96, 23);
             this.label20.TabIndex = 227;
-            this.label20.Text = "Cognome";
+            this.label20.Text = "Cognome*";
             // 
             // btnAnnulla
             // 
@@ -531,8 +534,8 @@
             this.lvAutori.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader8,
             this.columnHeader9,
-            this.columnHeader10,
-            this.columnHeader11});
+            this.columnHeader1,
+            this.columnHeader2});
             this.lvAutori.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lvAutori.FullRowSelect = true;
             this.lvAutori.HideSelection = false;
@@ -553,15 +556,15 @@
             this.columnHeader9.Text = "Nominativo";
             this.columnHeader9.Width = 211;
             // 
-            // columnHeader10
+            // columnHeader1
             // 
-            this.columnHeader10.Text = "Username";
-            this.columnHeader10.Width = 221;
+            this.columnHeader1.Text = "Città";
+            this.columnHeader1.Width = 206;
             // 
-            // columnHeader11
+            // columnHeader2
             // 
-            this.columnHeader11.Text = "Password";
-            this.columnHeader11.Width = 133;
+            this.columnHeader2.Text = "Periodo età";
+            this.columnHeader2.Width = 144;
             // 
             // btnVisualizza
             // 
@@ -595,6 +598,17 @@
             this.btnModifica.Text = "✍️Modifica";
             this.btnModifica.UseVisualStyleBackColor = true;
             this.btnModifica.Click += new System.EventHandler(this.btnModifica_Click);
+            // 
+            // chkAttivaDataMorte
+            // 
+            this.chkAttivaDataMorte.AutoSize = true;
+            this.chkAttivaDataMorte.Location = new System.Drawing.Point(149, 383);
+            this.chkAttivaDataMorte.Name = "chkAttivaDataMorte";
+            this.chkAttivaDataMorte.Size = new System.Drawing.Size(42, 27);
+            this.chkAttivaDataMorte.TabIndex = 267;
+            this.chkAttivaDataMorte.Text = "✓";
+            this.chkAttivaDataMorte.UseVisualStyleBackColor = true;
+            this.chkAttivaDataMorte.CheckedChanged += new System.EventHandler(this.chkAttivaDataMorte_CheckedChanged);
             // 
             // FrmAutori
             // 
@@ -639,8 +653,6 @@
         private System.Windows.Forms.ListView lvAutori;
         private System.Windows.Forms.ColumnHeader columnHeader8;
         private System.Windows.Forms.ColumnHeader columnHeader9;
-        private System.Windows.Forms.ColumnHeader columnHeader10;
-        private System.Windows.Forms.ColumnHeader columnHeader11;
         private System.Windows.Forms.Button btnVisualizza;
         private System.Windows.Forms.Button btnElimina;
         private System.Windows.Forms.Button btnModifica;
@@ -656,7 +668,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.DateTimePicker dtmDataDiNascita;
+        private System.Windows.Forms.DateTimePicker dtpDataDiNascita;
         private System.Windows.Forms.TextBox tbCognome;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label21;
@@ -667,7 +679,7 @@
         private System.Windows.Forms.TextBox tbNome;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtpDataMorte;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox tbNomeArte;
@@ -676,5 +688,8 @@
         private System.Windows.Forms.TextBox tbCittà;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.CheckBox chkAttivaDataMorte;
     }
 }

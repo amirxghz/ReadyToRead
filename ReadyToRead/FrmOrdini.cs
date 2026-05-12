@@ -59,11 +59,11 @@ namespace ReadyToRead
             {
                 ClsOrdinare o = ordini[i];
                 ListViewItem lvi = new ListViewItem(o.ID.ToString());
-                lvi.SubItems.Add("");               // cliente 
-                lvi.SubItems.Add("");               // contatto
-                lvi.SubItems.Add("");               // stato 
-                lvi.SubItems.Add("");               // data
-                lvi.SubItems.Add(o.Totale.ToString("C"));
+                lvi.SubItems.Add(o.ClienteID.ToString()); //recupera il nome
+                lvi.SubItems.Add("");               // recupera il cliente e dunque poi il contatto
+                lvi.SubItems.Add(o.StatoOrdine.ToString());           
+                lvi.SubItems.Add(o.Data.ToString());         
+                lvi.SubItems.Add(o.Totale.ToString()+"€");
                 lvi.Tag = o;
                 lvOrdini.Items.Add(lvi);
             }

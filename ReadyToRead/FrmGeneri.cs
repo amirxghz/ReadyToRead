@@ -43,8 +43,7 @@ namespace ReadyToRead
             for (int i = 0; i<generi.Count;i++)
             {
                 ClsGenere g = generi[i];
-                ListViewItem lvi = new ListViewItem((i + 1).ToString());
-                lvi.SubItems.Add(g.Nome);
+                ListViewItem lvi = new ListViewItem(g.Nome);
                 lvi.SubItems.Add(g.Target);
                 lvi.Tag = g;
                 lvGeneri.Items.Add(lvi);

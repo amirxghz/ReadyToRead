@@ -66,12 +66,8 @@ namespace ReadyToRead
             else
             {
                 clbGenere.Items.Clear();
-                int i = 0;
-                while (i < _generi.Count)
-                {
+                for (int i=0;  i < _generi.Count;i++)
                     clbGenere.Items.Add(_generi[i]);
-                    i++;
-                }
                 clbGenere.DisplayMember = "Nome";
             }
         }
@@ -92,17 +88,15 @@ namespace ReadyToRead
         private void PopolaListView(List<ClsLibro> libri)
         {
             lvLibri.Items.Clear();
-            int i = 0;
-            while (i < libri.Count)
+            for (int i=0; i < libri.Count;i++)
             {
                 ClsLibro l = libri[i];
 
                 string nomeAutore = "";
                 string erroreS;
-                List<ClsScrivere> scritture = ClsScrivereBL.GetByLibroISBN(ref Program.conn, l.Isbn, out erroreS);
+                List<ClsScrivere> scritture = ClsScrivereBL.GetByAutoreID(ref Program.conn, l.ProdottoID, out erroreS);
                 if (string.IsNullOrEmpty(erroreS) && scritture.Count > 0)
                 {
-                    string erroreA;
                     long autoreID = scritture[0].AutoreID;
                     ClsAutore autore = null;
                     int j = 0;
@@ -118,7 +112,7 @@ namespace ReadyToRead
 
                 string nomeCasa = "";
                 string erroreP;
-                List<ClsPubblicare> pubblicazioni = ClsPubblicareBL.GetByLibroISBN(ref Program.conn, l.Isbn, out erroreP);
+                List<ClsPubblicare> pubblicazioni = ClsPubblicareBL.GetByCasaEditriceID(ref Program.conn, l.ProdottoID, out erroreP);
                 if (string.IsNullOrEmpty(erroreP) && pubblicazioni.Count > 0)
                 {
                     long casaID = pubblicazioni[0].CasaEditriceID;
@@ -136,8 +130,7 @@ namespace ReadyToRead
 
                 string nomeGenere = "";
                 string erroreG="";
-                List<ClsCaratterizzare> generi = new List<ClsCaratterizzare>();
-                //List<ClsCaratterizzare> generi = ClsCaratterizzareBL.GetByLibroISBN(ref Program.conn, l.Isbn, out erroreG);
+                List<ClsCaratterizzare> generi = ClsCaratterizzareBL.GetByGenereID(ref Program.conn, l.ProdottoID, out erroreG);
                 if (string.IsNullOrEmpty(erroreG) && pubblicazioni.Count > 0)
                 {
                     long genereID = generi[0].GenereID;
@@ -153,14 +146,12 @@ namespace ReadyToRead
                         nomeGenere = genere.Nome;
                 }
 
-                ListViewItem lvi = new ListViewItem(l.Nome ?? "");
+                ListViewItem lvi = new ListViewItem(l.Nome);
                 lvi.SubItems.Add(nomeAutore);
                 lvi.SubItems.Add(nomeCasa);
                 lvi.SubItems.Add(nomeGenere);
                 lvi.Tag = l;
                 lvLibri.Items.Add(lvi);
-
-                i++;
             }
         }
 

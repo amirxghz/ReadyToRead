@@ -43,7 +43,7 @@ namespace ReadyToRead
                     conn.Open();
 
                 string sql = @"INSERT INTO utenti (nome, cognome, username, password, email, data_nascita, genere, comune_nascita, foto_profilo)
-                               VALUES (@nome, @cognome, @username, @password, @email, @data_nascita, @genere, @comune_nascita, @foto_profilo)";
+                      VALUES (@nome, @cognome, @username, @password, @email, @data_nascita, @genere, @comune_nascita, @foto_profilo)";
 
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@nome", utente.Nome ?? "");
@@ -56,9 +56,29 @@ namespace ReadyToRead
                 cmd.Parameters.AddWithValue("@comune_nascita", utente.ComuneDiNascita.ToString());
                 cmd.Parameters.AddWithValue("@foto_profilo", utente.Foto_profilo ?? "");
 
-                int numRec = cmd.ExecuteNonQuery();
-                if (numRec == 1)
-                    ID = cmd.LastInsertedId;
+                cmd.ExecuteNonQuery();
+                long utenteID = cmd.LastInsertedId;
+
+                if (utente is ClsAdmin)
+                {
+                    string sqlAdmin = "INSERT INTO admins (utenteID) VALUES (@utenteID)";
+                    MySqlCommand cmdA = new MySqlCommand(sqlAdmin, conn);
+                    cmdA.Parameters.AddWithValue("@utenteID", utenteID);
+                    cmdA.ExecuteNonQuery();
+                    ID = cmdA.LastInsertedId;
+                }
+                else if (utente is ClsCliente)
+                {
+                    ClsCliente cliente = (ClsCliente)utente;
+                    string sqlCliente = @"INSERT INTO clienti (indirizzo, cap, utenteID)
+                                  VALUES (@indirizzo, @cap, @utenteID)";
+                    MySqlCommand cmdC = new MySqlCommand(sqlCliente, conn);
+                    cmdC.Parameters.AddWithValue("@indirizzo", cliente.Indirizzo ?? "");
+                    cmdC.Parameters.AddWithValue("@cap", cliente.CAP ?? "");
+                    cmdC.Parameters.AddWithValue("@utenteID", utenteID);
+                    cmdC.ExecuteNonQuery();
+                    ID = cmdC.LastInsertedId;
+                }
 
                 conn.Close();
             }
@@ -161,10 +181,9 @@ namespace ReadyToRead
                     if (conn.State != ConnectionState.Open)
                         conn.Open();
 
-                    string sql = @"UPDATE utenti SET nome=@nome, cognome=@cognome, username=@username,
-                                   password=@password, email=@email, data_nascita=@data_nascita,
-                                   genere=@genere, comune_nascita=@comune_nascita, foto_profilo=@foto_profilo
-                                   WHERE ID=@ID";
+                    string sql = @"UPDATE utenti SET nome=@nome, cognome=@cognome, username=@username, password=@password, email=@email, data_nascita=@data_nascita,
+                           genere=@genere, comune_nascita=@comune_nascita, foto_profilo=@foto_profilo
+                           WHERE ID=@ID";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@ID", ID);
@@ -179,6 +198,28 @@ namespace ReadyToRead
                     cmd.Parameters.AddWithValue("@foto_profilo", utente.Foto_profilo ?? "");
 
                     esito = cmd.ExecuteNonQuery();
+
+                    if (utente is ClsAdmin)
+                    {
+                        ClsAdmin admin = (ClsAdmin)utente;
+                        string sqlAdmin = @"UPDATE admins SET utenteID=@utenteID
+                                    WHERE utenteID=@utenteID";
+                        MySqlCommand cmdA = new MySqlCommand(sqlAdmin, conn);
+                        cmdA.Parameters.AddWithValue("@utenteID", ID);
+                        cmdA.ExecuteNonQuery();
+                    }
+                    else if (utente is ClsCliente)
+                    {
+                        ClsCliente cliente = (ClsCliente)utente;
+                        string sqlCliente = @"UPDATE clienti SET indirizzo=@indirizzo, cap=@cap 
+                                      WHERE utenteID=@utenteID";
+                        MySqlCommand cmdC = new MySqlCommand(sqlCliente, conn);
+                        cmdC.Parameters.AddWithValue("@utenteID", ID);
+                        cmdC.Parameters.AddWithValue("@indirizzo", cliente.Indirizzo ?? "");
+                        cmdC.Parameters.AddWithValue("@cap", cliente.CAP ?? "");
+                        cmdC.ExecuteNonQuery();
+                    }
+
                     conn.Close();
                 }
                 catch (Exception ex)
@@ -207,6 +248,14 @@ namespace ReadyToRead
                 {
                     if (conn.State != ConnectionState.Open)
                         conn.Open();
+
+                    MySqlCommand cmdDelAdmin = new MySqlCommand("DELETE FROM admins WHERE utenteID=@ID", conn);
+                    cmdDelAdmin.Parameters.AddWithValue("@ID", ID);
+                    cmdDelAdmin.ExecuteNonQuery();
+
+                    MySqlCommand cmdDelCliente = new MySqlCommand("DELETE FROM clienti WHERE utenteID=@ID", conn);
+                    cmdDelCliente.Parameters.AddWithValue("@ID", ID);
+                    cmdDelCliente.ExecuteNonQuery();
 
                     MySqlCommand cmd = new MySqlCommand("DELETE FROM utenti WHERE ID=@ID", conn);
                     cmd.Parameters.AddWithValue("@ID", ID);

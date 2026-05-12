@@ -122,18 +122,6 @@ namespace ReadyToRead
             set => _sesso = value;
         }
 
-        public int Età
-        {
-            get
-            {
-                int anni = DateTime.Now.Year - _dataDiNascita.Year;
-                if (DateTime.Now.Month < _dataDiNascita.Month ||
-                    (DateTime.Now.Month == _dataDiNascita.Month && DateTime.Now.Day < _dataDiNascita.Day))
-                    anni--;
-                return anni;
-            }
-        }
-
         public string Foto_profilo { get => _foto_profilo; set => _foto_profilo = value; }
         #endregion
 

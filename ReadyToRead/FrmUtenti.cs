@@ -52,7 +52,7 @@ namespace ReadyToRead
             for  (int i =0;  i < utenti.Count; i++)
             {
                 ClsUtente u = utenti[i];
-                ListViewItem lvi = new ListViewItem("Utente");
+                ListViewItem lvi = new ListViewItem(u is ClsAdmin? "Admin" : "Cliente");
                 lvi.SubItems.Add(u.Nome + " " + u.Cognome);
                 lvi.SubItems.Add(u.Username);
                 lvi.SubItems.Add(u.Email);
@@ -86,15 +86,36 @@ namespace ReadyToRead
         private ClsUtente LeggiCampi()
         {
             ClsUtente utente = new ClsUtente();
-            utente.Nome = tbNome.Text.Trim();
-            utente.Cognome = tbCognome.Text.Trim();
-            utente.Username = tbUsername.Text.Trim();
-            utente.Password = tbPassword.Text.Trim();
-            utente.Email = tbEmail.Text.Trim();
-            utente.DataDiNascita = dtpDataDiNascita.Value;
-            utente.Sesso = rbM.Checked ? ClsUtente.eSESSO.m : ClsUtente.eSESSO.f;
-            if (cbComuneNascita.SelectedItem != null)
-                utente.ComuneDiNascita = (ClsUtente.eCOMUNE)cbComuneNascita.SelectedItem;
+            if(rbAdmin.Checked)
+            {
+                ClsAdmin admin = new ClsAdmin();
+                admin.Nome = tbNome.Text.Trim();
+                admin.Cognome = tbCognome.Text.Trim();
+                admin.Username = tbUsername.Text.Trim();
+                admin.Password = tbPassword.Text.Trim();
+                admin.Email = tbEmail.Text.Trim();
+                admin.DataDiNascita = dtpDataDiNascita.Value;
+                admin.Sesso = rbM.Checked ? ClsUtente.eSESSO.m : ClsUtente.eSESSO.f;
+                if (cbComuneNascita.SelectedItem != null)
+                    admin.ComuneDiNascita = (ClsUtente.eCOMUNE)cbComuneNascita.SelectedItem;
+
+                utente = admin;
+            }
+            else
+            {
+                ClsCliente cliente = new ClsCliente();
+                cliente.Nome = tbNome.Text.Trim();
+                cliente.Cognome = tbCognome.Text.Trim();
+                cliente.Username = tbUsername.Text.Trim();
+                cliente.Password = tbPassword.Text.Trim();
+                cliente.Email = tbEmail.Text.Trim();
+                cliente.DataDiNascita = dtpDataDiNascita.Value;
+                cliente.Sesso = rbM.Checked ? ClsUtente.eSESSO.m : ClsUtente.eSESSO.f;
+                if (cbComuneNascita.SelectedItem != null)
+                    cliente.ComuneDiNascita = (ClsUtente.eCOMUNE)cbComuneNascita.SelectedItem;
+
+                utente = cliente;
+            }
             return utente;
         }
 
@@ -154,7 +175,7 @@ namespace ReadyToRead
                 rbM.Checked = _utenteSelezionato.Sesso == ClsUtente.eSESSO.m;
                 rbF.Checked = _utenteSelezionato.Sesso == ClsUtente.eSESSO.f;
                 cbComuneNascita.SelectedItem = _utenteSelezionato.ComuneDiNascita;
-                tbCF.Text = _utenteSelezionato.CodiceFiscale ?? "";
+                tbCF.Text = CalcolaCF();
             }
         }
         
@@ -318,9 +339,7 @@ namespace ReadyToRead
         private void btnModifica_Click(object sender, EventArgs e)
         {
             if (lvUtenti.SelectedItems.Count == 0)
-            {
                 MessageBox.Show("Seleziona un utente da modificare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
             else
             {
                 VisualizzaUtente();
@@ -333,9 +352,7 @@ namespace ReadyToRead
         private void btnElimina_Click(object sender, EventArgs e)
         {
             if (lvUtenti.SelectedItems.Count == 0)
-            {
                 MessageBox.Show("Seleziona un utente da eliminare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
             else
             {
                 DialogResult dr = MessageBox.Show("Vuoi eliminare l'utente selezionato?", "Conferma", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
