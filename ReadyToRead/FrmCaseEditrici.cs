@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ReadyToRead
 {
-    public partial class FrmCaseEditrici : Form
+    public partial class FrmCaseEditrici : Form //Amir
     {
         private List<ClsCasa> _case = new List<ClsCasa>();
         private bool _modalitaModifica = false;

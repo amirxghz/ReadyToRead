@@ -9,7 +9,7 @@ using ReadyToRead;
 
 namespace ReadyToRead
 {
-    internal static class ClsAutoreBL
+    internal static class ClsAutoreBL //Amir
     {
         private const string SELECT_BASE =
             @"SELECT a.ID, a.verificato, a.nome_arte, a.data_morte, a.città, a.utenteID, 

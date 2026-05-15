@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReadyToRead
 {
-    public class ClsCaratterizzare
+    public class ClsCaratterizzare //Amir
     {
         long _ID;
         string _libroISBN;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReadyToRead
 {
-    public class ClsControllare
+    public class ClsControllare //Amir
     {
         long _ID;
         DateTime _data;

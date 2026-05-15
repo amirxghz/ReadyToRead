@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReadyToRead
 {
-    public class ClsAutore : ClsUtente
+    public class ClsAutore : ClsUtente //Amir
     {
         long _ID;
         bool _èVerificato;

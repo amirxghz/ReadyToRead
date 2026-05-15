@@ -9,7 +9,7 @@ using ReadyToRead;
 
 namespace ReadyToRead
 {
-    internal static class ClsCasaBL
+    internal static class ClsCasaBL //Urbani
     {
         private static ClsCasa CreaCasaDaRiga(DataRow r)
         {

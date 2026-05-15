@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ReadyToRead
 {
-    public partial class FrmUtenti : Form
+    public partial class FrmUtenti : Form //Amir
     {
         private List<ClsUtente> _utenti = new List<ClsUtente>();
         private bool _modalitaModifica = false;

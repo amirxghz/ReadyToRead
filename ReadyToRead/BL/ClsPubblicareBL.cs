@@ -9,7 +9,7 @@ using ReadyToRead;
 
 namespace ReadyToRead
 {
-    internal static class ClsPubblicareBL
+    internal static class ClsPubblicareBL //Urbani
     {
         #region CREATE
         internal static long Create(ref MySqlConnection conn, ClsPubblicare pubblicare, out string errore)

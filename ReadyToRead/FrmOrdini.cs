@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ReadyToRead
 {
-    public partial class FrmOrdini : Form
+    public partial class FrmOrdini : Form //Amir
     {
         private List<ClsOrdinare> _ordini = new List<ClsOrdinare>();
         enum eTipoOrdine

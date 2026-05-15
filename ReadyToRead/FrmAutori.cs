@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ReadyToRead
 {
-    public partial class FrmAutori : Form
+    public partial class FrmAutori : Form //Amir
     {
         private List<ClsAutore> _autori = new List<ClsAutore>();
         private bool _modalitaModifica = false;

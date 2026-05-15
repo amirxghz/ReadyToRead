@@ -9,7 +9,7 @@ using ReadyToRead;
 
 namespace ReadyToRead
 {
-    internal static class ClsAdminBL
+    internal static class ClsAdminBL //Amir
     {
 
         private const string SELECT_BASE =

@@ -9,7 +9,7 @@ using ReadyToRead;
 
 namespace ReadyToRead
 {
-    internal static class ClsClienteBL
+    internal static class ClsClienteBL //Urbani
     {
         private const string SELECT_BASE =
             @"SELECT c.ID, c.indirizzo, c.cap, c.utenteID,

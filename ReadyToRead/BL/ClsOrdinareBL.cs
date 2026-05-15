@@ -9,7 +9,7 @@ using ReadyToRead;
 
 namespace ReadyToRead
 {
-    internal static class ClsOrdinareBL
+    internal static class ClsOrdinareBL //Urbani
     {
         #region CREATE
         internal static long Create(ref MySqlConnection conn, ClsOrdinare ordine, out string errore)

@@ -9,7 +9,7 @@ using ReadyToRead;
 
 namespace ReadyToRead
 {
-    internal static class ClsUtenteBL
+    internal static class ClsUtenteBL //Amir
     {
         private static ClsUtente CreaUtenteDaRiga(DataRow r)
         {

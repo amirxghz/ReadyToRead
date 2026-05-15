@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReadyToRead
 {
-    public class ClsUtente
+    public class ClsUtente //Amir
     {
         public enum eCOMUNE
         {

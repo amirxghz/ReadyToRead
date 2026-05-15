@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ReadyToRead
 {
-    public partial class FrmLibri : Form
+    public partial class FrmLibri : Form //Amir
     {
         bool _inModifica = false;
         ClsLibro _libroSelezionato = null;
