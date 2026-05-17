@@ -42,6 +42,7 @@ namespace ReadyToRead
                 if (conn.State != ConnectionState.Open)
                     conn.Open();
 
+                // La password viene hashata con SHA2-256 direttamente in MySQL
                 string sql = @"INSERT INTO utenti (nome, cognome, username, password, email, data_nascita, genere, comune_nascita, foto_profilo)
                       VALUES (@nome, @cognome, @username, SHA2(@password, 256), @email, @data_nascita, @genere, @comune_nascita, @foto_profilo)";
 
@@ -106,12 +107,8 @@ namespace ReadyToRead
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
-                int i = 0;
-                while (i < dt.Rows.Count)
-                {
+                for (int i=0; i < dt.Rows.Count;i++)
                     utenti.Add(CreaUtenteDaRiga(dt.Rows[i]));
-                    i++;
-                }
 
                 conn.Close();
             }
@@ -145,12 +142,9 @@ namespace ReadyToRead
                     DataTable dt = new DataTable();
                     da.Fill(dt);
 
-                    int i = 0;
-                    while (i < dt.Rows.Count)
-                    {
+                   
+                    for (int i =0; i < dt.Rows.Count;i++)
                         utenti.Add(CreaUtenteDaRiga(dt.Rows[i]));
-                        i++;
-                    }
 
                     conn.Close();
                 }
@@ -317,6 +311,7 @@ namespace ReadyToRead
                     if (conn.State != ConnectionState.Open)
                         conn.Open();
 
+                    // Prima verifica che l'utente esista
                     string query = "SELECT * FROM utenti WHERE username = @username";
                     MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
                     da.SelectCommand.Parameters.AddWithValue("@username", username);
@@ -325,6 +320,7 @@ namespace ReadyToRead
 
                     if (dt.Rows.Count > 0)
                     {
+                        // Poi verifica la password con SHA2-256
                         query = "SELECT * FROM utenti WHERE username = @username AND password = SHA2(@password, 256)";
                         da = new MySqlDataAdapter(query, conn);
                         da.SelectCommand.Parameters.AddWithValue("@username", username);
@@ -336,6 +332,7 @@ namespace ReadyToRead
                         {
                             long utenteID = CreaUtenteDaRiga(dt.Rows[0]).ID;
 
+                            // Determina il ruolo: cliente o admin
                             query = "SELECT * FROM clienti WHERE utenteID = @ID";
                             da = new MySqlDataAdapter(query, conn);
                             da.SelectCommand.Parameters.AddWithValue("@ID", utenteID);

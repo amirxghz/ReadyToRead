@@ -47,7 +47,7 @@ namespace ReadyToRead
         #endregion
 
         #region READ
-      
+
         internal static ClsOrdinare GetByOrdineID(ref MySqlConnection conn, string ordineID, out string errore)
         {
             DataTable dt = null;
@@ -124,7 +124,7 @@ namespace ReadyToRead
 
             return ordini;
         }
-        
+
         internal static List<ClsOrdinare> GetByStato(ref MySqlConnection conn, string stato, out string errore)
         {
             DataTable dt = null;
@@ -246,7 +246,7 @@ namespace ReadyToRead
 
             return esito;
         }
-        
+
         internal static long UpdateStato(ref MySqlConnection conn, string ordineID, string nuovoStato, out string errore)
         {
             long esito = 0;

@@ -132,7 +132,7 @@ namespace ReadyToRead
             if (Program._chiudiForm)
                 this.Close();
         }
-        
+
         private void btnVisualizza_Click(object sender, EventArgs e)
         {
             if (lvCase.SelectedItems.Count == 0)

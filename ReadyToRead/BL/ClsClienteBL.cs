@@ -21,7 +21,7 @@ namespace ReadyToRead
         private static ClsCliente CreaClienteDaRiga(DataRow r)
         {
             ClsCliente c = new ClsCliente();
-            c.ID = Convert.ToInt64(r["ID"]);
+            c.Id = Convert.ToInt64(r["ID"]);
             c.UtenteID = Convert.ToInt32(r["utenteID"]);
             c.Indirizzo = r["indirizzo"] == DBNull.Value ? "" : r["indirizzo"].ToString();
             c.CAP = r["cap"] == DBNull.Value ? "" : r["cap"].ToString();
@@ -51,7 +51,7 @@ namespace ReadyToRead
                     conn.Open();
 
                 string sqlUtente = @"INSERT INTO utenti (nome, cognome, username, password, email, data_nascita, genere, comune_nascita)
-                                     VALUES (@nome, @cognome, @username, SHA2(@password, 256), @email, @data_nascita, @genere, @comune_nascita)";
+                                     VALUES (@nome, @cognome, @username, @password, @email, @data_nascita, @genere, @comune_nascita)";
                 MySqlCommand cmdU = new MySqlCommand(sqlUtente, conn);
                 cmdU.Parameters.AddWithValue("@nome", cliente.Nome ?? "");
                 cmdU.Parameters.AddWithValue("@cognome", cliente.Cognome ?? "");

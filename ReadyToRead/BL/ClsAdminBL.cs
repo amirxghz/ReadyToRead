@@ -50,7 +50,7 @@ namespace ReadyToRead
                     conn.Open();
 
                 string sqlUtente = @"INSERT INTO utenti (nome, cognome, username, password, email, data_nascita, genere, comune_nascita)
-                                     VALUES (@nome, @cognome, @username, SHA2(@password, 256), @email, @data_nascita, @genere, @comune_nascita)";
+                                     VALUES (@nome, @cognome, @username, @password, @email, @data_nascita, @genere, @comune_nascita)";
                 MySqlCommand cmdU = new MySqlCommand(sqlUtente, conn);
                 cmdU.Parameters.AddWithValue("@nome", admin.Nome ?? "");
                 cmdU.Parameters.AddWithValue("@cognome", admin.Cognome ?? "");

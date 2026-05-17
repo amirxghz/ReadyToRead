@@ -331,9 +331,26 @@ namespace ReadyToRead
             ResetCampi();
         }
 
+        bool modalitàVisualizza = false;
         private void btnVisualizza_Click(object sender, EventArgs e)
         {
-            VisualizzaUtente();
+            modalitàVisualizza = !modalitàVisualizza;
+            if (modalitàVisualizza)
+            {
+                VisualizzaUtente();
+                btnAggiungi.Visible = false;
+                btnAnnulla.Visible = false;
+                btnVisualizza.ForeColor = Color.DodgerBlue;
+                btnVisualizza.Text = "👁️Smetti";
+            }
+            else
+            {
+                ResetCampi();
+                btnAggiungi.Visible = true;
+                btnAnnulla.Visible = true;
+                btnVisualizza.ForeColor = Color.Black;
+                btnVisualizza.Text = "👁️Visualizza";
+            }
         }
 
         private void btnModifica_Click(object sender, EventArgs e)

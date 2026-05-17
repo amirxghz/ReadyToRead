@@ -21,7 +21,7 @@ namespace ReadyToRead
         private static ClsAutore CreaAutoreDaRiga(DataRow r)
         {
             ClsAutore a = new ClsAutore();
-            a.ID = Convert.ToInt64(r["ID"]);
+            a.Id = Convert.ToInt64(r["ID"]);
             a.UtenteID = Convert.ToInt64(r["utenteID"]);
             a.ÈVerificato = Convert.ToBoolean(r["verificato"]);
             a.NomeArte = r["nome_arte"] == DBNull.Value ? "" : r["nome_arte"].ToString();

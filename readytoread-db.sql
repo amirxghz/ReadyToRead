@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Creato il: Mag 17, 2026 alle 20:31
+-- Creato il: Mag 17, 2026 alle 22:48
 -- Versione del server: 8.2.0
 -- Versione PHP: 8.3.0
 
@@ -32,6 +32,13 @@ CREATE TABLE `admins` (
   `utenteID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dump dei dati per la tabella `admins`
+--
+
+INSERT INTO `admins` (`ID`, `utenteID`) VALUES
+(1, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -43,6 +50,7 @@ CREATE TABLE `autori` (
   `verificato` tinyint(1) NOT NULL,
   `nome_arte` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `data_morte` date DEFAULT NULL,
+  `città` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `utenteID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -83,14 +91,6 @@ CREATE TABLE `clienti` (
   `cap` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `utenteID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dump dei dati per la tabella `clienti`
---
-
-INSERT INTO `clienti` (`ID`, `indirizzo`, `cap`, `utenteID`) VALUES
-(1, '', '', 1),
-(2, '', '', 2);
 
 -- --------------------------------------------------------
 
@@ -188,11 +188,14 @@ CREATE TABLE `houses` (
 
 CREATE TABLE `libri` (
   `isbn` char(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `path_copertina` blob,
+  `path_copertina` varchar(500) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `numero_pagine` smallint NOT NULL,
   `sinossi` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `path_file` blob,
   `tipo` enum('fisico','ebook') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `edizione` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `lingua` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `anno_pubblicazione` date DEFAULT NULL,
   `prodottoID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -220,7 +223,7 @@ CREATE TABLE `ordinare` (
 
 CREATE TABLE `prodotti` (
   `ID` int NOT NULL,
-  `nome` int NOT NULL,
+  `nome` varchar(80) COLLATE utf8mb4_general_ci NOT NULL,
   `stato_disponibilita` enum('disponibile','preordine','esaurito','') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `prezzo` decimal(10,0) NOT NULL,
   `descrizione` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
@@ -305,8 +308,7 @@ CREATE TABLE `utenti` (
 --
 
 INSERT INTO `utenti` (`ID`, `nome`, `cognome`, `comune_nascita`, `data_nascita`, `genere`, `username`, `password`, `email`, `foto_profilo`) VALUES
-(1, '', '', 'Chiaravalle', '2025-11-13', 'f', '', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', '', ''),
-(2, 'ewrew', 'erwrr', 'Nessuno', '2025-11-01', 'm', 'ciccio', 'c23a9f0b40aa39799d80255487ec8f167dc4e6aef5155ba429f6e5192d3e7deb', 'ewrwe@', NULL);
+(3, 'Amir', 'Ghouzlani', 'Ancona', '2007-12-17', 'm', 'amirxghz', '21088768c7f1bc3f5f61fa7d01d61c3d1b2f8c794a86b4c98e8fa0897053f0c8', 'amirxghz@gmail.com', '');
 
 --
 -- Indici per le tabelle scaricate
@@ -454,7 +456,7 @@ ALTER TABLE `utenti`
 -- AUTO_INCREMENT per la tabella `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT per la tabella `autori`
@@ -508,7 +510,7 @@ ALTER TABLE `gift_cards`
 -- AUTO_INCREMENT per la tabella `houses`
 --
 ALTER TABLE `houses`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT per la tabella `ordinare`
@@ -550,7 +552,7 @@ ALTER TABLE `super_admins`
 -- AUTO_INCREMENT per la tabella `utenti`
 --
 ALTER TABLE `utenti`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Limiti per le tabelle scaricate
@@ -612,7 +614,7 @@ ALTER TABLE `libri`
 -- Limiti per la tabella `ordinare`
 --
 ALTER TABLE `ordinare`
-  ADD CONSTRAINT `ordine_cliente` FOREIGN KEY (`clienteID`) REFERENCES `utenti` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `ordine_cliente` FOREIGN KEY (`clienteID`) REFERENCES `clienti` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `ordine_prodotto` FOREIGN KEY (`prodottoID`) REFERENCES `prodotti` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

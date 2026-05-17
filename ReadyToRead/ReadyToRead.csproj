@@ -391,6 +391,7 @@
     <Content Include="bin\Debug\ReadyToRead.exe" />
     <Content Include="bin\Debug\ReadyToRead.pdb" />
     <Content Include="readytoread.sql" />
+    <Content Include="Resources\libroCopertina_DEFAULT.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Release\" />

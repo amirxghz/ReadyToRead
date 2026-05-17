@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,8 +21,8 @@ namespace ReadyToRead
         List<ClsCasa> _case = new List<ClsCasa>();
         List<ClsGenere> _generi = new List<ClsGenere>();
 
-
         Image _coverLibro = Properties.Resources.cover;
+        string _pathCopertinaScelto = string.Empty;
 
         public FrmLibri()
         {
@@ -33,6 +34,7 @@ namespace ReadyToRead
             PopolaComboBox();
             CaricaLibri();
         }
+
         private void PopolaComboBox()
         {
             string erroreA;
@@ -66,13 +68,11 @@ namespace ReadyToRead
             else
             {
                 clbGenere.Items.Clear();
-                for (int i=0;  i < _generi.Count;i++)
+                for (int i = 0; i < _generi.Count; i++)
                     clbGenere.Items.Add(_generi[i]);
                 clbGenere.DisplayMember = "Nome";
             }
         }
-
-
 
         private void CaricaLibri()
         {
@@ -88,13 +88,13 @@ namespace ReadyToRead
         private void PopolaListView(List<ClsLibro> libri)
         {
             lvLibri.Items.Clear();
-            for (int i=0; i < libri.Count;i++)
+            for (int i = 0; i < libri.Count; i++)
             {
                 ClsLibro l = libri[i];
 
                 string nomeAutore = "";
                 string erroreS;
-                List<ClsScrivere> scritture = ClsScrivereBL.GetByAutoreID(ref Program.conn, l.ProdottoID, out erroreS);
+                List<ClsScrivere> scritture = ClsScrivereBL.GetByLibroISBN(ref Program.conn, l.Isbn, out erroreS);
                 if (string.IsNullOrEmpty(erroreS) && scritture.Count > 0)
                 {
                     long autoreID = scritture[0].AutoreID;
@@ -102,7 +102,7 @@ namespace ReadyToRead
                     int j = 0;
                     while (j < _autori.Count && autore == null)
                     {
-                        if (_autori[j].ID == autoreID)
+                        if (_autori[j].Id == autoreID)
                             autore = _autori[j];
                         j++;
                     }
@@ -112,7 +112,7 @@ namespace ReadyToRead
 
                 string nomeCasa = "";
                 string erroreP;
-                List<ClsPubblicare> pubblicazioni = ClsPubblicareBL.GetByCasaEditriceID(ref Program.conn, l.ProdottoID, out erroreP);
+                List<ClsPubblicare> pubblicazioni = ClsPubblicareBL.GetByLibroISBN(ref Program.conn, l.Isbn, out erroreP);
                 if (string.IsNullOrEmpty(erroreP) && pubblicazioni.Count > 0)
                 {
                     long casaID = pubblicazioni[0].CasaEditriceID;
@@ -127,16 +127,16 @@ namespace ReadyToRead
                     if (casa != null)
                         nomeCasa = casa.RagioneSociale;
                 }
-
+                
                 string nomeGenere = "";
-                string erroreG="";
-                List<ClsCaratterizzare> generi = ClsCaratterizzareBL.GetByGenereID(ref Program.conn, l.ProdottoID, out erroreG);
-                if (string.IsNullOrEmpty(erroreG) && pubblicazioni.Count > 0)
+                string erroreG;
+                List<ClsCaratterizzare> caratterizzazioni = ClsCaratterizzareBL.GetByLibroISBN(ref Program.conn, l.Isbn, out erroreG);
+                if (string.IsNullOrEmpty(erroreG) && caratterizzazioni.Count > 0)
                 {
-                    long genereID = generi[0].GenereID;
+                    long genereID = caratterizzazioni[0].GenereID;
                     ClsGenere genere = null;
                     int j = 0;
-                    while (j < _case.Count && genere == null)
+                    while (j < _generi.Count && genere == null)
                     {
                         if (_generi[j].ID == genereID)
                             genere = _generi[j];
@@ -155,7 +155,6 @@ namespace ReadyToRead
             }
         }
 
-
         private void ResetCampi()
         {
             tbTitolo.Clear();
@@ -168,10 +167,12 @@ namespace ReadyToRead
             dtmDataProduzione.Value = DateTime.Now;
             cbAutore.SelectedIndex = -1;
             cbCasaEditrice.SelectedIndex = -1;
-            for (int i = 0;  i < clbGenere.Items.Count; i++)
+            for (int i = 0; i < clbGenere.Items.Count; i++)
                 clbGenere.SetItemChecked(i, false);
             _coverLibro = Properties.Resources.cover;
+            _pathCopertinaScelto = string.Empty;
             pbCoverLibro.Image = _coverLibro;
+            tbISBN.Text = string.Empty;
             _inModifica = false;
             _libroSelezionato = null;
             _idSelezionato = -1;
@@ -186,6 +187,7 @@ namespace ReadyToRead
             libro.Nome = tbTitolo.Text.Trim();
             libro.Edizione = tbEdizione.Text.Trim();
             libro.Lingua = tbLingua.Text.Trim();
+            libro.Sinossi = rtbDescrizione.Text.Trim();
             libro.Descrizione = rtbDescrizione.Text.Trim();
             libro.NumeroPagine = (int)nudPagine.Value;
             libro.Prezzo = (float)nudPrezzo.Value;
@@ -193,14 +195,12 @@ namespace ReadyToRead
             return libro;
         }
 
-
-
         private void pbCoverLibro_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 ofd.Filter = "File Immagine|*.jpg;*.jpeg;*.png";
-                ofd.Title = "Seleziona una foto profilo(solo jpg, jpeg e png)";
+                ofd.Title = "Seleziona copertina (solo jpg, jpeg, png)";
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
@@ -208,6 +208,7 @@ namespace ReadyToRead
                     {
                         _coverLibro = Image.FromFile(ofd.FileName);
                         pbCoverLibro.Image = _coverLibro;
+                        _pathCopertinaScelto = ofd.FileName;
                     }
                     catch (Exception ex)
                     {
@@ -237,9 +238,26 @@ namespace ReadyToRead
             GestisciLibro(_inModifica);
         }
 
+        bool modalitàVisualizza = false;
         private void btnVisualizza_Click(object sender, EventArgs e)
         {
-            VisualizzaLibro();
+            modalitàVisualizza = !modalitàVisualizza;
+            if (modalitàVisualizza)
+            {
+                VisualizzaLibro();
+                btnAggiungi.Visible = false;
+                btnAnnulla.Visible = false;
+                btnVisualizza.ForeColor = Color.DodgerBlue;
+                btnVisualizza.Text = "👁️Smetti";
+            }
+            else
+            {
+                ResetCampi();
+                btnAggiungi.Visible = true;
+                btnAnnulla.Visible = true;
+                btnVisualizza.ForeColor = Color.Black;
+                btnVisualizza.Text = "👁️Visualizza";
+            }
         }
 
         private void btnModifica_Click(object sender, EventArgs e)
@@ -261,6 +279,7 @@ namespace ReadyToRead
                 MessageBox.Show("Seleziona un libro da eliminare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
             {
+
                 DialogResult dr = MessageBox.Show("Vuoi eliminare il libro selezionato?", "Conferma", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.Yes)
                 {
@@ -272,15 +291,18 @@ namespace ReadyToRead
                     else if (esito > 0)
                     {
                         MessageBox.Show("Libro eliminato.", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ResetCampi();
                         CaricaLibri();
                     }
                 }
             }
         }
+
         private void tbFiltroNome_TextChanged(object sender, EventArgs e)
         {
             Ricerca(tbFiltroNome.Text.Trim());
         }
+
         private void Ricerca(string testo)
         {
             if (string.IsNullOrEmpty(testo))
@@ -295,49 +317,163 @@ namespace ReadyToRead
                     PopolaListView(filtrati);
             }
         }
-        
 
         private void GestisciLibro(bool modificaLibro)
         {
             ClsLibro libro = LeggiCampi();
-            string errore;
-            libro.Isbn = GeneraISBN(libro);
 
-            if (!modificaLibro)
-            {
-                long id = ClsLibroBL.Create(ref Program.conn, libro, out errore);
-                if (!string.IsNullOrEmpty(errore))
-                    MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else if (id > 0)
-                {
-                    MessageBox.Show("Libro aggiunto con successo!", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ResetCampi();
-                    CaricaLibri();
-                }
-            }
+            if (string.IsNullOrWhiteSpace(libro.Nome))
+                MessageBox.Show("Il titolo del libro e' obbligatorio.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
             {
-                if (_libroSelezionato == null)
-                    MessageBox.Show("Seleziona un libro da modificare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                else
+
+                string errore;
+
+                if (!string.IsNullOrEmpty(_pathCopertinaScelto))
                 {
-                    long esito = ClsLibroBL.Update(ref Program.conn, _idSelezionato, libro, out errore);
+                    string pathCopertina = ClsLibroBL.SalvaCopertina(_pathCopertinaScelto, libro.Nome, out errore);
                     if (!string.IsNullOrEmpty(errore))
-                        MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    else if (esito > 0)
+                        MessageBox.Show("Errore nel salvataggio della copertina: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    else
+                        libro.ImgCopertina = pathCopertina;
+                }
+
+                if (!modificaLibro)
+                {
+                    int quantita = (int)nudQuantita.Value;
+                    if (quantita <= 0) quantita = 1;
+
+                    long ultimoID = 0;
+                    string ultimoISBN = string.Empty;
+
+                    int q = 0;
+                    bool continua = true;
+
+                    while (q < quantita && continua)
                     {
-                        MessageBox.Show("Libro modificato con successo!", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        libro.Isbn = GeneraISBN(libro, q);
+
+                        long id = ClsLibroBL.Create(ref Program.conn, libro, out errore);
+
+                        if (!string.IsNullOrEmpty(errore))
+                        {
+                            MessageBox.Show("Errore alla copia " + (q + 1) + ": " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            continua = false;
+                        }
+
+                        if (id > 0)
+                        {
+                            ultimoID = id;
+                            ultimoISBN = libro.Isbn;
+                        }
+
+                        q++;
+                    }
+
+                    if (ultimoID > 0)
+                    {
+                        string isbnPrimoLibro = GeneraISBN(libro, 0);
+                        List<ClsLibro> libriCreati = ClsLibroBL.GetByNome(ref Program.conn, libro.Nome, out errore);
+
+                        string isbnRif;
+
+                        if (libriCreati.Count > 0)
+                            isbnRif = libriCreati[libriCreati.Count - quantita].Isbn;
+                        else
+                            isbnRif = libro.Isbn;
+
+                        if (cbAutore.SelectedIndex >= 0)
+                        {
+                            ClsAutore autoreSelezionato = (ClsAutore)cbAutore.SelectedItem;
+                            ClsScrivere scrivere = new ClsScrivere();
+                            scrivere.AutoreID = autoreSelezionato.Id;
+                            scrivere.LibroISBN = isbnRif;
+                            scrivere.Data = DateTime.Now;
+                            string erroreScr;
+                            ClsScrivereBL.Create(ref Program.conn, scrivere, out erroreScr);
+                            if (!string.IsNullOrEmpty(erroreScr))
+                                MessageBox.Show("Errore associazione autore: " + erroreScr, "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+
+                        if (cbCasaEditrice.SelectedIndex >= 0)
+                        {
+                            ClsCasa casaSelezionata = (ClsCasa)cbCasaEditrice.SelectedItem;
+                            ClsPubblicare pubblicare = new ClsPubblicare();
+                            pubblicare.CasaEditriceID = casaSelezionata.ID;
+                            pubblicare.LibroISBN = isbnRif;
+                            pubblicare.AnnoPubblicazione = libro.AnnoPubblicazione;
+                            pubblicare.Edizione = libro.Edizione;
+                            string erroreP;
+                            ClsPubblicareBL.Create(ref Program.conn, pubblicare, out erroreP);
+                            if (!string.IsNullOrEmpty(erroreP))
+                                MessageBox.Show("Errore associazione casa editrice: " + erroreP, "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+
+                        for (int i = 0; i < clbGenere.CheckedItems.Count; i++)
+                        {
+                            ClsGenere genereSelezionato = (ClsGenere)clbGenere.CheckedItems[i];
+                            ClsCaratterizzare car = new ClsCaratterizzare();
+                            car.LibroISBN = isbnRif;
+                            car.GenereID = (int)genereSelezionato.ID;
+                            string erroreC;
+                            ClsCaratterizzareBL.Create(ref Program.conn, car, out erroreC);
+                            if (!string.IsNullOrEmpty(erroreC))
+                                MessageBox.Show("Errore associazione genere: " + erroreC, "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+
+                        MessageBox.Show(quantita + " copie del libro aggiunte con successo!", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ResetCampi();
                         CaricaLibri();
+                    }
+                }
+                else
+                {
+                    if (_libroSelezionato == null)
+                        MessageBox.Show("Seleziona un libro da modificare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    else
+                    {
+                        libro.Isbn = _libroSelezionato.Isbn;
+                        long esito = ClsLibroBL.Update(ref Program.conn, _idSelezionato, libro, out errore);
+                        if (!string.IsNullOrEmpty(errore))
+                            MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        else if (esito > 0)
+                        {
+                            AggiornaGeneriLibro(_libroSelezionato.Isbn);
+
+                            MessageBox.Show("Libro modificato con successo!", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            ResetCampi();
+                            CaricaLibri();
+                        }
                     }
                 }
             }
         }
 
-        private string GeneraISBN(ClsLibro libro)
+        private void AggiornaGeneriLibro(string isbn)
         {
-            string isbn=String.Empty;
-            return isbn;
+            string errore;
+            List<ClsCaratterizzare> vecchie = ClsCaratterizzareBL.GetByLibroISBN(ref Program.conn, isbn, out errore);
+            if (string.IsNullOrEmpty(errore))
+            {
+                for (int i = 0; i < vecchie.Count; i++)
+                    ClsCaratterizzareBL.Delete(ref Program.conn, vecchie[i].ID, out errore);
+            }
+
+            for (int i = 0; i < clbGenere.CheckedItems.Count; i++)
+            {
+                ClsGenere g = (ClsGenere)clbGenere.CheckedItems[i];
+                ClsCaratterizzare car = new ClsCaratterizzare();
+                car.LibroISBN = isbn;
+                car.GenereID = (int)g.ID;
+                ClsCaratterizzareBL.Create(ref Program.conn, car, out errore);
+            }
+        }
+
+        private string GeneraISBN(ClsLibro libro, int indiceCopia)
+        {
+            string timestamp = DateTime.Now.ToString("yyMMddHHmmss");
+            string isbn = "978" + timestamp.Substring(0, 9) + indiceCopia.ToString();
+            return isbn.Substring(0, 13);
         }
 
         private void VisualizzaLibro()
@@ -355,18 +491,54 @@ namespace ReadyToRead
                 nudPagine.Value = _libroSelezionato.NumeroPagine;
                 nudPrezzo.Value = (decimal)_libroSelezionato.Prezzo;
                 dtmDataProduzione.Value = _libroSelezionato.AnnoPubblicazione;
-                btnAssegnaEbook.Visible = true;
                 tbISBN.Text = _libroSelezionato.Isbn;
+                btnAssegnaEbook.Visible = true;
+
+                if (!string.IsNullOrEmpty(_libroSelezionato.ImgCopertina))
+                {
+                    string pathCompleto = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _libroSelezionato.ImgCopertina);
+                    if (File.Exists(pathCompleto))
+                    {
+                        try
+                        {
+                            _coverLibro = Image.FromFile(pathCompleto);
+                            pbCoverLibro.Image = _coverLibro;
+                        }
+                        catch
+                        {
+                            pbCoverLibro.Image = Properties.Resources.libroCopertina_DEFAULT;
+                        }
+                    }
+                }
+
+                string erroreG;
+                List<ClsCaratterizzare> caratterizzazioni = ClsCaratterizzareBL.GetByLibroISBN(ref Program.conn, _libroSelezionato.Isbn, out erroreG);
+                if (string.IsNullOrEmpty(erroreG))
+                {
+                    for (int i = 0; i < clbGenere.Items.Count; i++)
+                    {
+                        ClsGenere g = (ClsGenere)clbGenere.Items[i];
+                        bool spuntato = false;
+                        int j = 0;
+
+                        while (j < caratterizzazioni.Count && !spuntato)
+                        {
+                            if (caratterizzazioni[j].GenereID == (int)g.ID)
+                                spuntato = true;
+                            j++;
+                        }
+                        clbGenere.SetItemChecked(i, spuntato);
+                    }
+                }
             }
         }
-
 
         private void btnAssegnaEbook_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                ofd.Filter = "File Testo|*.txt;*.docx;*.doc;*.rtf";
-                ofd.Title = "Seleziona un file di testo per l'e-book (solo txt, docx, doc e rtf)";
+                ofd.Filter = "File Testo|*.txt;*.docx;*.doc;*.rtf;*.pdf;*.epub";
+                ofd.Title = "Seleziona il file e-book";
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
@@ -374,16 +546,22 @@ namespace ReadyToRead
                     {
                         if (_idSelezionato > 0)
                         {
-                            string errore;
                             ClsLibro libro = Program._libri.FirstOrDefault(l => l.ProdottoID == _idSelezionato);
                             if (libro != null)
                             {
-                                libro.EBook = ofd.FileName;
-                                ClsLibroBL.Update(ref Program.conn, _idSelezionato, libro, out errore);
+                                string errore;
+                                string pathEBook = ClsLibroBL.SalvaEBook(ofd.FileName, libro.Nome, out errore);
                                 if (!string.IsNullOrEmpty(errore))
-                                    MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Errore nel salvataggio del file: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 else
-                                    MessageBox.Show("E-book assegnato con successo.", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                {
+                                    libro.EBook = pathEBook;
+                                    ClsLibroBL.Update(ref Program.conn, _idSelezionato, libro, out errore);
+                                    if (!string.IsNullOrEmpty(errore))
+                                        MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    else
+                                        MessageBox.Show("E-book assegnato con successo.\nSalvato in: " + pathEBook, "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
                             }
                         }
                     }
@@ -400,7 +578,7 @@ namespace ReadyToRead
             Program._chiudiForm = true;
             FrmAutori frmAutori = new FrmAutori();
             frmAutori.ShowDialog();
-            PopolaComboBox();    
+            PopolaComboBox();
         }
 
         private void btnAggiungiCasa_Click(object sender, EventArgs e)

@@ -26,6 +26,7 @@ namespace ReadyToRead
         {
             CaricaGeneri();
         }
+
         private void CaricaGeneri()
         {
             string errore;
@@ -40,7 +41,7 @@ namespace ReadyToRead
         private void PopolaListView(List<ClsGenere> generi)
         {
             lvGeneri.Items.Clear();
-            for (int i = 0; i<generi.Count;i++)
+            for (int i = 0; i < generi.Count; i++)
             {
                 ClsGenere g = generi[i];
                 ListViewItem lvi = new ListViewItem(g.Nome);
@@ -60,7 +61,6 @@ namespace ReadyToRead
             _idSelezionato = -1;
             lblTitolo.Text = "Crea Genere";
             btnAggiungi.Text = "➕Aggiungi";
-
 
             if (Program._chiudiForm)
                 this.Close();
@@ -88,12 +88,29 @@ namespace ReadyToRead
                     MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else
                     PopolaListView(filtrati);
-            }        
+            }
         }
 
+        bool modalitàVisualizza = false;
         private void btnVisualizza_Click(object sender, EventArgs e)
         {
-            VisualizzaGenere();
+            modalitàVisualizza = !modalitàVisualizza;
+            if (modalitàVisualizza)
+            {
+                VisualizzaGenere();
+                btnAggiungi.Visible = false;
+                btnAnnulla.Visible = false;
+                btnVisualizza.ForeColor = Color.DodgerBlue;
+                btnVisualizza.Text = "👁️Smetti";
+            }
+            else
+            {
+                ResetCampi();
+                btnAggiungi.Visible = true;
+                btnAnnulla.Visible = true;
+                btnVisualizza.ForeColor = Color.Black;
+                btnVisualizza.Text = "👁️Visualizza";
+            }
         }
 
         private void VisualizzaGenere()
@@ -103,6 +120,7 @@ namespace ReadyToRead
             else
             {
                 _genereSelezionato = (ClsGenere)lvGeneri.SelectedItems[0].Tag;
+                _idSelezionato = _genereSelezionato.ID;
                 tbNome.Text = _genereSelezionato.Nome;
                 tbTarget.Text = _genereSelezionato.Target;
                 rtbDescrizione.Text = _genereSelezionato.Descrizione;
@@ -133,12 +151,13 @@ namespace ReadyToRead
                 {
                     ClsGenere g = (ClsGenere)lvGeneri.SelectedItems[0].Tag;
                     string errore;
-                    long esito = ClsGenereBL.Delete(ref Program.conn, _idSelezionato, out errore);
+                    long esito = ClsGenereBL.Delete(ref Program.conn, g.ID, out errore);
                     if (!string.IsNullOrEmpty(errore))
                         MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     else if (esito > 0)
                     {
                         MessageBox.Show("Genere eliminato.", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ResetCampi();
                         CaricaGeneri();
                     }
                 }
@@ -149,6 +168,7 @@ namespace ReadyToRead
         {
             GestisciGenere(_modalitaModifica);
         }
+
         private void GestisciGenere(bool modificaGenere)
         {
             ClsGenere genere = LeggiCampi();

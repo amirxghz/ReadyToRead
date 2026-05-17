@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,10 +12,32 @@ namespace ReadyToRead
 {
     internal static class ClsLibroBL //Urbani
     {
+        private static ClsLibro CreaLibroDaRiga(DataRow r)
+        {
+            ClsLibro l = new ClsLibro();
+            l.Isbn = r["isbn"] == DBNull.Value ? "" : r["isbn"].ToString();
+            l.ProdottoID = r["prodottoID"] == DBNull.Value ? 0 : Convert.ToInt32(r["prodottoID"]);
+            l.NumeroPagine = r["numero_pagine"] == DBNull.Value ? 0 : Convert.ToInt32(r["numero_pagine"]);
+            l.Sinossi = r["sinossi"] == DBNull.Value ? "" : r["sinossi"].ToString();
+            l.ImgCopertina = r["path_copertina"] == DBNull.Value ? "" : r["path_copertina"].ToString();
+            l.EBook = r["path_file"] == DBNull.Value ? "" : r["path_file"].ToString();
+            l.Edizione = r["edizione"] == DBNull.Value ? "" : r["edizione"].ToString();
+            l.Lingua = r["lingua"] == DBNull.Value ? "" : r["lingua"].ToString();
+            if (r["anno_pubblicazione"] != DBNull.Value)
+                l.AnnoPubblicazione = Convert.ToDateTime(r["anno_pubblicazione"]);
+            if (r.Table.Columns.Contains("nome"))
+                l.Nome = r["nome"] == DBNull.Value ? "" : r["nome"].ToString();
+            if (r.Table.Columns.Contains("prezzo"))
+                l.Prezzo = r["prezzo"] == DBNull.Value ? 0f : Convert.ToSingle(r["prezzo"]);
+            if (r.Table.Columns.Contains("descrizione"))
+                l.Descrizione = r["descrizione"] == DBNull.Value ? "" : r["descrizione"].ToString();
+            return l;
+        }
+
         #region CREATE
         internal static long Create(ref MySqlConnection conn, ClsLibro libro, out string errore)
         {
-            long ID = 0;
+            long prodottoID = 0;
             errore = String.Empty;
 
             try
@@ -22,41 +45,49 @@ namespace ReadyToRead
                 if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
 
-                string sql = @"INSERT INTO libri (isbn, annoPubblicazione, numeroPagine, sinossi, edizione, imgCopertina, nome, prezzo, descrizione, lingua) 
-                             VALUES (@isbn, @annoPubblicazione, @numeroPagine, @sinossi, @edizione, @imgCopertina, @nome, @prezzo, @descrizione, @lingua)";
+                string sqlProd = @"INSERT INTO prodotti (nome, stato_disponibilita, prezzo, descrizione)
+                                   VALUES (@nome, 'disponibile', @prezzo, @descrizione)";
+                MySqlCommand cmdP = new MySqlCommand(sqlProd, conn);
+                cmdP.Parameters.AddWithValue("@nome", libro.Nome ?? "");
+                cmdP.Parameters.AddWithValue("@prezzo", libro.Prezzo);
+                cmdP.Parameters.AddWithValue("@descrizione", libro.Descrizione ?? "");
+                cmdP.ExecuteNonQuery();
+                prodottoID = cmdP.LastInsertedId;
 
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-
-                cmd.Parameters.AddWithValue("@isbn", libro.Isbn ?? "");
-                cmd.Parameters.AddWithValue("@annoPubblicazione", libro.AnnoPubblicazione);
-                cmd.Parameters.AddWithValue("@numeroPagine", libro.NumeroPagine);
-                cmd.Parameters.AddWithValue("@sinossi", libro.Sinossi ?? "");
-                cmd.Parameters.AddWithValue("@edizione", libro.Edizione ?? "");
-                cmd.Parameters.AddWithValue("@imgCopertina", libro.ImgCopertina ?? "");
-                cmd.Parameters.AddWithValue("@nome", libro.Nome ?? "");
-                cmd.Parameters.AddWithValue("@prezzo", libro.Prezzo);
-                cmd.Parameters.AddWithValue("@descrizione", libro.Descrizione ?? "");
-                cmd.Parameters.AddWithValue("@lingua", libro.Lingua ?? "");
-
-                int numRec = cmd.ExecuteNonQuery();
-                if (numRec == 1)
-                    ID = cmd.LastInsertedId;
+                string sqlLibro = @"INSERT INTO libri 
+                                    (isbn, path_copertina, numero_pagine, sinossi, path_file, tipo,
+                                     edizione, lingua, anno_pubblicazione, prodottoID)
+                                    VALUES 
+                                    (@isbn, @pathCopertina, @numeroPagine, @sinossi, @pathFile, @tipo,
+                                     @edizione, @lingua, @annoPubblicazione, @prodottoID)";
+                MySqlCommand cmdL = new MySqlCommand(sqlLibro, conn);
+                cmdL.Parameters.AddWithValue("@isbn", libro.Isbn ?? "");
+                cmdL.Parameters.AddWithValue("@pathCopertina", libro.ImgCopertina ?? "");
+                cmdL.Parameters.AddWithValue("@numeroPagine", libro.NumeroPagine);
+                cmdL.Parameters.AddWithValue("@sinossi", libro.Sinossi ?? "");
+                cmdL.Parameters.AddWithValue("@pathFile", libro.EBook ?? "");
+                cmdL.Parameters.AddWithValue("@tipo", "fisico");
+                cmdL.Parameters.AddWithValue("@edizione", libro.Edizione ?? "");
+                cmdL.Parameters.AddWithValue("@lingua", libro.Lingua ?? "");
+                cmdL.Parameters.AddWithValue("@annoPubblicazione", libro.AnnoPubblicazione.Date);
+                cmdL.Parameters.AddWithValue("@prodottoID", prodottoID);
+                cmdL.ExecuteNonQuery();
 
                 conn.Close();
             }
             catch (Exception ex)
             {
                 errore = ex.Message;
+                prodottoID = 0;
             }
 
-            return ID;
+            return prodottoID;
         }
         #endregion
 
         #region READ
         internal static List<ClsLibro> GetAll(ref MySqlConnection conn, out string errore)
         {
-            DataTable dt = null;
             List<ClsLibro> libri = new List<ClsLibro>();
             errore = string.Empty;
 
@@ -65,24 +96,16 @@ namespace ReadyToRead
                 if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
 
-                string query = "SELECT * FROM libri";
+                string query = @"SELECT l.*, p.nome, p.prezzo, p.descrizione, p.stato_disponibilita
+                                 FROM libri l
+                                 INNER JOIN prodotti p ON l.prodottoID = p.ID";
 
                 MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
-                dt = new DataTable();
+                DataTable dt = new DataTable();
                 da.Fill(dt);
 
                 for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    ClsLibro libro = new ClsLibro();
-                    libro.ProdottoID = (int)dt.Rows[i]["prodottoID"];
-                    libro.Isbn = dt.Rows[i]["isbn"].ToString();
-                    libro.AnnoPubblicazione = (DateTime)dt.Rows[i]["annoPubblicazione"];
-                    libro.NumeroPagine = (int)dt.Rows[i]["numeroPagine"];
-                    libro.Sinossi = dt.Rows[i]["sinossi"].ToString();
-                    libro.Edizione = dt.Rows[i]["edizione"].ToString();
-                    libro.ImgCopertina = dt.Rows[i]["imgCopertina"].ToString();
-                    libri.Add(libro);
-                }
+                    libri.Add(CreaLibroDaRiga(dt.Rows[i]));
 
                 conn.Close();
             }
@@ -93,49 +116,41 @@ namespace ReadyToRead
 
             return libri;
         }
-        internal static List<ClsLibro> GetByPriceRange(ref MySqlConnection conn, float minPrezzo, float maxPrezzo, out string errore)
+
+        internal static List<ClsLibro> GetByNome(ref MySqlConnection conn, string nome, out string errore)
         {
-            DataTable dt = null;
             List<ClsLibro> libri = new List<ClsLibro>();
             errore = string.Empty;
 
-            if (minPrezzo < 0 || maxPrezzo < 0)
-                errore = "Prezzo non valido";
-            else
+            if (string.IsNullOrEmpty(nome))
             {
-                try
-                {
-                    if (conn.State != System.Data.ConnectionState.Open)
-                        conn.Open();
+                errore = "Nome non valido";
+                return libri;
+            }
 
-                    string query = "SELECT * FROM libri WHERE prezzo BETWEEN @minPrezzo AND @maxPrezzo";
+            try
+            {
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
-                    MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
-                    da.SelectCommand.Parameters.AddWithValue("@minPrezzo", minPrezzo);
-                    da.SelectCommand.Parameters.AddWithValue("@maxPrezzo", maxPrezzo);
+                string query = @"SELECT l.*, p.nome, p.prezzo, p.descrizione, p.stato_disponibilita
+                                 FROM libri l
+                                 INNER JOIN prodotti p ON l.prodottoID = p.ID
+                                 WHERE p.nome LIKE @nome";
 
-                    dt = new DataTable();
-                    da.Fill(dt);
+                MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
+                da.SelectCommand.Parameters.AddWithValue("@nome", "%" + nome + "%");
+                DataTable dt = new DataTable();
+                da.Fill(dt);
 
-                    for (int i = 0; i < dt.Rows.Count; i++)
-                    {
-                        ClsLibro libro = new ClsLibro();
-                        libro.ProdottoID = (int)dt.Rows[i]["prodottoID"];
-                        libro.Isbn = dt.Rows[i]["isbn"].ToString();
-                        libro.AnnoPubblicazione = (DateTime)dt.Rows[i]["annoPubblicazione"];
-                        libro.NumeroPagine = (int)dt.Rows[i]["numeroPagine"];
-                        libro.Sinossi = dt.Rows[i]["sinossi"].ToString();
-                        libro.Edizione = dt.Rows[i]["edizione"].ToString();
-                        libro.ImgCopertina = dt.Rows[i]["imgCopertina"].ToString();
-                        libri.Add(libro);
-                    }
+                for (int i = 0; i < dt.Rows.Count; i++)
+                    libri.Add(CreaLibroDaRiga(dt.Rows[i]));
 
-                    conn.Close();
-                }
-                catch (Exception ex)
-                {
-                    errore = ex.Message;
-                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                errore = ex.Message;
             }
 
             return libri;
@@ -143,140 +158,78 @@ namespace ReadyToRead
 
         internal static List<ClsLibro> GetByISBN(ref MySqlConnection conn, string isbn, out string errore)
         {
-            DataTable dt = null;
             List<ClsLibro> libri = new List<ClsLibro>();
             errore = string.Empty;
 
             if (string.IsNullOrEmpty(isbn))
+            {
                 errore = "ISBN non valido";
-            else
+                return libri;
+            }
+
+            try
             {
-                try
-                {
-                    if (conn.State != System.Data.ConnectionState.Open)
-                        conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
-                    string query = "SELECT * FROM libri WHERE isbn=@isbn";
+                string query = @"SELECT l.*, p.nome, p.prezzo, p.descrizione, p.stato_disponibilita
+                                 FROM libri l
+                                 INNER JOIN prodotti p ON l.prodottoID = p.ID
+                                 WHERE l.isbn = @isbn";
 
-                    MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
-                    da.SelectCommand.Parameters.AddWithValue("@isbn", isbn);
+                MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
+                da.SelectCommand.Parameters.AddWithValue("@isbn", isbn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
 
-                    dt = new DataTable();
-                    da.Fill(dt);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                    libri.Add(CreaLibroDaRiga(dt.Rows[i]));
 
-                    for (int i = 0; i < dt.Rows.Count; i++)
-                    {
-                        ClsLibro libro = new ClsLibro();
-                        libro.ProdottoID = (int)dt.Rows[i]["prodottoID"];
-                        libro.Isbn = dt.Rows[i]["isbn"].ToString();
-                        libro.AnnoPubblicazione = (DateTime)dt.Rows[i]["annoPubblicazione"];
-                        libro.NumeroPagine = (int)dt.Rows[i]["numeroPagine"];
-                        libro.Sinossi = dt.Rows[i]["sinossi"].ToString();
-                        libro.Edizione = dt.Rows[i]["edizione"].ToString();
-                        libro.ImgCopertina = dt.Rows[i]["imgCopertina"].ToString();
-                        libri.Add(libro);
-                    }
-
-                    conn.Close();
-                }
-                catch (Exception ex)
-                {
-                    errore = ex.Message;
-                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                errore = ex.Message;
             }
 
             return libri;
         }
-        
-        internal static List<ClsLibro> GetByNome(ref MySqlConnection conn, string nome, out string errore)
+
+        internal static List<ClsLibro> GetByPriceRange(ref MySqlConnection conn, float minPrezzo, float maxPrezzo, out string errore)
         {
-            DataTable dt = null;
             List<ClsLibro> libri = new List<ClsLibro>();
             errore = string.Empty;
 
-            if (string.IsNullOrEmpty(nome))
-                errore = "Nome non valido";
-            else
+            if (minPrezzo < 0 || maxPrezzo < 0)
             {
-                try
-                {
-                    if (conn.State != System.Data.ConnectionState.Open)
-                        conn.Open();
-
-                    string query = "SELECT * FROM libri WHERE nome LIKE @nome";
-
-                    MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
-                    da.SelectCommand.Parameters.AddWithValue("@nome", "%" + nome + "%");
-
-                    dt = new DataTable();
-                    da.Fill(dt);
-
-                    for (int i = 0; i < dt.Rows.Count; i++)
-                    {
-                        ClsLibro libro = new ClsLibro();
-                        libro.ProdottoID = (int)dt.Rows[i]["prodottoID"];
-                        libro.Isbn = dt.Rows[i]["isbn"].ToString();
-                        libro.AnnoPubblicazione = (DateTime)dt.Rows[i]["annoPubblicazione"];
-                        libro.NumeroPagine = (int)dt.Rows[i]["numeroPagine"];
-                        libro.Sinossi = dt.Rows[i]["sinossi"].ToString();
-                        libro.Edizione = dt.Rows[i]["edizione"].ToString();
-                        libro.ImgCopertina = dt.Rows[i]["imgCopertina"].ToString();
-                        libri.Add(libro);
-                    }
-
-                    conn.Close();
-                }
-                catch (Exception ex)
-                {
-                    errore = ex.Message;
-                }
+                errore = "Prezzo non valido";
+                return libri;
             }
 
-            return libri;
-        }
-        
-        internal static List<ClsLibro> GetByAnnoPubblicazione(ref MySqlConnection conn, int anno, out string errore)
-        {
-            DataTable dt = null;
-            List<ClsLibro> libri = new List<ClsLibro>();
-            errore = string.Empty;
-
-            if (anno < 1900)
-                errore = "Anno non valido";
-            else
+            try
             {
-                try
-                {
-                    if (conn.State != System.Data.ConnectionState.Open)
-                        conn.Open();
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
-                    string query = "SELECT * FROM libri WHERE YEAR(annoPubblicazione)=@anno";
+                string query = @"SELECT l.*, p.nome, p.prezzo, p.descrizione, p.stato_disponibilita
+                                 FROM libri l
+                                 INNER JOIN prodotti p ON l.prodottoID = p.ID
+                                 WHERE p.prezzo BETWEEN @minPrezzo AND @maxPrezzo";
 
-                    MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
-                    da.SelectCommand.Parameters.AddWithValue("@anno", anno);
+                MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
+                da.SelectCommand.Parameters.AddWithValue("@minPrezzo", minPrezzo);
+                da.SelectCommand.Parameters.AddWithValue("@maxPrezzo", maxPrezzo);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
 
-                    dt = new DataTable();
-                    da.Fill(dt);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                    libri.Add(CreaLibroDaRiga(dt.Rows[i]));
 
-                    for (int i = 0; i < dt.Rows.Count; i++)
-                    {
-                        ClsLibro libro = new ClsLibro();
-                        libro.ProdottoID = (int)dt.Rows[i]["prodottoID"];
-                        libro.Isbn = dt.Rows[i]["isbn"].ToString();
-                        libro.AnnoPubblicazione = (DateTime)dt.Rows[i]["annoPubblicazione"];
-                        libro.NumeroPagine = (int)dt.Rows[i]["numeroPagine"];
-                        libro.Sinossi = dt.Rows[i]["sinossi"].ToString();
-                        libro.Edizione = dt.Rows[i]["edizione"].ToString();
-                        libro.ImgCopertina = dt.Rows[i]["imgCopertina"].ToString();
-                        libri.Add(libro);
-                    }
-
-                    conn.Close();
-                }
-                catch (Exception ex)
-                {
-                    errore = ex.Message;
-                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                errore = ex.Message;
             }
 
             return libri;
@@ -284,46 +237,53 @@ namespace ReadyToRead
         #endregion
 
         #region UPDATE
-        internal static long Update(ref MySqlConnection conn, long ID, ClsLibro libro, out string errore)
+        internal static long Update(ref MySqlConnection conn, long prodottoID, ClsLibro libro, out string errore)
         {
             long esito = 0;
             errore = string.Empty;
 
-            if (ID <= 0)
-                errore = "ID non valido";
-            else
+            if (prodottoID <= 0)
             {
-                try
-                {
-                    if (conn.State != System.Data.ConnectionState.Open)
-                        conn.Open();
+                errore = "ID non valido";
+                return esito;
+            }
 
-                    string sql = @"UPDATE libri SET isbn=@isbn, annoPubblicazione=@annoPubblicazione, numeroPagine=@numeroPagine, 
-                                 sinossi=@sinossi, edizione=@edizione, imgCopertina=@imgCopertina, nome=@nome, prezzo=@prezzo, 
-                                 descrizione=@descrizione, lingua=@lingua 
-                                 WHERE prodottoID=@ID";
+            try
+            {
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                string sqlProd = @"UPDATE prodotti SET nome=@nome, prezzo=@prezzo, descrizione=@descrizione 
+                                   WHERE ID=@prodottoID";
+                MySqlCommand cmdP = new MySqlCommand(sqlProd, conn);
+                cmdP.Parameters.AddWithValue("@prodottoID", prodottoID);
+                cmdP.Parameters.AddWithValue("@nome", libro.Nome ?? "");
+                cmdP.Parameters.AddWithValue("@prezzo", libro.Prezzo);
+                cmdP.Parameters.AddWithValue("@descrizione", libro.Descrizione ?? "");
+                cmdP.ExecuteNonQuery();
 
-                    cmd.Parameters.AddWithValue("@ID", ID);
-                    cmd.Parameters.AddWithValue("@isbn", libro.Isbn ?? "");
-                    cmd.Parameters.AddWithValue("@annoPubblicazione", libro.AnnoPubblicazione);
-                    cmd.Parameters.AddWithValue("@numeroPagine", libro.NumeroPagine);
-                    cmd.Parameters.AddWithValue("@sinossi", libro.Sinossi ?? "");
-                    cmd.Parameters.AddWithValue("@edizione", libro.Edizione ?? "");
-                    cmd.Parameters.AddWithValue("@imgCopertina", libro.ImgCopertina ?? "");
-                    cmd.Parameters.AddWithValue("@nome", libro.Nome ?? "");
-                    cmd.Parameters.AddWithValue("@prezzo", libro.Prezzo);
-                    cmd.Parameters.AddWithValue("@descrizione", libro.Descrizione ?? "");
-                    cmd.Parameters.AddWithValue("@lingua", libro.Lingua ?? "");
+                string sqlLibro = @"UPDATE libri SET 
+                                    isbn=@isbn, path_copertina=@pathCopertina, numero_pagine=@numeroPagine,
+                                    sinossi=@sinossi, path_file=@pathFile, edizione=@edizione,
+                                    lingua=@lingua, anno_pubblicazione=@annoPubblicazione
+                                    WHERE prodottoID=@prodottoID";
+                MySqlCommand cmdL = new MySqlCommand(sqlLibro, conn);
+                cmdL.Parameters.AddWithValue("@prodottoID", prodottoID);
+                cmdL.Parameters.AddWithValue("@isbn", libro.Isbn ?? "");
+                cmdL.Parameters.AddWithValue("@pathCopertina", libro.ImgCopertina ?? "");
+                cmdL.Parameters.AddWithValue("@numeroPagine", libro.NumeroPagine);
+                cmdL.Parameters.AddWithValue("@sinossi", libro.Sinossi ?? "");
+                cmdL.Parameters.AddWithValue("@pathFile", libro.EBook ?? "");
+                cmdL.Parameters.AddWithValue("@edizione", libro.Edizione ?? "");
+                cmdL.Parameters.AddWithValue("@lingua", libro.Lingua ?? "");
+                cmdL.Parameters.AddWithValue("@annoPubblicazione", libro.AnnoPubblicazione.Date);
+                esito = cmdL.ExecuteNonQuery();
 
-                    esito = cmd.ExecuteNonQuery();
-                    conn.Close();
-                }
-                catch (Exception ex)
-                {
-                    errore = ex.Message;
-                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                errore = ex.Message;
             }
 
             return esito;
@@ -331,32 +291,30 @@ namespace ReadyToRead
         #endregion
 
         #region DELETE
-        internal static long Delete(ref MySqlConnection conn, long ID, out string errore)
+        internal static long Delete(ref MySqlConnection conn, long prodottoID, out string errore)
         {
             long esito = 0;
             errore = string.Empty;
 
-            if (ID <= 0)
-                errore = "ID non valido";
-            else
+            if (prodottoID <= 0)
             {
-                try
-                {
-                    if (conn.State != System.Data.ConnectionState.Open)
-                        conn.Open();
+                errore = "ID non valido";
+                return esito;
+            }
 
-                    string sql = "DELETE FROM libri WHERE prodottoID=@ID";
+            try
+            {
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
 
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@ID", ID);
-
-                    esito = cmd.ExecuteNonQuery();
-                    conn.Close();
-                }
-                catch (Exception ex)
-                {
-                    errore = ex.Message;
-                }
+                MySqlCommand cmd = new MySqlCommand("DELETE FROM prodotti WHERE ID=@prodottoID", conn);
+                cmd.Parameters.AddWithValue("@prodottoID", prodottoID);
+                esito = cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                errore = ex.Message;
             }
 
             return esito;
@@ -374,11 +332,8 @@ namespace ReadyToRead
                 if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
 
-                string query = "SELECT COUNT(*) FROM libri";
-
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM libri", conn);
                 object risultato = cmd.ExecuteScalar();
-
                 if (risultato != null)
                     count = Convert.ToInt32(risultato);
 
@@ -390,6 +345,52 @@ namespace ReadyToRead
             }
 
             return count;
+        }
+        #endregion
+
+        #region FILE COPERTINA ED EBOOOK
+        internal static string SalvaCopertina(string pathSorgente, string titoloLibro, out string errore)
+        {
+            errore = string.Empty;
+            try
+            {
+                string estenzioneFile = Path.GetExtension(pathSorgente);
+                string nomeFile = "copertina_" + NomeFile(titoloLibro) + estenzioneFile;
+                string resourceDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources");
+                Directory.CreateDirectory(resourceDir);
+                string destPath = Path.Combine(resourceDir, nomeFile);
+                File.Copy(pathSorgente, destPath, overwrite: true);
+                return Path.Combine("Resources", nomeFile);
+            }
+            catch (Exception ex)
+            {
+                errore = ex.Message;
+                return Path.Combine("Resources", "libroCopertina_DEFAULT");
+            }
+        }
+        internal static string SalvaEBook(string pathSorgente, string titoloLibro, out string errore)
+        {
+            errore = string.Empty;
+            try
+            {
+                string estenzioneFile = Path.GetExtension(pathSorgente);
+                string nomeFile = "e_book_" + NomeFile(titoloLibro) + estenzioneFile;
+                string resourceDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources");
+                Directory.CreateDirectory(resourceDir);
+                string destPath = Path.Combine(resourceDir, nomeFile);
+                File.Copy(pathSorgente, destPath, overwrite: true);
+                return Path.Combine("Resources", nomeFile);
+            }
+            catch (Exception ex)
+            {
+                errore = ex.Message;
+                return Path.Combine("Resources", "e_book_DEFAULT");
+            }
+        }
+
+        private static string NomeFile(string nome)
+        {
+            return nome.Replace(' ', '_');
         }
         #endregion
     }

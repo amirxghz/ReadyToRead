@@ -181,7 +181,7 @@ namespace ReadyToRead
             else
             {
                 _autoreSelezionato = (ClsAutore)lvAutori.SelectedItems[0].Tag;
-                _idSelezionato = _autoreSelezionato.ID;
+                _idSelezionato = _autoreSelezionato.Id;
                 rbVerificato.Checked = _autoreSelezionato.ÈVerificato;
                 rbNonVerificato.Checked = !_autoreSelezionato.ÈVerificato;
                 tbNomeArte.Text = _autoreSelezionato.NomeArte;
@@ -213,12 +213,27 @@ namespace ReadyToRead
             if (ValidaCampi())
                 GestisciAutore(_modalitaModifica);
         }
-
+        bool modalitàVisualizza = false;
         private void btnVisualizza_Click(object sender, EventArgs e)
         {
-            VisualizzaAutore();
+            modalitàVisualizza = !modalitàVisualizza;
+            if (modalitàVisualizza)
+            {
+                VisualizzaAutore();
+                btnAggiungi.Visible = false;
+                btnAnnulla.Visible = false;
+                btnVisualizza.ForeColor = Color.DodgerBlue;
+                btnVisualizza.Text = "👁️Smetti";
+            }
+            else
+            {
+                ResetCampi();
+                btnAggiungi.Visible = true;
+                btnAnnulla.Visible = true;
+                btnVisualizza.ForeColor = Color.Black;
+                btnVisualizza.Text = "👁️Visualizza";
+            }
         }
-
         private void btnModifica_Click(object sender, EventArgs e)
         {
             if (lvAutori.SelectedItems.Count == 0)
@@ -249,12 +264,12 @@ namespace ReadyToRead
                     ListViewItem[] lvi = new ListViewItem[lvAutori.SelectedItems.Count];
                     lvAutori.SelectedItems.CopyTo(lvi, 0);
 
-                    for(int i =0;  i < lvi.Length;i++)
+                    for (int i = 0; i < lvi.Length; i++)
                     {
                         if (string.IsNullOrEmpty(errore))
                         {
                             ClsAutore a = (ClsAutore)lvi[i].Tag;
-                            long esito = ClsAutoreBL.Delete(ref Program.conn, a.ID, out errore);
+                            long esito = ClsAutoreBL.Delete(ref Program.conn, a.Id, out errore);
                             if (string.IsNullOrEmpty(errore) && esito > 0)
                                 eliminati++;
                         }
@@ -312,7 +327,7 @@ namespace ReadyToRead
         {
             Program._chiudiForm = false;
         }
-        
+
         private void chkAttivaDataMorte_CheckedChanged(object sender, EventArgs e)
         {
             if (!chkAttivaDataMorte.Checked)

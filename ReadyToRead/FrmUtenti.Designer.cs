@@ -147,6 +147,7 @@
             // 
             // tbCF
             // 
+            this.tbCF.Cursor = System.Windows.Forms.Cursors.Default;
             this.tbCF.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbCF.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.tbCF.Location = new System.Drawing.Point(51, 615);
