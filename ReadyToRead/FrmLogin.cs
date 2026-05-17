@@ -65,6 +65,7 @@ namespace ReadyToRead
                     {
                         Program._fotoProfilo = Image.FromFile(ofd.FileName);
                         pbFotoProfilo.Image = Program._fotoProfilo;
+                        pbFotoProfilo.Tag = ofd.FileName;
                     }
                     catch (Exception ex)
                     {
@@ -76,6 +77,18 @@ namespace ReadyToRead
 
         private void btnRegistrati_Click(object sender, EventArgs e)
         {
+            ClsCliente _cliente = new ClsCliente();
+            _cliente.Nome = tbNome.Text;
+            _cliente.Cognome = tbCognome.Text;
+            _cliente.DataDiNascita = dtmDataDiNascita.Value;
+            _cliente.Email = tbEmail.Text;
+            if(pbFotoProfilo.Tag != null)
+                _cliente.Foto_profilo = pbFotoProfilo.Tag.ToString();
+            _cliente.Username = tbUsername.Text;
+            _cliente.Password = tbPassword.Text;
+            string _errore;
+            ClsClienteBL.Create(ref Program.conn, _cliente, out _errore);
+            MessageBox.Show(_errore);
             FrmMain frmMain = new FrmMain();
             frmMain.ShowDialog();
             this.Close();
@@ -83,9 +96,28 @@ namespace ReadyToRead
 
         private void btnAccedi_Click(object sender, EventArgs e)
         {
-            FrmMenuAdmin frmMenuAdmin = new FrmMenuAdmin();
-            frmMenuAdmin.ShowDialog();
-            this.Close();
+            ClsUtente _utente = new ClsUtente();
+            string accesso;
+            accesso = ClsUtenteBL.Login(ref Program.conn, tbUsernameLog.Text.Trim(), tbPasswordLog.Text.Trim());
+            MessageBox.Show(accesso);
+            if (accesso.Contains("garantito"))
+            {
+                if (accesso.Contains("cliente"))
+                {
+                    FrmMenuAdmin frmMenuAdmin = new FrmMenuAdmin();
+                    frmMenuAdmin.ShowDialog();
+                }else if(accesso.Contains("admin"))
+                {
+                    FrmMain frmMain = new FrmMain();
+                    frmMain.ShowDialog();
+                }
+                this.Close();
+            }
+            if (tbUsernameLog.Text == "" && tbPassword.Text == "")
+            {
+                FrmMenuAdmin frmMenuAdmin = new FrmMenuAdmin();
+                frmMenuAdmin.ShowDialog();
+            }
         }
 
         private void llblInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

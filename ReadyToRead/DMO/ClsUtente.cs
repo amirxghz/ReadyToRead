@@ -43,9 +43,9 @@ namespace ReadyToRead
             get => _username;
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                /*if (string.IsNullOrWhiteSpace(value))
                     throw new Exception("Username non può essere vuoto");
-                else
+                else*/
                     _username = value;
             }
         }
@@ -55,9 +55,9 @@ namespace ReadyToRead
             get => _password;
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                /*if (string.IsNullOrWhiteSpace(value))
                     throw new Exception("Password non può essere vuota");
-                else
+                else*/
                     _password = value;
             }
         }
@@ -67,9 +67,9 @@ namespace ReadyToRead
             get => _nome;
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                /*if (string.IsNullOrWhiteSpace(value))
                     throw new Exception("Nome non può essere vuoto");
-                else
+                else*/
                     _nome = value;
             }
         }
@@ -79,9 +79,9 @@ namespace ReadyToRead
             get => _cognome;
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                /*if (string.IsNullOrWhiteSpace(value))
                     throw new Exception("Cognome non può essere vuoto");
-                else
+                else*/
                     _cognome = value;
             }
         }
@@ -91,9 +91,9 @@ namespace ReadyToRead
             get => _email;
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                /*if (string.IsNullOrWhiteSpace(value))
                     throw new Exception("Email non valida");
-                else
+                else*/
                     _email = value;
             }
         }
@@ -128,12 +128,14 @@ namespace ReadyToRead
         #region Costruttori
         public ClsUtente()
         {
+            ComuneDiNascita = eCOMUNE.Nessuno;
         }
 
         public ClsUtente(string username, string password)
         {
+            ComuneDiNascita = eCOMUNE.Nessuno;
             Username = username;
-            Password = string.IsNullOrWhiteSpace(password) ? "1234567890xxx" : password;
+            Password = password;
         }
         #endregion
     }

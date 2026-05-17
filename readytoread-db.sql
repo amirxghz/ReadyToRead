@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Creato il: Mag 11, 2026 alle 19:56
+-- Creato il: Mag 17, 2026 alle 19:10
 -- Versione del server: 8.2.0
 -- Versione PHP: 8.3.0
 
@@ -84,6 +84,13 @@ CREATE TABLE `clienti` (
   `utenteID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dump dei dati per la tabella `clienti`
+--
+
+INSERT INTO `clienti` (`ID`, `indirizzo`, `cap`, `utenteID`) VALUES
+(1, '', '', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -121,7 +128,7 @@ CREATE TABLE `generi` (
   `nome` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `descrizione` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `target` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `tipologia` enum('narrativo','musicale') COLLATE utf8mb4_general_ci DEFAULT NULL
+  `tipologia` enum('narrativo','musicale') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -287,10 +294,17 @@ CREATE TABLE `utenti` (
   `data_nascita` date DEFAULT NULL,
   `genere` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `username` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `password` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `password` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `foto_profilo` text COLLATE utf8mb4_general_ci
+  `foto_profilo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `utenti`
+--
+
+INSERT INTO `utenti` (`ID`, `nome`, `cognome`, `comune_nascita`, `data_nascita`, `genere`, `username`, `password`, `email`, `foto_profilo`) VALUES
+(1, '', '', 'Chiaravalle', '2025-11-13', 'f', '', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', '', '');
 
 --
 -- Indici per le tabelle scaricate
@@ -462,7 +476,7 @@ ALTER TABLE `censire`
 -- AUTO_INCREMENT per la tabella `clienti`
 --
 ALTER TABLE `clienti`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT per la tabella `controllare`
@@ -534,7 +548,7 @@ ALTER TABLE `super_admins`
 -- AUTO_INCREMENT per la tabella `utenti`
 --
 ALTER TABLE `utenti`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Limiti per le tabelle scaricate

@@ -43,7 +43,7 @@ namespace ReadyToRead
                     conn.Open();
 
                 string sql = @"INSERT INTO utenti (nome, cognome, username, password, email, data_nascita, genere, comune_nascita, foto_profilo)
-                      VALUES (@nome, @cognome, @username, @password, @email, @data_nascita, @genere, @comune_nascita, @foto_profilo)";
+                      VALUES (@nome, @cognome, @username, SHA2(@password, 256), @email, @data_nascita, @genere, @comune_nascita, @foto_profilo)";
 
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@nome", utente.Nome ?? "");
@@ -297,6 +297,68 @@ namespace ReadyToRead
             }
 
             return count;
+        }
+        #endregion
+
+        #region LOGIN
+        //Urbani
+        internal static string Login(ref MySqlConnection conn, string username, string password)
+        {
+            string accesso = string.Empty;
+
+            if (string.IsNullOrEmpty(username))
+            {
+                accesso = "Username non valido";
+            }
+            else
+            {
+                try
+                {
+                    if (conn.State != ConnectionState.Open)
+                        conn.Open();
+
+                    string query = "SELECT * FROM utenti WHERE username = @username";
+                    MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
+                    da.SelectCommand.Parameters.AddWithValue("@username", username);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    if (dt.Rows.Count > 0)
+                    {
+                        query = "SELECT * FROM utenti WHERE username = @username AND password = SHA2(@password, 256)";
+                        da = new MySqlDataAdapter(query, conn);
+                        da.SelectCommand.Parameters.AddWithValue("@username", username);
+                        da.SelectCommand.Parameters.AddWithValue("@password", password);
+                        dt = new DataTable();
+                        da.Fill(dt);
+
+                        if (dt.Rows.Count > 0)
+                        {
+                            long utenteID = CreaUtenteDaRiga(dt.Rows[0]).ID;
+
+                            query = "SELECT * FROM clienti WHERE utenteID = @ID";
+                            da = new MySqlDataAdapter(query, conn);
+                            da.SelectCommand.Parameters.AddWithValue("@ID", utenteID);
+                            dt = new DataTable();
+                            da.Fill(dt);
+
+                            accesso = dt.Rows.Count > 0 ? "garantitocliente" : "garantitoadmin";
+                        }
+                        else
+                            accesso = "Password errata";
+                    }
+                    else
+                        accesso = "Utente inesistente";
+
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    accesso = ex.Message;
+                }
+            }
+
+            return accesso;
         }
         #endregion
     }

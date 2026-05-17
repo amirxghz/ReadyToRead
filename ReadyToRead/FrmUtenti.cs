@@ -52,7 +52,7 @@ namespace ReadyToRead
             for  (int i =0;  i < utenti.Count; i++)
             {
                 ClsUtente u = utenti[i];
-                ListViewItem lvi = new ListViewItem(u is ClsAdmin? "Admin" : "Cliente");
+                ListViewItem lvi = new ListViewItem(u is ClsAdmin ? "Admin" : "Cliente");
                 lvi.SubItems.Add(u.Nome + " " + u.Cognome);
                 lvi.SubItems.Add(u.Username);
                 lvi.SubItems.Add(u.Email);
