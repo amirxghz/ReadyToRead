@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Creato il: Mag 17, 2026 alle 19:10
+-- Creato il: Mag 17, 2026 alle 20:31
 -- Versione del server: 8.2.0
 -- Versione PHP: 8.3.0
 
@@ -89,7 +89,8 @@ CREATE TABLE `clienti` (
 --
 
 INSERT INTO `clienti` (`ID`, `indirizzo`, `cap`, `utenteID`) VALUES
-(1, '', '', 1);
+(1, '', '', 1),
+(2, '', '', 2);
 
 -- --------------------------------------------------------
 
@@ -290,7 +291,7 @@ CREATE TABLE `utenti` (
   `ID` int NOT NULL,
   `nome` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `cognome` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `comune_nascita` enum('Jesi','Ancona','Chiaravalle','Senigallia','Rotella') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `comune_nascita` enum('Jesi','Ancona','Chiaravalle','Senigallia','Rotella','Nessuno') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `data_nascita` date DEFAULT NULL,
   `genere` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `username` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -304,7 +305,8 @@ CREATE TABLE `utenti` (
 --
 
 INSERT INTO `utenti` (`ID`, `nome`, `cognome`, `comune_nascita`, `data_nascita`, `genere`, `username`, `password`, `email`, `foto_profilo`) VALUES
-(1, '', '', 'Chiaravalle', '2025-11-13', 'f', '', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', '', '');
+(1, '', '', 'Chiaravalle', '2025-11-13', 'f', '', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', '', ''),
+(2, 'ewrew', 'erwrr', 'Nessuno', '2025-11-01', 'm', 'ciccio', 'c23a9f0b40aa39799d80255487ec8f167dc4e6aef5155ba429f6e5192d3e7deb', 'ewrwe@', NULL);
 
 --
 -- Indici per le tabelle scaricate
@@ -476,7 +478,7 @@ ALTER TABLE `censire`
 -- AUTO_INCREMENT per la tabella `clienti`
 --
 ALTER TABLE `clienti`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT per la tabella `controllare`
@@ -548,7 +550,7 @@ ALTER TABLE `super_admins`
 -- AUTO_INCREMENT per la tabella `utenti`
 --
 ALTER TABLE `utenti`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Limiti per le tabelle scaricate
