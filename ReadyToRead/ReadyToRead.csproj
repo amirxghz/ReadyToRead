@@ -125,7 +125,7 @@
     <Compile Include="BL\ClsOrdinareBL.cs" />
     <Compile Include="BL\ClsProdottoBL.cs" />
     <Compile Include="BL\ClsPubblicareBL.cs" />
-    <Compile Include="BL\ClsRecensioneBL.cs" />
+    <Compile Include="BL\ClsRecensireBL.cs" />
     <Compile Include="BL\ClsScrivereBL.cs" />
     <Compile Include="BL\ClsUtenteBL.cs" />
     <Compile Include="DMO\ClsAdmin.cs" />
@@ -391,6 +391,7 @@
     <Content Include="bin\Debug\ReadyToRead.exe" />
     <Content Include="bin\Debug\ReadyToRead.pdb" />
     <Content Include="readytoread.sql" />
+    <Content Include="Resources\libroCopertina_DEFAULT.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Release\" />

@@ -43,9 +43,8 @@
             this.lblTitolo = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lvGeneri = new System.Windows.Forms.ListView();
-            this.chISBN = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chAutore = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chGenere = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chNome = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chTarget = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label3 = new System.Windows.Forms.Label();
             this.tbFiltroNome = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -223,9 +222,8 @@
             // lvGeneri
             // 
             this.lvGeneri.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chISBN,
-            this.chAutore,
-            this.chGenere});
+            this.chNome,
+            this.chTarget});
             this.lvGeneri.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lvGeneri.FullRowSelect = true;
             this.lvGeneri.HideSelection = false;
@@ -236,20 +234,15 @@
             this.lvGeneri.UseCompatibleStateImageBehavior = false;
             this.lvGeneri.View = System.Windows.Forms.View.Details;
             // 
-            // chISBN
+            // chNome
             // 
-            this.chISBN.Text = "ID";
-            this.chISBN.Width = 61;
+            this.chNome.Text = "Nome";
+            this.chNome.Width = 432;
             // 
-            // chAutore
+            // chTarget
             // 
-            this.chAutore.Text = "Nome";
-            this.chAutore.Width = 432;
-            // 
-            // chGenere
-            // 
-            this.chGenere.Text = "Target";
-            this.chGenere.Width = 156;
+            this.chTarget.Text = "Target";
+            this.chTarget.Width = 224;
             // 
             // label3
             // 
@@ -358,9 +351,8 @@
         private System.Windows.Forms.Label lblTitolo;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ListView lvGeneri;
-        private System.Windows.Forms.ColumnHeader chISBN;
-        private System.Windows.Forms.ColumnHeader chAutore;
-        private System.Windows.Forms.ColumnHeader chGenere;
+        private System.Windows.Forms.ColumnHeader chNome;
+        private System.Windows.Forms.ColumnHeader chTarget;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbFiltroNome;
         private System.Windows.Forms.Label label4;

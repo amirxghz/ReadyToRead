@@ -93,6 +93,16 @@ namespace ReadyToRead.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap libroCopertina_DEFAULT {
+            get {
+                object obj = ResourceManager.GetObject("libroCopertina_DEFAULT", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Pfp {
             get {
                 object obj = ResourceManager.GetObject("Pfp", resourceCulture);

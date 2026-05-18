@@ -9,7 +9,7 @@ using ReadyToRead;
 
 namespace ReadyToRead
 {
-    internal static class ClsClienteBL
+    internal static class ClsClienteBL //Urbani
     {
         private const string SELECT_BASE =
             @"SELECT c.ID, c.indirizzo, c.cap, c.utenteID,
@@ -21,7 +21,7 @@ namespace ReadyToRead
         private static ClsCliente CreaClienteDaRiga(DataRow r)
         {
             ClsCliente c = new ClsCliente();
-            c.ID = Convert.ToInt64(r["ID"]);
+            c.Id = Convert.ToInt64(r["ID"]);
             c.UtenteID = Convert.ToInt32(r["utenteID"]);
             c.Indirizzo = r["indirizzo"] == DBNull.Value ? "" : r["indirizzo"].ToString();
             c.CAP = r["cap"] == DBNull.Value ? "" : r["cap"].ToString();

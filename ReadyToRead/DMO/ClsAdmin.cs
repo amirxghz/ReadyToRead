@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReadyToRead
 {
-    public class ClsAdmin : ClsUtente
+    public class ClsAdmin : ClsUtente //Amir
     {
         private long _adminID;
         private long _utenteID;

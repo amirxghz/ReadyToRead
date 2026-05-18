@@ -9,10 +9,9 @@ using ReadyToRead;
 
 namespace ReadyToRead
 {
-    internal static class ClsAdminBL
+    internal static class ClsAdminBL //Amir
     {
-        // admins: ID, utenteID
-        // utenti:  ID, nome, cognome, username, password, email, data_nascita, genere, comune_nascita
+
         private const string SELECT_BASE =
             @"SELECT a.ID AS adminID, a.utenteID,
                      u.nome, u.cognome, u.username, u.password, u.email,

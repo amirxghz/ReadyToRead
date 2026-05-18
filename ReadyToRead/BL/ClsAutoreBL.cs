@@ -9,10 +9,10 @@ using ReadyToRead;
 
 namespace ReadyToRead
 {
-    internal static class ClsAutoreBL
+    internal static class ClsAutoreBL //Amir
     {
         private const string SELECT_BASE =
-            @"SELECT a.ID, a.verificato, a.nome_arte, a.data_morte, a.utenteID,
+            @"SELECT a.ID, a.verificato, a.nome_arte, a.data_morte, a.città, a.utenteID, 
                      u.nome, u.cognome, u.username, u.password, u.email,
                      u.data_nascita, u.genere, u.comune_nascita
               FROM autori a
@@ -21,7 +21,7 @@ namespace ReadyToRead
         private static ClsAutore CreaAutoreDaRiga(DataRow r)
         {
             ClsAutore a = new ClsAutore();
-            a.ID = Convert.ToInt64(r["ID"]);
+            a.Id = Convert.ToInt64(r["ID"]);
             a.UtenteID = Convert.ToInt64(r["utenteID"]);
             a.ÈVerificato = Convert.ToBoolean(r["verificato"]);
             a.NomeArte = r["nome_arte"] == DBNull.Value ? "" : r["nome_arte"].ToString();
@@ -37,7 +37,10 @@ namespace ReadyToRead
             if (r["genere"] != DBNull.Value)
                 a.Sesso = r["genere"].ToString() == "m" ? ClsUtente.eSESSO.m : ClsUtente.eSESSO.f;
             if (r["comune_nascita"] != DBNull.Value)
-                a.ComuneDiNascita = (ClsUtente.eCOMUNE)Enum.Parse(typeof(ClsUtente.eCOMUNE), r["comune_nascita"].ToString(), true);
+                a.ComuneDiNascita = ClsUtente.eCOMUNE.Nessuno;
+            a.CittaNascita = r["città"] == DBNull.Value ? "" : r["città"].ToString();
+            if (r["data_morte"] != DBNull.Value)
+                a.DataMorte = Convert.ToDateTime(r["data_morte"]);
             return a;
         }
 
@@ -62,15 +65,17 @@ namespace ReadyToRead
                 cmdU.Parameters.AddWithValue("@email", autore.Email ?? "");
                 cmdU.Parameters.AddWithValue("@data_nascita", autore.DataDiNascita);
                 cmdU.Parameters.AddWithValue("@genere", autore.Sesso.ToString());
-                cmdU.Parameters.AddWithValue("@comune_nascita", autore.ComuneDiNascita.ToString());
+                cmdU.Parameters.AddWithValue("@comune_nascita", ClsUtente.eCOMUNE.Nessuno);
                 cmdU.ExecuteNonQuery();
                 long utenteID = cmdU.LastInsertedId;
 
-                string sqlAutore = @"INSERT INTO autori (verificato, nome_arte, utenteID)
-                                     VALUES (@verificato, @nome_arte, @utenteID)";
+                string sqlAutore = @"INSERT INTO autori (verificato, nome_arte, data_morte, città,m utenteID)
+                                     VALUES (@verificato, @nome_arte, @data_morte, @città, @utenteID)";
                 MySqlCommand cmdA = new MySqlCommand(sqlAutore, conn);
                 cmdA.Parameters.AddWithValue("@verificato", autore.ÈVerificato);
                 cmdA.Parameters.AddWithValue("@nome_arte", autore.NomeArte ?? "");
+                cmdA.Parameters.AddWithValue("@data_morte", autore.DataMorte);
+                cmdA.Parameters.AddWithValue("@città", autore.CittaNascita ?? "");
                 cmdA.Parameters.AddWithValue("@utenteID", utenteID);
                 cmdA.ExecuteNonQuery();
                 autoreID = cmdA.LastInsertedId;
@@ -221,15 +226,17 @@ namespace ReadyToRead
                     cmdU.Parameters.AddWithValue("@email", autore.Email ?? "");
                     cmdU.Parameters.AddWithValue("@data_nascita", autore.DataDiNascita);
                     cmdU.Parameters.AddWithValue("@genere", autore.Sesso.ToString());
-                    cmdU.Parameters.AddWithValue("@comune_nascita", autore.ComuneDiNascita.ToString());
+                    cmdU.Parameters.AddWithValue("@comune_nascita", ClsUtente.eCOMUNE.Nessuno);
                     cmdU.ExecuteNonQuery();
 
-                    string sqlAutore = @"UPDATE autori SET verificato=@verificato, nome_arte=@nome_arte
+                    string sqlAutore = @"UPDATE autori SET verificato=@verificato, nome_arte=@nome_arte, data_morte=@data_morte, città=@città
                                          WHERE ID=@autoreID";
                     MySqlCommand cmdA = new MySqlCommand(sqlAutore, conn);
                     cmdA.Parameters.AddWithValue("@autoreID", autoreID);
                     cmdA.Parameters.AddWithValue("@verificato", autore.ÈVerificato);
                     cmdA.Parameters.AddWithValue("@nome_arte", autore.NomeArte ?? "");
+                    cmdA.Parameters.AddWithValue("@data_morte", autore.DataMorte);
+                    cmdA.Parameters.AddWithValue("@città", autore.CittaNascita ?? "");
                     esito = cmdA.ExecuteNonQuery();
 
                     conn.Close();

@@ -9,7 +9,7 @@ using ReadyToRead;
 
 namespace ReadyToRead
 {
-    internal static class ClsUtenteBL
+    internal static class ClsUtenteBL //Amir
     {
         private static ClsUtente CreaUtenteDaRiga(DataRow r)
         {
@@ -42,8 +42,9 @@ namespace ReadyToRead
                 if (conn.State != ConnectionState.Open)
                     conn.Open();
 
+                // La password viene hashata con SHA2-256 direttamente in MySQL
                 string sql = @"INSERT INTO utenti (nome, cognome, username, password, email, data_nascita, genere, comune_nascita, foto_profilo)
-                               VALUES (@nome, @cognome, @username, @password, @email, @data_nascita, @genere, @comune_nascita, @foto_profilo)";
+                      VALUES (@nome, @cognome, @username, SHA2(@password, 256), @email, @data_nascita, @genere, @comune_nascita, @foto_profilo)";
 
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@nome", utente.Nome ?? "");
@@ -56,9 +57,29 @@ namespace ReadyToRead
                 cmd.Parameters.AddWithValue("@comune_nascita", utente.ComuneDiNascita.ToString());
                 cmd.Parameters.AddWithValue("@foto_profilo", utente.Foto_profilo ?? "");
 
-                int numRec = cmd.ExecuteNonQuery();
-                if (numRec == 1)
-                    ID = cmd.LastInsertedId;
+                cmd.ExecuteNonQuery();
+                long utenteID = cmd.LastInsertedId;
+
+                if (utente is ClsAdmin)
+                {
+                    string sqlAdmin = "INSERT INTO admins (utenteID) VALUES (@utenteID)";
+                    MySqlCommand cmdA = new MySqlCommand(sqlAdmin, conn);
+                    cmdA.Parameters.AddWithValue("@utenteID", utenteID);
+                    cmdA.ExecuteNonQuery();
+                    ID = cmdA.LastInsertedId;
+                }
+                else if (utente is ClsCliente)
+                {
+                    ClsCliente cliente = (ClsCliente)utente;
+                    string sqlCliente = @"INSERT INTO clienti (indirizzo, cap, utenteID)
+                                  VALUES (@indirizzo, @cap, @utenteID)";
+                    MySqlCommand cmdC = new MySqlCommand(sqlCliente, conn);
+                    cmdC.Parameters.AddWithValue("@indirizzo", cliente.Indirizzo ?? "");
+                    cmdC.Parameters.AddWithValue("@cap", cliente.CAP ?? "");
+                    cmdC.Parameters.AddWithValue("@utenteID", utenteID);
+                    cmdC.ExecuteNonQuery();
+                    ID = cmdC.LastInsertedId;
+                }
 
                 conn.Close();
             }
@@ -86,12 +107,8 @@ namespace ReadyToRead
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
-                int i = 0;
-                while (i < dt.Rows.Count)
-                {
+                for (int i=0; i < dt.Rows.Count;i++)
                     utenti.Add(CreaUtenteDaRiga(dt.Rows[i]));
-                    i++;
-                }
 
                 conn.Close();
             }
@@ -125,12 +142,9 @@ namespace ReadyToRead
                     DataTable dt = new DataTable();
                     da.Fill(dt);
 
-                    int i = 0;
-                    while (i < dt.Rows.Count)
-                    {
+                   
+                    for (int i =0; i < dt.Rows.Count;i++)
                         utenti.Add(CreaUtenteDaRiga(dt.Rows[i]));
-                        i++;
-                    }
 
                     conn.Close();
                 }
@@ -161,10 +175,9 @@ namespace ReadyToRead
                     if (conn.State != ConnectionState.Open)
                         conn.Open();
 
-                    string sql = @"UPDATE utenti SET nome=@nome, cognome=@cognome, username=@username,
-                                   password=@password, email=@email, data_nascita=@data_nascita,
-                                   genere=@genere, comune_nascita=@comune_nascita, foto_profilo=@foto_profilo
-                                   WHERE ID=@ID";
+                    string sql = @"UPDATE utenti SET nome=@nome, cognome=@cognome, username=@username, password=@password, email=@email, data_nascita=@data_nascita,
+                           genere=@genere, comune_nascita=@comune_nascita, foto_profilo=@foto_profilo
+                           WHERE ID=@ID";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@ID", ID);
@@ -179,6 +192,28 @@ namespace ReadyToRead
                     cmd.Parameters.AddWithValue("@foto_profilo", utente.Foto_profilo ?? "");
 
                     esito = cmd.ExecuteNonQuery();
+
+                    if (utente is ClsAdmin)
+                    {
+                        ClsAdmin admin = (ClsAdmin)utente;
+                        string sqlAdmin = @"UPDATE admins SET utenteID=@utenteID
+                                    WHERE utenteID=@utenteID";
+                        MySqlCommand cmdA = new MySqlCommand(sqlAdmin, conn);
+                        cmdA.Parameters.AddWithValue("@utenteID", ID);
+                        cmdA.ExecuteNonQuery();
+                    }
+                    else if (utente is ClsCliente)
+                    {
+                        ClsCliente cliente = (ClsCliente)utente;
+                        string sqlCliente = @"UPDATE clienti SET indirizzo=@indirizzo, cap=@cap 
+                                      WHERE utenteID=@utenteID";
+                        MySqlCommand cmdC = new MySqlCommand(sqlCliente, conn);
+                        cmdC.Parameters.AddWithValue("@utenteID", ID);
+                        cmdC.Parameters.AddWithValue("@indirizzo", cliente.Indirizzo ?? "");
+                        cmdC.Parameters.AddWithValue("@cap", cliente.CAP ?? "");
+                        cmdC.ExecuteNonQuery();
+                    }
+
                     conn.Close();
                 }
                 catch (Exception ex)
@@ -207,6 +242,14 @@ namespace ReadyToRead
                 {
                     if (conn.State != ConnectionState.Open)
                         conn.Open();
+
+                    MySqlCommand cmdDelAdmin = new MySqlCommand("DELETE FROM admins WHERE utenteID=@ID", conn);
+                    cmdDelAdmin.Parameters.AddWithValue("@ID", ID);
+                    cmdDelAdmin.ExecuteNonQuery();
+
+                    MySqlCommand cmdDelCliente = new MySqlCommand("DELETE FROM clienti WHERE utenteID=@ID", conn);
+                    cmdDelCliente.Parameters.AddWithValue("@ID", ID);
+                    cmdDelCliente.ExecuteNonQuery();
 
                     MySqlCommand cmd = new MySqlCommand("DELETE FROM utenti WHERE ID=@ID", conn);
                     cmd.Parameters.AddWithValue("@ID", ID);
@@ -248,6 +291,71 @@ namespace ReadyToRead
             }
 
             return count;
+        }
+        #endregion
+
+        #region LOGIN
+        //Urbani
+        internal static string Login(ref MySqlConnection conn, string username, string password)
+        {
+            string accesso = string.Empty;
+
+            if (string.IsNullOrEmpty(username))
+            {
+                accesso = "Username non valido";
+            }
+            else
+            {
+                try
+                {
+                    if (conn.State != ConnectionState.Open)
+                        conn.Open();
+
+                    // Prima verifica che l'utente esista
+                    string query = "SELECT * FROM utenti WHERE username = @username";
+                    MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
+                    da.SelectCommand.Parameters.AddWithValue("@username", username);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    if (dt.Rows.Count > 0)
+                    {
+                        // Poi verifica la password con SHA2-256
+                        query = "SELECT * FROM utenti WHERE username = @username AND password = SHA2(@password, 256)";
+                        da = new MySqlDataAdapter(query, conn);
+                        da.SelectCommand.Parameters.AddWithValue("@username", username);
+                        da.SelectCommand.Parameters.AddWithValue("@password", password);
+                        dt = new DataTable();
+                        da.Fill(dt);
+
+                        if (dt.Rows.Count > 0)
+                        {
+                            long utenteID = CreaUtenteDaRiga(dt.Rows[0]).ID;
+
+                            // Determina il ruolo: cliente o admin
+                            query = "SELECT * FROM clienti WHERE utenteID = @ID";
+                            da = new MySqlDataAdapter(query, conn);
+                            da.SelectCommand.Parameters.AddWithValue("@ID", utenteID);
+                            dt = new DataTable();
+                            da.Fill(dt);
+
+                            accesso = dt.Rows.Count > 0 ? "garantitocliente" : "garantitoadmin";
+                        }
+                        else
+                            accesso = "Password errata";
+                    }
+                    else
+                        accesso = "Utente inesistente";
+
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    accesso = ex.Message;
+                }
+            }
+
+            return accesso;
         }
         #endregion
     }

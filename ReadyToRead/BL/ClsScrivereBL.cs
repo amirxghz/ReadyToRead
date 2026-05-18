@@ -9,7 +9,7 @@ using ReadyToRead;
 
 namespace ReadyToRead
 {
-    internal static class ClsScrivereBL
+    internal static class ClsScrivereBL //Amir
     {
         #region CREATE
         internal static long Create(ref MySqlConnection conn, ClsScrivere scrivere, out string errore)

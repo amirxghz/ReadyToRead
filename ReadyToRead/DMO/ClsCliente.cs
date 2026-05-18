@@ -37,7 +37,7 @@ namespace ReadyToRead
         }
 
         public int UtenteID { get => _utenteID; set => _utenteID = value; }
-        public long ID { get => _ID; set => _ID = value; }
+        public long Id { get => _ID; set => _ID = value; }
 
         public ClsCliente()
         {

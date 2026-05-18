@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ReadyToRead
 {
-    public partial class FrmOrdini : Form
+    public partial class FrmOrdini : Form //Amir
     {
         private List<ClsOrdinare> _ordini = new List<ClsOrdinare>();
         enum eTipoOrdine
@@ -37,7 +37,7 @@ namespace ReadyToRead
             cbStatoOrdine.SelectedIndex = -1;
 
             cbOrdina.Items.Clear();
-            cbOrdina.DataSource= Enum.GetValues(typeof(eTipoOrdine));
+            cbOrdina.DataSource = Enum.GetValues(typeof(eTipoOrdine));
             cbOrdina.SelectedIndex = -1;
         }
 
@@ -55,15 +55,15 @@ namespace ReadyToRead
         private void PopolaListView(List<ClsOrdinare> ordini)
         {
             lvOrdini.Items.Clear();
-            for (int i = 0;  i < ordini.Count;i++)
+            for (int i = 0; i < ordini.Count; i++)
             {
                 ClsOrdinare o = ordini[i];
                 ListViewItem lvi = new ListViewItem(o.ID.ToString());
-                lvi.SubItems.Add("");               // cliente 
-                lvi.SubItems.Add("");               // contatto
-                lvi.SubItems.Add("");               // stato 
-                lvi.SubItems.Add("");               // data
-                lvi.SubItems.Add(o.Totale.ToString("C"));
+                lvi.SubItems.Add(o.ClienteID.ToString()); //recupera il nome
+                lvi.SubItems.Add("");               // recupera il cliente e dunque poi il contatto
+                lvi.SubItems.Add(o.StatoOrdine.ToString());
+                lvi.SubItems.Add(o.Data.ToString());
+                lvi.SubItems.Add(o.Totale.ToString() + "€");
                 lvi.Tag = o;
                 lvOrdini.Items.Add(lvi);
             }
@@ -72,8 +72,8 @@ namespace ReadyToRead
 
         private void cbOrdina_SelectedIndexChanged(object sender, EventArgs e)
         {
-            eTipoOrdine tipo=eTipoOrdine.Normale;
-            if (cbOrdina.SelectedIndex!=-1)
+            eTipoOrdine tipo = eTipoOrdine.Normale;
+            if (cbOrdina.SelectedIndex != -1)
                 tipo = (eTipoOrdine)cbOrdina.SelectedItem;
 
             if (tipo == eTipoOrdine.Crescente)
@@ -104,7 +104,7 @@ namespace ReadyToRead
                 PopolaListView(filtrati);
             }
         }
-        
+
         private void btnApplicaFiltri_Click(object sender, EventArgs e)
         {
             List<ClsOrdinare> filtrati = new List<ClsOrdinare>(_ordini);

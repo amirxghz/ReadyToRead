@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReadyToRead
 {
-    public class ClsPubblicare
+    public class ClsPubblicare //Amir
     {
         long _ID;
         DateTime _annoPubblicazione;

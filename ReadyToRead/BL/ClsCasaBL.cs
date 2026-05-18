@@ -9,7 +9,7 @@ using ReadyToRead;
 
 namespace ReadyToRead
 {
-    internal static class ClsCasaBL
+    internal static class ClsCasaBL //Urbani
     {
         private static ClsCasa CreaCasaDaRiga(DataRow r)
         {
@@ -42,7 +42,7 @@ namespace ReadyToRead
             {
                 if (conn.State != ConnectionState.Open)
                     conn.Open();
-                
+
                 string sql = @"INSERT INTO houses (ragione_sociale, indirizzo_sede_legale, indirizzo_sede_operativo, tipo_azienda, esclusiva, tipologia, utenteID)
                                VALUES (@ragione_sociale, @indirizzo_sede_legale, @indirizzo_sede_operativo, @tipo_azienda, @esclusiva, @tipologia, @utenteID)";
 

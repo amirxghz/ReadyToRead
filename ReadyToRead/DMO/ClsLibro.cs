@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 //Urbani
 namespace ReadyToRead
 {
-    public class ClsLibro:ClsProdotto
+    public class ClsLibro : ClsProdotto
     {
-        enum eTIPO
-        {
-            fisico,
-            e_book
-        }
+        enum eTIPO { fisico, e_book }
+
         string _isbn;
         DateTime _annoPubblicazione;
         int _numeroPagine;
@@ -21,7 +18,6 @@ namespace ReadyToRead
         string _imgCopertina;
         string _eBook;
         eTIPO tipo;
-        long prodottoID;
 
         public string Isbn { get => _isbn; set => _isbn = value; }
         public DateTime AnnoPubblicazione { get => _annoPubblicazione; set => _annoPubblicazione = value; }
@@ -30,16 +26,17 @@ namespace ReadyToRead
         public string Edizione { get => _edizione; set => _edizione = value; }
         public string ImgCopertina { get => _imgCopertina; set => _imgCopertina = value; }
         public string EBook { get => _eBook; set => _eBook = value; }
-        public long ProdottoID1 { get => prodottoID; set => prodottoID = value; }
         private eTIPO Tipo { get => tipo; set => tipo = value; }
 
         public ClsLibro()
         {
-
+            _annoPubblicazione = DateTime.Now;
         }
+
         public ClsLibro(string isbn, ClsAutore autore)
         {
             Isbn = isbn;
+            _annoPubblicazione = DateTime.Now;
         }
     }
 }

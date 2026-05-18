@@ -10,11 +10,12 @@ using System.Windows.Forms;
 
 namespace ReadyToRead
 {
-    public partial class usLibro : UserControl
+    public partial class usLibro : UserControl 
     {
         public usLibro()
         {
             InitializeComponent();
         }
+        
     }
 }

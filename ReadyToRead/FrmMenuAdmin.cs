@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ReadyToRead
 {
-    public partial class FrmMenuAdmin : Form
+    public partial class FrmMenuAdmin : Form //Amir
     {
         public FrmMenuAdmin()
         {
@@ -18,7 +18,6 @@ namespace ReadyToRead
         }
         private void FrmMenuAdmin_Load(object sender, EventArgs e)
         {
-            btnCasaEditrice_Click(sender, e);
         }
         private Form frmCorrente = null;
         private Button btnPrecedente = null;
