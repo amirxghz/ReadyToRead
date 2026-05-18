@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLibri));
             this.pnlDetails = new System.Windows.Forms.Panel();
+            this.tbISBN = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.btnAggiungiCasa = new System.Windows.Forms.Button();
             this.btnAggiungiGenere = new System.Windows.Forms.Button();
             this.btnAggiungiAutore = new System.Windows.Forms.Button();
@@ -83,9 +86,7 @@
             this.btnVisualizza = new System.Windows.Forms.Button();
             this.btnElimina = new System.Windows.Forms.Button();
             this.btnModifica = new System.Windows.Forms.Button();
-            this.tbISBN = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.chQuantità = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pnlDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudQuantita)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPrezzo)).BeginInit();
@@ -145,6 +146,39 @@
             this.pnlDetails.Name = "pnlDetails";
             this.pnlDetails.Size = new System.Drawing.Size(427, 720);
             this.pnlDetails.TabIndex = 92;
+            // 
+            // tbISBN
+            // 
+            this.tbISBN.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbISBN.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.tbISBN.Location = new System.Drawing.Point(61, 617);
+            this.tbISBN.Name = "tbISBN";
+            this.tbISBN.ReadOnly = true;
+            this.tbISBN.Size = new System.Drawing.Size(317, 33);
+            this.tbISBN.TabIndex = 263;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.Black;
+            this.label6.Location = new System.Drawing.Point(29, 620);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(34, 25);
+            this.label6.TabIndex = 264;
+            this.label6.Text = "🪪";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.Gray;
+            this.label7.Location = new System.Drawing.Point(30, 591);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(47, 23);
+            this.label7.TabIndex = 262;
+            this.label7.Text = "ISBN";
             // 
             // btnAggiungiCasa
             // 
@@ -623,7 +657,8 @@
             this.columnHeader1,
             this.chAutore,
             this.chCasaEditrice,
-            this.chGenere});
+            this.chGenere,
+            this.chQuantità});
             this.lvLibri.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lvLibri.FullRowSelect = true;
             this.lvLibri.HideSelection = false;
@@ -652,7 +687,7 @@
             // chGenere
             // 
             this.chGenere.Text = "Genere";
-            this.chGenere.Width = 165;
+            this.chGenere.Width = 120;
             // 
             // label3
             // 
@@ -719,38 +754,10 @@
             this.btnModifica.UseVisualStyleBackColor = true;
             this.btnModifica.Click += new System.EventHandler(this.btnModifica_Click);
             // 
-            // tbISBN
+            // chQuantità
             // 
-            this.tbISBN.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbISBN.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.tbISBN.Location = new System.Drawing.Point(61, 617);
-            this.tbISBN.Name = "tbISBN";
-            this.tbISBN.ReadOnly = true;
-            this.tbISBN.Size = new System.Drawing.Size(317, 33);
-            this.tbISBN.TabIndex = 263;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(29, 620);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(34, 25);
-            this.label6.TabIndex = 264;
-            this.label6.Text = "🪪";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.Gray;
-            this.label7.Location = new System.Drawing.Point(30, 591);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(47, 23);
-            this.label7.TabIndex = 262;
-            this.label7.Text = "ISBN";
+            this.chQuantità.Text = "Q.";
+            this.chQuantità.Width = 46;
             // 
             // FrmLibri
             // 
@@ -842,5 +849,6 @@
         private System.Windows.Forms.TextBox tbISBN;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ColumnHeader chQuantità;
     }
 }

@@ -55,8 +55,7 @@
             this.btnNo = new System.Windows.Forms.RadioButton();
             this.btnSi = new System.Windows.Forms.RadioButton();
             this.cbTipoAzienda = new System.Windows.Forms.ComboBox();
-            this.btnSalva = new System.Windows.Forms.Button();
-            this.rtbDescrizione = new System.Windows.Forms.RichTextBox();
+            this.btnAggiungi = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tbFiltroNome = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -70,12 +69,14 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tbEmail = new System.Windows.Forms.TextBox();
             this.pnlDetails.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlDetails
             // 
+            this.pnlDetails.Controls.Add(this.tbEmail);
             this.pnlDetails.Controls.Add(this.tbPassword);
             this.pnlDetails.Controls.Add(this.label15);
             this.pnlDetails.Controls.Add(this.label21);
@@ -102,8 +103,7 @@
             this.pnlDetails.Controls.Add(this.btnNo);
             this.pnlDetails.Controls.Add(this.btnSi);
             this.pnlDetails.Controls.Add(this.cbTipoAzienda);
-            this.pnlDetails.Controls.Add(this.btnSalva);
-            this.pnlDetails.Controls.Add(this.rtbDescrizione);
+            this.pnlDetails.Controls.Add(this.btnAggiungi);
             this.pnlDetails.Dock = System.Windows.Forms.DockStyle.Right;
             this.pnlDetails.Location = new System.Drawing.Point(855, 0);
             this.pnlDetails.Margin = new System.Windows.Forms.Padding(2);
@@ -190,7 +190,7 @@
             this.btnAnnulla.BackColor = System.Drawing.Color.White;
             this.btnAnnulla.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.btnAnnulla.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAnnulla.Location = new System.Drawing.Point(288, 660);
+            this.btnAnnulla.Location = new System.Drawing.Point(288, 590);
             this.btnAnnulla.Margin = new System.Windows.Forms.Padding(11, 10, 11, 10);
             this.btnAnnulla.Name = "btnAnnulla";
             this.btnAnnulla.Size = new System.Drawing.Size(92, 33);
@@ -208,9 +208,9 @@
             this.label12.ForeColor = System.Drawing.Color.Gray;
             this.label12.Location = new System.Drawing.Point(24, 522);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(102, 23);
+            this.label12.Size = new System.Drawing.Size(51, 23);
             this.label12.TabIndex = 98;
-            this.label12.Text = "Descrizione";
+            this.label12.Text = "Email";
             // 
             // label13
             // 
@@ -341,9 +341,9 @@
             this.label23.ForeColor = System.Drawing.Color.Gray;
             this.label23.Location = new System.Drawing.Point(18, 211);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(136, 23);
+            this.label23.Size = new System.Drawing.Size(146, 23);
             this.label23.TabIndex = 83;
-            this.label23.Text = "Ragione Sociale";
+            this.label23.Text = "Ragione Sociale*";
             // 
             // label24
             // 
@@ -398,24 +398,16 @@
             this.cbTipoAzienda.Size = new System.Drawing.Size(321, 31);
             this.cbTipoAzienda.TabIndex = 79;
             // 
-            // btnSalva
+            // btnAggiungi
             // 
-            this.btnSalva.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSalva.Location = new System.Drawing.Point(59, 660);
-            this.btnSalva.Name = "btnSalva";
-            this.btnSalva.Size = new System.Drawing.Size(215, 33);
-            this.btnSalva.TabIndex = 76;
-            this.btnSalva.Text = "➕Aggiungi";
-            this.btnSalva.UseVisualStyleBackColor = true;
-            this.btnSalva.Click += new System.EventHandler(this.btnSalva_Click);
-            // 
-            // rtbDescrizione
-            // 
-            this.rtbDescrizione.Location = new System.Drawing.Point(59, 551);
-            this.rtbDescrizione.Name = "rtbDescrizione";
-            this.rtbDescrizione.Size = new System.Drawing.Size(321, 96);
-            this.rtbDescrizione.TabIndex = 67;
-            this.rtbDescrizione.Text = "";
+            this.btnAggiungi.Font = new System.Drawing.Font("Coolvetica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAggiungi.Location = new System.Drawing.Point(59, 590);
+            this.btnAggiungi.Name = "btnAggiungi";
+            this.btnAggiungi.Size = new System.Drawing.Size(215, 33);
+            this.btnAggiungi.TabIndex = 76;
+            this.btnAggiungi.Text = "➕Aggiungi";
+            this.btnAggiungi.UseVisualStyleBackColor = true;
+            this.btnAggiungi.Click += new System.EventHandler(this.btnSalva_Click);
             // 
             // panel2
             // 
@@ -540,6 +532,15 @@
             this.columnHeader4.Text = "Esclusività";
             this.columnHeader4.Width = 100;
             // 
+            // tbEmail
+            // 
+            this.tbEmail.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbEmail.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.tbEmail.Location = new System.Drawing.Point(56, 551);
+            this.tbEmail.Name = "tbEmail";
+            this.tbEmail.Size = new System.Drawing.Size(321, 33);
+            this.tbEmail.TabIndex = 239;
+            // 
             // FrmCaseEditrici
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
@@ -589,8 +590,7 @@
         private System.Windows.Forms.RadioButton btnNo;
         private System.Windows.Forms.RadioButton btnSi;
         private System.Windows.Forms.ComboBox cbTipoAzienda;
-        private System.Windows.Forms.Button btnSalva;
-        private System.Windows.Forms.RichTextBox rtbDescrizione;
+        private System.Windows.Forms.Button btnAggiungi;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ListView lvCase;
         private System.Windows.Forms.ColumnHeader chISBN;
@@ -612,5 +612,6 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.TextBox tbUsername;
+        private System.Windows.Forms.TextBox tbEmail;
     }
 }

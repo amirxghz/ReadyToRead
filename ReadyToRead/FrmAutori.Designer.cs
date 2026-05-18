@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.pnlDetails = new System.Windows.Forms.Panel();
+            this.chkAttivaDataMorte = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.tbNomeArte = new System.Windows.Forms.TextBox();
@@ -74,7 +75,6 @@
             this.btnVisualizza = new System.Windows.Forms.Button();
             this.btnElimina = new System.Windows.Forms.Button();
             this.btnModifica = new System.Windows.Forms.Button();
-            this.chkAttivaDataMorte = new System.Windows.Forms.CheckBox();
             this.pnlDetails.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -117,6 +117,17 @@
             this.pnlDetails.Name = "pnlDetails";
             this.pnlDetails.Size = new System.Drawing.Size(425, 720);
             this.pnlDetails.TabIndex = 88;
+            // 
+            // chkAttivaDataMorte
+            // 
+            this.chkAttivaDataMorte.AutoSize = true;
+            this.chkAttivaDataMorte.Location = new System.Drawing.Point(149, 383);
+            this.chkAttivaDataMorte.Name = "chkAttivaDataMorte";
+            this.chkAttivaDataMorte.Size = new System.Drawing.Size(42, 27);
+            this.chkAttivaDataMorte.TabIndex = 267;
+            this.chkAttivaDataMorte.Text = "✓";
+            this.chkAttivaDataMorte.UseVisualStyleBackColor = true;
+            this.chkAttivaDataMorte.CheckedChanged += new System.EventHandler(this.chkAttivaDataMorte_CheckedChanged);
             // 
             // label11
             // 
@@ -525,9 +536,9 @@
             this.label4.ForeColor = System.Drawing.Color.Gray;
             this.label4.Location = new System.Drawing.Point(38, 44);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(195, 23);
+            this.label4.Size = new System.Drawing.Size(224, 23);
             this.label4.TabIndex = 226;
-            this.label4.Text = "Cerca per nome Autore";
+            this.label4.Text = "Cerca per cognome Autore";
             // 
             // lvAutori
             // 
@@ -598,17 +609,6 @@
             this.btnModifica.Text = "✍️Modifica";
             this.btnModifica.UseVisualStyleBackColor = true;
             this.btnModifica.Click += new System.EventHandler(this.btnModifica_Click);
-            // 
-            // chkAttivaDataMorte
-            // 
-            this.chkAttivaDataMorte.AutoSize = true;
-            this.chkAttivaDataMorte.Location = new System.Drawing.Point(149, 383);
-            this.chkAttivaDataMorte.Name = "chkAttivaDataMorte";
-            this.chkAttivaDataMorte.Size = new System.Drawing.Size(42, 27);
-            this.chkAttivaDataMorte.TabIndex = 267;
-            this.chkAttivaDataMorte.Text = "✓";
-            this.chkAttivaDataMorte.UseVisualStyleBackColor = true;
-            this.chkAttivaDataMorte.CheckedChanged += new System.EventHandler(this.chkAttivaDataMorte_CheckedChanged);
             // 
             // FrmAutori
             // 

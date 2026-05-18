@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 //Urbani
 namespace ReadyToRead
 {
-    public class ClsCasa
+    public class ClsCasa:ClsUtente
     {
         public enum eTIPO_CASA
         {
