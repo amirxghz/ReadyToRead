@@ -11,6 +11,11 @@ namespace ReadyToRead
 {
     internal static class ClsCasaBL //Urbani
     {
+        private const string SELECT_BASE =
+            @"SELECT h.*, u.username, u.password, u.email
+              FROM houses h
+              INNER JOIN utenti u ON h.utenteID = u.ID";
+
         private static ClsCasa CreaCasaDaRiga(DataRow r)
         {
             ClsCasa c = new ClsCasa();
@@ -19,7 +24,10 @@ namespace ReadyToRead
             c.Esclusiva = Convert.ToBoolean(r["esclusiva"]);
             c.UtenteID = Convert.ToInt64(r["utenteID"]);
             c.IndirizzoSedeLegale = r["indirizzo_sede_legale"] == DBNull.Value ? "" : r["indirizzo_sede_legale"].ToString();
-            c.IndirizzoSedeOperativa = r["indirizzo_sede_operativo "] == DBNull.Value ? "" : r["indirizzo_sede_operativo "].ToString();
+            c.IndirizzoSedeOperativa = r["indirizzo_sede_operativo"] == DBNull.Value ? "" : r["indirizzo_sede_operativo"].ToString();
+            c.Username = r["username"] == DBNull.Value ? "" : r["username"].ToString();
+            c.Password = r["password"] == DBNull.Value ? "" : r["password"].ToString();
+            c.Email = r["email"] == DBNull.Value ? "" : r["email"].ToString();
 
             string tipoAzienda = r["tipo_azienda"] == DBNull.Value ? "" : r["tipo_azienda"].ToString();
             if (!string.IsNullOrEmpty(tipoAzienda))
@@ -43,6 +51,21 @@ namespace ReadyToRead
                 if (conn.State != ConnectionState.Open)
                     conn.Open();
 
+                string sqlUtente = @"INSERT INTO utenti (nome, cognome, username, password, email, data_nascita, genere, comune_nascita, foto_profilo)
+                                     VALUES (@nome, @cognome, @username, SHA2(@password, 256), @email, @data_nascita, @genere, @comune_nascita, @foto_profilo)";
+                MySqlCommand cmdU = new MySqlCommand(sqlUtente, conn);
+                cmdU.Parameters.AddWithValue("@nome", casa.RagioneSociale ?? "");
+                cmdU.Parameters.AddWithValue("@cognome", "");
+                cmdU.Parameters.AddWithValue("@username", casa.Username ?? "");
+                cmdU.Parameters.AddWithValue("@password", casa.Password ?? "");
+                cmdU.Parameters.AddWithValue("@email", casa.Email ?? "");
+                cmdU.Parameters.AddWithValue("@data_nascita", DBNull.Value);
+                cmdU.Parameters.AddWithValue("@genere", "m");
+                cmdU.Parameters.AddWithValue("@comune_nascita", "Jesi");
+                cmdU.Parameters.AddWithValue("@foto_profilo", "");
+                cmdU.ExecuteNonQuery();
+                long utenteID = cmdU.LastInsertedId;
+
                 string sql = @"INSERT INTO houses (ragione_sociale, indirizzo_sede_legale, indirizzo_sede_operativo, tipo_azienda, esclusiva, tipologia, utenteID)
                                VALUES (@ragione_sociale, @indirizzo_sede_legale, @indirizzo_sede_operativo, @tipo_azienda, @esclusiva, @tipologia, @utenteID)";
 
@@ -53,7 +76,7 @@ namespace ReadyToRead
                 cmd.Parameters.AddWithValue("@tipo_azienda", casa.TipoAzienda.ToString());
                 cmd.Parameters.AddWithValue("@esclusiva", casa.Esclusiva);
                 cmd.Parameters.AddWithValue("@tipologia", casa.Tipologia.ToString());
-                cmd.Parameters.AddWithValue("@utenteID", 1);    //placeholder: da sostituire con ID utente sessione
+                cmd.Parameters.AddWithValue("@utenteID", utenteID);
 
                 int numRec = cmd.ExecuteNonQuery();
                 if (numRec == 1)
@@ -81,7 +104,7 @@ namespace ReadyToRead
                 if (conn.State != ConnectionState.Open)
                     conn.Open();
 
-                MySqlDataAdapter da = new MySqlDataAdapter("SELECT * FROM houses", conn);
+                MySqlDataAdapter da = new MySqlDataAdapter(SELECT_BASE, conn);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
@@ -118,7 +141,7 @@ namespace ReadyToRead
                     if (conn.State != ConnectionState.Open)
                         conn.Open();
 
-                    string query = "SELECT * FROM houses WHERE ragione_sociale LIKE @ragione_sociale";
+                    string query = SELECT_BASE + " WHERE h.ragione_sociale LIKE @ragione_sociale";
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@ragione_sociale", "%" + ragioneSociale + "%");
 

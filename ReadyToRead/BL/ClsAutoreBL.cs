@@ -21,7 +21,7 @@ namespace ReadyToRead
         private static ClsAutore CreaAutoreDaRiga(DataRow r)
         {
             ClsAutore a = new ClsAutore();
-            a.Id = Convert.ToInt64(r["ID"]);
+            a.ID = Convert.ToInt64(r["ID"]);
             a.UtenteID = Convert.ToInt64(r["utenteID"]);
             a.ÈVerificato = Convert.ToBoolean(r["verificato"]);
             a.NomeArte = r["nome_arte"] == DBNull.Value ? "" : r["nome_arte"].ToString();
@@ -65,11 +65,11 @@ namespace ReadyToRead
                 cmdU.Parameters.AddWithValue("@email", autore.Email ?? "");
                 cmdU.Parameters.AddWithValue("@data_nascita", autore.DataDiNascita);
                 cmdU.Parameters.AddWithValue("@genere", autore.Sesso.ToString());
-                cmdU.Parameters.AddWithValue("@comune_nascita", ClsUtente.eCOMUNE.Nessuno);
+                cmdU.Parameters.AddWithValue("@comune_nascita", DBNull.Value);
                 cmdU.ExecuteNonQuery();
                 long utenteID = cmdU.LastInsertedId;
 
-                string sqlAutore = @"INSERT INTO autori (verificato, nome_arte, data_morte, città,m utenteID)
+                string sqlAutore = @"INSERT INTO autori (verificato, nome_arte, data_morte, città, utenteID)
                                      VALUES (@verificato, @nome_arte, @data_morte, @città, @utenteID)";
                 MySqlCommand cmdA = new MySqlCommand(sqlAutore, conn);
                 cmdA.Parameters.AddWithValue("@verificato", autore.ÈVerificato);
@@ -226,7 +226,7 @@ namespace ReadyToRead
                     cmdU.Parameters.AddWithValue("@email", autore.Email ?? "");
                     cmdU.Parameters.AddWithValue("@data_nascita", autore.DataDiNascita);
                     cmdU.Parameters.AddWithValue("@genere", autore.Sesso.ToString());
-                    cmdU.Parameters.AddWithValue("@comune_nascita", ClsUtente.eCOMUNE.Nessuno);
+                    cmdU.Parameters.AddWithValue("@comune_nascita", DBNull.Value);
                     cmdU.ExecuteNonQuery();
 
                     string sqlAutore = @"UPDATE autori SET verificato=@verificato, nome_arte=@nome_arte, data_morte=@data_morte, città=@città

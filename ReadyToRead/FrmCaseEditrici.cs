@@ -69,7 +69,7 @@ namespace ReadyToRead
             tbRagioneSociale.Clear();
             tbSedeLegale.Clear();
             tbSedeOperativa.Clear();
-            rtbDescrizione.Clear();
+            tbEmail.Clear();
             btnSi.Checked = false;
             btnNo.Checked = false;
             cbTipoAzienda.SelectedIndex = -1;
@@ -77,7 +77,7 @@ namespace ReadyToRead
             _casaSelezionata = null;
             _idSelezionato = -1;
             lblDomanda.Text = "Crea Casa Editrice";
-            btnSalva.Text = "➕Aggiungi";
+            btnAggiungi.Text = "➕Aggiungi";
 
             if (Program._chiudiForm)
                 this.Close();
@@ -87,10 +87,15 @@ namespace ReadyToRead
         {
             ClsCasa casa = new ClsCasa();
             casa.RagioneSociale = tbRagioneSociale.Text.Trim();
+            casa.IndirizzoSedeLegale = tbSedeLegale.Text.Trim();
+            casa.IndirizzoSedeOperativa = tbSedeOperativa.Text.Trim();
             casa.Esclusiva = btnSi.Checked;
             if (cbTipoAzienda.SelectedItem != null)
                 casa.TipoAzienda = (ClsCasa.eTIPO_AZIENDA)cbTipoAzienda.SelectedItem;
             casa.Tipologia = ClsCasa.eTIPO_CASA.editrice;
+            casa.Username = tbUsername.Text.Trim();
+            casa.Password = tbPassword.Text.Trim();
+            casa.Email = tbEmail.Text.Trim();
             return casa;
         }
 
@@ -101,14 +106,19 @@ namespace ReadyToRead
 
             if (!modificaCasa)
             {
-                long id = ClsCasaBL.Create(ref Program.conn, casa, out errore);
-                if (!string.IsNullOrEmpty(errore))
-                    MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else if (id > 0)
+                if (string.IsNullOrWhiteSpace(casa.Password) || string.IsNullOrWhiteSpace(casa.Username) || string.IsNullOrWhiteSpace(casa.RagioneSociale))
+                    MessageBox.Show("Compilare tutt i campi obbligatori", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                else
                 {
-                    MessageBox.Show("Casa editrice aggiunta con successo!", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ResetCampi();
-                    CaricaCase();
+                    long id = ClsCasaBL.Create(ref Program.conn, casa, out errore);
+                    if (!string.IsNullOrEmpty(errore))
+                        MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    else if (id > 0)
+                    {
+                        MessageBox.Show("Casa editrice aggiunta con successo!", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ResetCampi();
+                        CaricaCase();
+                    }
                 }
             }
             else
@@ -132,8 +142,29 @@ namespace ReadyToRead
             if (Program._chiudiForm)
                 this.Close();
         }
-
+        bool modalitàVisualizza = false;
         private void btnVisualizza_Click(object sender, EventArgs e)
+        {
+            modalitàVisualizza = !modalitàVisualizza;
+            if (modalitàVisualizza)
+            {
+                VisualizzaCasa();
+                btnAggiungi.Visible = false;
+                btnAnnulla.Visible = false;
+                btnVisualizza.ForeColor = Color.DodgerBlue;
+                btnVisualizza.Text = "👁️Smetti";
+            }
+            else
+            {
+                btnAggiungi.Visible = true;
+                btnAnnulla.Visible = true;
+                btnVisualizza.ForeColor = Color.Black;
+                btnVisualizza.Text = "👁️Visualizza";
+                ResetCampi();
+            }
+        }
+
+        private void VisualizzaCasa()
         {
             if (lvCase.SelectedItems.Count == 0)
                 MessageBox.Show("Seleziona una casa editrice da visualizzare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -145,21 +176,22 @@ namespace ReadyToRead
                 btnSi.Checked = _casaSelezionata.Esclusiva;
                 btnNo.Checked = !_casaSelezionata.Esclusiva;
                 cbTipoAzienda.SelectedItem = _casaSelezionata.TipoAzienda;
+                tbPassword.Text = _casaSelezionata.Password;
+                tbUsername.Text = _casaSelezionata.Username;
+                tbEmail.Text = _casaSelezionata.Email;
             }
-        }
+        }       
 
         private void btnModifica_Click(object sender, EventArgs e)
         {
             if (lvCase.SelectedItems.Count == 0)
-            {
                 MessageBox.Show("Seleziona una casa editrice da modificare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
             else
             {
-                btnVisualizza_Click(sender, e);
+                VisualizzaCasa();
                 _modalitaModifica = true;
                 lblDomanda.Text = "Modifica Casa Editrice";
-                btnSalva.Text = "☑️ Salva";
+                btnAggiungi.Text = "☑️ Salva";
             }
         }
 
@@ -211,9 +243,7 @@ namespace ReadyToRead
         {
             string testo = tbFiltroNome.Text.Trim();
             if (string.IsNullOrEmpty(testo))
-            {
                 PopolaListView(_case);
-            }
             else
             {
                 string errore;
