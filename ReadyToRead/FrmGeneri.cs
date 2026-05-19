@@ -94,6 +94,14 @@ namespace ReadyToRead
         bool modalitàVisualizza = false;
         private void btnVisualizza_Click(object sender, EventArgs e)
         {
+            if (lvGeneri.SelectedItems.Count == 0)
+                MessageBox.Show("Seleziona un genere da visualizzare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else
+                ModificaBtnVisualizza();
+        }
+
+        private void ModificaBtnVisualizza()
+        {
             modalitàVisualizza = !modalitàVisualizza;
             if (modalitàVisualizza)
             {
@@ -112,19 +120,13 @@ namespace ReadyToRead
                 btnVisualizza.Text = "👁️Visualizza";
             }
         }
-
         private void VisualizzaGenere()
         {
-            if (lvGeneri.SelectedItems.Count == 0)
-                MessageBox.Show("Seleziona un genere da visualizzare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else
-            {
-                _genereSelezionato = (ClsGenere)lvGeneri.SelectedItems[0].Tag;
-                _idSelezionato = _genereSelezionato.ID;
-                tbNome.Text = _genereSelezionato.Nome;
-                tbTarget.Text = _genereSelezionato.Target;
-                rtbDescrizione.Text = _genereSelezionato.Descrizione;
-            }
+            _genereSelezionato = (ClsGenere)lvGeneri.SelectedItems[0].Tag;
+            _idSelezionato = _genereSelezionato.ID;
+            tbNome.Text = _genereSelezionato.Nome;
+            tbTarget.Text = _genereSelezionato.Target;
+            rtbDescrizione.Text = _genereSelezionato.Descrizione;
         }
 
         private void btnModifica_Click(object sender, EventArgs e)

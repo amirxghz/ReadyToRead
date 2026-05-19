@@ -22,8 +22,8 @@ namespace ReadyToRead
                 if (conn.State != System.Data.ConnectionState.Open)
                     conn.Open();
 
-                string sql = @"INSERT INTO prodotti (nome, stato_disponibilita, prezzo, descrizione) 
-                             VALUES (@nome, @stato_disponibilita, @prezzo, @descrizione)";
+                string sql = @"INSERT INTO prodotti (nome, stato_disponibilita, prezzo, descrizione, quantita) 
+                             VALUES (@nome, @stato_disponibilita, @prezzo, @descrizione, @quantita)";
 
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
 
@@ -31,6 +31,7 @@ namespace ReadyToRead
                 cmd.Parameters.AddWithValue("@stato_disponibilita", prodotto.Disponibilita.ToString() ?? "");
                 cmd.Parameters.AddWithValue("@prezzo", prodotto.Prezzo);
                 cmd.Parameters.AddWithValue("@descrizione", prodotto.Descrizione ?? "");
+                cmd.Parameters.AddWithValue("@quantita", prodotto.Quantita);
 
                 int numRec = cmd.ExecuteNonQuery();
                 if (numRec == 1)
@@ -73,6 +74,7 @@ namespace ReadyToRead
                     prodotto.Disponibilita = (ClsProdotto.eStatoDisponibilita)dt.Rows[i]["stato_disponibilita"];
                     prodotto.Prezzo = Convert.ToSingle(dt.Rows[i]["prezzo"]);
                     prodotto.Descrizione = dt.Rows[i]["descrizione"].ToString();
+                    prodotto.ProdottoID = Convert.ToInt32(dt.Rows[i]["quantita"]);
                     prodotti.Add(prodotto);
                 }
 
@@ -117,6 +119,7 @@ namespace ReadyToRead
                         prodotto.Disponibilita = (ClsProdotto.eStatoDisponibilita)dt.Rows[0]["stato_disponibilita"];
                         prodotto.Prezzo = Convert.ToSingle(dt.Rows[0]["prezzo"]);
                         prodotto.Descrizione = dt.Rows[0]["descrizione"].ToString();
+                        prodotto.ProdottoID = Convert.ToInt32(dt.Rows[0]["quantita"]);
                     }
 
                     conn.Close();
@@ -161,6 +164,7 @@ namespace ReadyToRead
                         prodotto.Disponibilita = (ClsProdotto.eStatoDisponibilita)dt.Rows[i]["stato_disponibilita"];
                         prodotto.Prezzo = Convert.ToSingle(dt.Rows[i]["prezzo"]);
                         prodotto.Descrizione = dt.Rows[i]["descrizione"].ToString();
+                        prodotto.ProdottoID = Convert.ToInt32(dt.Rows[i]["quantita"]);
                         prodotti.Add(prodotto);
                     }
 
@@ -192,7 +196,7 @@ namespace ReadyToRead
                         conn.Open();
 
                     string sql = @"UPDATE prodotti SET nome=@nome, stato_disponibilita=@stato_disponibilita, 
-                                 prezzo=@prezzo, descrizione=@descrizione 
+                                 prezzo=@prezzo, descrizione=@descrizione, quantita=@quantita
                                  WHERE ID=@ID";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
@@ -202,6 +206,7 @@ namespace ReadyToRead
                     cmd.Parameters.AddWithValue("@stato_disponibilita", prodotto.Disponibilita.ToString() ?? "");
                     cmd.Parameters.AddWithValue("@prezzo", prodotto.Prezzo);
                     cmd.Parameters.AddWithValue("@descrizione", prodotto.Descrizione ?? "");
+                    cmd.Parameters.AddWithValue("@quantita", prodotto.Quantita);
 
                     esito = cmd.ExecuteNonQuery();
                     conn.Close();

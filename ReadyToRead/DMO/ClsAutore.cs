@@ -8,7 +8,6 @@ namespace ReadyToRead
 {
     public class ClsAutore : ClsUtente //Amir
     {
-        long _ID;
         bool _èVerificato;
         string _nomeArte;
         DateTime? _dataMorte;
@@ -18,8 +17,6 @@ namespace ReadyToRead
         public bool ÈVerificato { get => _èVerificato; set => _èVerificato = value; }
 
         public long UtenteID { get => _utenteID; set => _utenteID = value; }
-
-        public long Id { get => _ID; set => _ID = value; }
 
         public string NomeArte
         {
@@ -58,8 +55,9 @@ namespace ReadyToRead
         {
         }
 
-        public ClsAutore(string nome, string cognome)
+        public ClsAutore(long id, string nome, string cognome)
         {
+            ID = id;
             Nome = nome;
             Cognome = cognome;
         }

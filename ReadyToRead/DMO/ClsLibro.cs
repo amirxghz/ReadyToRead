@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 //Urbani
 namespace ReadyToRead
 {
-    public class ClsLibro : ClsProdotto
+    public class ClsLibro:ClsProdotto
     {
-        enum eTIPO { fisico, e_book }
-
+        enum eTIPO
+        {
+            fisico,
+            e_book
+        }
         string _isbn;
         DateTime _annoPubblicazione;
         int _numeroPagine;
@@ -30,13 +33,11 @@ namespace ReadyToRead
 
         public ClsLibro()
         {
-            _annoPubblicazione = DateTime.Now;
-        }
 
+        }
         public ClsLibro(string isbn, ClsAutore autore)
         {
             Isbn = isbn;
-            _annoPubblicazione = DateTime.Now;
         }
     }
 }

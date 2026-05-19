@@ -80,13 +80,13 @@
             this.chAutore = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chCasaEditrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chGenere = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chQuantità = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label3 = new System.Windows.Forms.Label();
             this.tbFiltroNome = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btnVisualizza = new System.Windows.Forms.Button();
             this.btnElimina = new System.Windows.Forms.Button();
             this.btnModifica = new System.Windows.Forms.Button();
-            this.chQuantità = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pnlDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudQuantita)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPrezzo)).BeginInit();
@@ -689,6 +689,11 @@
             this.chGenere.Text = "Genere";
             this.chGenere.Width = 120;
             // 
+            // chQuantità
+            // 
+            this.chQuantità.Text = "Q.";
+            this.chQuantità.Width = 46;
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -753,11 +758,6 @@
             this.btnModifica.Text = "✍️Modifica";
             this.btnModifica.UseVisualStyleBackColor = true;
             this.btnModifica.Click += new System.EventHandler(this.btnModifica_Click);
-            // 
-            // chQuantità
-            // 
-            this.chQuantità.Text = "Q.";
-            this.chQuantità.Width = 46;
             // 
             // FrmLibri
             // 

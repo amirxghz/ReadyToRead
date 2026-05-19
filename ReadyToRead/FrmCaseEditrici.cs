@@ -145,6 +145,14 @@ namespace ReadyToRead
         bool modalitàVisualizza = false;
         private void btnVisualizza_Click(object sender, EventArgs e)
         {
+            if (lvCase.SelectedItems.Count == 0)
+                MessageBox.Show("Seleziona una casa editrice da visualizzare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else
+                ModificaBtnVisualizza();
+        }
+
+        private void ModificaBtnVisualizza()
+        {
             modalitàVisualizza = !modalitàVisualizza;
             if (modalitàVisualizza)
             {
@@ -156,30 +164,24 @@ namespace ReadyToRead
             }
             else
             {
+                ResetCampi();
                 btnAggiungi.Visible = true;
                 btnAnnulla.Visible = true;
                 btnVisualizza.ForeColor = Color.Black;
                 btnVisualizza.Text = "👁️Visualizza";
-                ResetCampi();
             }
         }
-
         private void VisualizzaCasa()
         {
-            if (lvCase.SelectedItems.Count == 0)
-                MessageBox.Show("Seleziona una casa editrice da visualizzare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else
-            {
-                _casaSelezionata = (ClsCasa)lvCase.SelectedItems[0].Tag;
-                _idSelezionato = _casaSelezionata.ID;
-                tbRagioneSociale.Text = _casaSelezionata.RagioneSociale;
-                btnSi.Checked = _casaSelezionata.Esclusiva;
-                btnNo.Checked = !_casaSelezionata.Esclusiva;
-                cbTipoAzienda.SelectedItem = _casaSelezionata.TipoAzienda;
-                tbPassword.Text = _casaSelezionata.Password;
-                tbUsername.Text = _casaSelezionata.Username;
-                tbEmail.Text = _casaSelezionata.Email;
-            }
+            _casaSelezionata = (ClsCasa)lvCase.SelectedItems[0].Tag;
+            _idSelezionato = _casaSelezionata.ID;
+            tbRagioneSociale.Text = _casaSelezionata.RagioneSociale;
+            btnSi.Checked = _casaSelezionata.Esclusiva;
+            btnNo.Checked = !_casaSelezionata.Esclusiva;
+            cbTipoAzienda.SelectedItem = _casaSelezionata.TipoAzienda;
+            tbPassword.Text = _casaSelezionata.Password;
+            tbUsername.Text = _casaSelezionata.Username;
+            tbEmail.Text = _casaSelezionata.Email;
         }       
 
         private void btnModifica_Click(object sender, EventArgs e)

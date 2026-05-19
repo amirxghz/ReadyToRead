@@ -97,9 +97,9 @@ namespace ReadyToRead
             autore.Nome = tbNome.Text.Trim();
             autore.Cognome = tbCognome.Text.Trim();
             autore.NomeArte = tbNomeArte.Text.Trim();
-            autore.Username = "-";
-            autore.Password = "-";
-            autore.Email = "-";
+            autore.Username = (tbNome.Text.Trim()+"."+tbCognome.Text.Trim()).ToLower();
+            autore.Password = null;
+            autore.Email = (tbNome.Text.Trim() + "." + tbCognome.Text.Trim()).ToLower()+"@ready2read.it";
             autore.ÈVerificato = rbVerificato.Checked;
             autore.DataDiNascita = dtpDataDiNascita.Value;
             autore.Sesso = rbM.Checked ? ClsUtente.eSESSO.m : ClsUtente.eSESSO.f;
@@ -176,36 +176,32 @@ namespace ReadyToRead
 
         private void VisualizzaAutore()
         {
-            if (lvAutori.SelectedItems.Count == 0)
-                MessageBox.Show("Seleziona un autore da visualizzare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            _autoreSelezionato = (ClsAutore)lvAutori.SelectedItems[0].Tag;
+            _idSelezionato = _autoreSelezionato.ID;
+            rbVerificato.Checked = _autoreSelezionato.ÈVerificato;
+            rbNonVerificato.Checked = !_autoreSelezionato.ÈVerificato;
+            tbNomeArte.Text = _autoreSelezionato.NomeArte;
+            tbNome.Text = _autoreSelezionato.Nome;
+            tbCognome.Text = _autoreSelezionato.Cognome;
+            dtpDataDiNascita.Value = _autoreSelezionato.DataDiNascita;
+
+            if (_autoreSelezionato.DataMorte.HasValue)
+            {
+                dtpDataMorte.Value = _autoreSelezionato.DataMorte.Value;
+                chkAttivaDataMorte.Checked = true;
+                dtpDataMorte.Visible = true;
+            }
             else
             {
-                _autoreSelezionato = (ClsAutore)lvAutori.SelectedItems[0].Tag;
-                _idSelezionato = _autoreSelezionato.Id;
-                rbVerificato.Checked = _autoreSelezionato.ÈVerificato;
-                rbNonVerificato.Checked = !_autoreSelezionato.ÈVerificato;
-                tbNomeArte.Text = _autoreSelezionato.NomeArte;
-                tbNome.Text = _autoreSelezionato.Nome;
-                tbCognome.Text = _autoreSelezionato.Cognome;
-                dtpDataDiNascita.Value = _autoreSelezionato.DataDiNascita;
-
-                if (_autoreSelezionato.DataMorte.HasValue)
-                {
-                    dtpDataMorte.Value = _autoreSelezionato.DataMorte.Value;
-                    chkAttivaDataMorte.Checked = true;
-                    dtpDataMorte.Visible = true;
-                }
-                else
-                {
-                    dtpDataMorte.Value = DateTime.Now;
-                    chkAttivaDataMorte.Checked = false;
-                    dtpDataMorte.Visible = false;
-                }
-
-                rbM.Checked = _autoreSelezionato.Sesso == ClsUtente.eSESSO.m;
-                rbF.Checked = _autoreSelezionato.Sesso == ClsUtente.eSESSO.f;
-                tbCittà.Text = _autoreSelezionato.CittaNascita;
+                dtpDataMorte.Value = DateTime.Now;
+                chkAttivaDataMorte.Checked = false;
+                dtpDataMorte.Visible = false;
             }
+
+            rbM.Checked = _autoreSelezionato.Sesso == ClsUtente.eSESSO.m;
+            rbF.Checked = _autoreSelezionato.Sesso == ClsUtente.eSESSO.f;
+            tbCittà.Text = _autoreSelezionato.CittaNascita;
+            
         }
 
         private void btnAggiungi_Click(object sender, EventArgs e)
@@ -215,6 +211,14 @@ namespace ReadyToRead
         }
         bool modalitàVisualizza = false;
         private void btnVisualizza_Click(object sender, EventArgs e)
+        {
+            if (lvAutori.SelectedItems.Count == 0)
+                MessageBox.Show("Seleziona un autore da visualizzare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else
+                ModificaBtnVisualizza();
+        }
+
+        private void ModificaBtnVisualizza()
         {
             modalitàVisualizza = !modalitàVisualizza;
             if (modalitàVisualizza)
@@ -269,7 +273,7 @@ namespace ReadyToRead
                         if (string.IsNullOrEmpty(errore))
                         {
                             ClsAutore a = (ClsAutore)lvi[i].Tag;
-                            long esito = ClsAutoreBL.Delete(ref Program.conn, a.Id, out errore);
+                            long esito = ClsAutoreBL.Delete(ref Program.conn, a.ID, out errore);
                             if (string.IsNullOrEmpty(errore) && esito > 0)
                                 eliminati++;
                         }

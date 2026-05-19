@@ -42,7 +42,6 @@ namespace ReadyToRead
                 if (conn.State != ConnectionState.Open)
                     conn.Open();
 
-                // La password viene hashata con SHA2-256 direttamente in MySQL
                 string sql = @"INSERT INTO utenti (nome, cognome, username, password, email, data_nascita, genere, comune_nascita, foto_profilo)
                       VALUES (@nome, @cognome, @username, SHA2(@password, 256), @email, @data_nascita, @genere, @comune_nascita, @foto_profilo)";
 

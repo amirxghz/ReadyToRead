@@ -8,7 +8,6 @@ namespace ReadyToRead
 {
     public class ClsCliente: ClsUtente //amir
     {
-        long _ID;
         private string _indirizzo;
         private string _cap;
         private int _utenteID;
@@ -37,13 +36,13 @@ namespace ReadyToRead
         }
 
         public int UtenteID { get => _utenteID; set => _utenteID = value; }
-        public long Id { get => _ID; set => _ID = value; }
 
         public ClsCliente()
         {
         }
-        public ClsCliente(string email, string password)
+        public ClsCliente(long id, string email, string password)
         {
+            ID = id;
             Email = email;
             Password = password;
         }
