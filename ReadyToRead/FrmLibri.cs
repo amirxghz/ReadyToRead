@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySqlConnector;
 
 namespace ReadyToRead
 {
@@ -87,77 +88,127 @@ namespace ReadyToRead
 
         private void PopolaListView(List<ClsLibro> libri)
         {
-            if (_autori.Count == 0)
-            {
-                string errA;
-                _autori = ClsAutoreBL.GetAll(ref Program.conn, out errA);
-            }
-            if (_case.Count == 0)
-            {
-                string errC;
-                _case = ClsCasaBL.GetAll(ref Program.conn, out errC);
-            }
-            if (_generi.Count == 0)
-            {
-                string errG;
-                _generi = ClsGenereBL.GetAll(ref Program.conn, out errG);
-            }
-
             lvLibri.Items.Clear();
 
             for (int i = 0; i < libri.Count; i++)
             {
                 ClsLibro l = libri[i];
-                ListViewItem lvi = new ListViewItem(l.Nome);
 
                 string nomeAutore = "";
-                string erroreS;
-                List<ClsScrivere> scritture = ClsScrivereBL.GetByLibroISBN(ref Program.conn, l.Isbn, out erroreS);
-                if (string.IsNullOrEmpty(erroreS) && scritture.Count > 0)
+                try
                 {
-                    long autoreID = scritture[0].AutoreID;
-                    int j = 0;
-                    while (j < _autori.Count && string.IsNullOrEmpty(nomeAutore))
+                    if (Program.conn.State != System.Data.ConnectionState.Open)
+                        Program.conn.Open();
+
+                    string sqlAutore = @"SELECT u.nome, u.cognome 
+                                         FROM scrivere s
+                                         INNER JOIN autori a ON s.autoreID = a.ID
+                                         INNER JOIN utenti u ON a.utenteID = u.ID
+                                         WHERE s.libroISBN = @isbn
+                                         LIMIT 1";
+                    MySqlConnector.MySqlCommand cmdA = new MySqlConnector.MySqlCommand(sqlAutore, Program.conn);
+                    cmdA.Parameters.AddWithValue("@isbn", l.Isbn);
+                    using (MySqlConnector.MySqlDataReader rA = cmdA.ExecuteReader())
                     {
-                        if (_autori[j].ID == autoreID)
-                            nomeAutore = _autori[j].Nome + " " + _autori[j].Cognome;
-                        j++;
+                        if (rA.Read())
+                            nomeAutore = rA["nome"].ToString() + " " + rA["cognome"].ToString();
                     }
                 }
-                lvi.SubItems.Add(nomeAutore);
+                catch { }
+                finally
+                {
+                    if (Program.conn.State == System.Data.ConnectionState.Open)
+                        Program.conn.Close();
+                }
 
                 string nomeCasa = "";
-                string erroreP;
-                List<ClsPubblicare> pubblicazioni = ClsPubblicareBL.GetByLibroISBN(ref Program.conn, l.Isbn, out erroreP);
-                if (string.IsNullOrEmpty(erroreP) && pubblicazioni.Count > 0)
+                try
                 {
-                    long casaID = pubblicazioni[0].CasaEditriceID;
-                    int j = 0;
-                    while (j < _case.Count && string.IsNullOrEmpty(nomeCasa))
+                    if (Program.conn.State != System.Data.ConnectionState.Open)
+                        Program.conn.Open();
+
+                    string sqlCasa = @"SELECT h.ragione_sociale 
+                                       FROM pubblicare p
+                                       INNER JOIN houses h ON p.casa_editriceID = h.ID
+                                       WHERE p.libroISBN = @isbn
+                                       LIMIT 1";
+                    MySqlConnector.MySqlCommand cmdC = new MySqlConnector.MySqlCommand(sqlCasa, Program.conn);
+                    cmdC.Parameters.AddWithValue("@isbn", l.Isbn);
+                    using (MySqlConnector.MySqlDataReader rC = cmdC.ExecuteReader())
                     {
-                        if (_case[j].ID == casaID)
-                            nomeCasa = _case[j].RagioneSociale;
-                        j++;
+                        if (rC.Read())
+                            nomeCasa = rC["ragione_sociale"].ToString();
                     }
                 }
-                lvi.SubItems.Add(nomeCasa);
+                catch { }
+                finally
+                {
+                    if (Program.conn.State == System.Data.ConnectionState.Open)
+                        Program.conn.Close();
+                }
 
                 string nomeGenere = "";
-                string erroreG;
-                List<ClsCaratterizzare> caratterizzazioni = ClsCaratterizzareBL.GetByLibroISBN(ref Program.conn, l.Isbn, out erroreG);
-                if (string.IsNullOrEmpty(erroreG) && caratterizzazioni.Count > 0)
+                try
                 {
-                    long genereID = caratterizzazioni[0].GenereID;
-                    int j = 0;
-                    while (j < _generi.Count && string.IsNullOrEmpty(nomeGenere))
+                    if (Program.conn.State != System.Data.ConnectionState.Open)
+                        Program.conn.Open();
+
+                    string sqlGenere = @"SELECT g.nome 
+                                         FROM caratterizzare c
+                                         INNER JOIN generi g ON c.genereID = g.ID
+                                         WHERE c.libroISBN = @isbn
+                                         LIMIT 1";
+                    MySqlConnector.MySqlCommand cmdG = new MySqlConnector.MySqlCommand(sqlGenere, Program.conn);
+                    cmdG.Parameters.AddWithValue("@isbn", l.Isbn);
+                    using (MySqlConnector.MySqlDataReader rG = cmdG.ExecuteReader())
                     {
-                        if (_generi[j].ID == genereID)
-                            nomeGenere = _generi[j].Nome;
-                        j++;
+                        if (rG.Read())
+                            nomeGenere = rG["nome"].ToString();
                     }
                 }
+                catch { }
+                finally
+                {
+                    if (Program.conn.State == System.Data.ConnectionState.Open)
+                        Program.conn.Close();
+                }
+
+                string quantita = "";
+                try
+                {
+                    if (Program.conn.State != System.Data.ConnectionState.Open)
+                        Program.conn.Open();
+
+                    string sqlQta = @"SELECT p.quantita 
+                                      FROM prodotti p
+                                      INNER JOIN libri lb ON lb.prodottoID = p.ID
+                                      WHERE lb.isbn = @isbn
+                                      LIMIT 1";
+                    MySqlConnector.MySqlCommand cmdQ = new MySqlConnector.MySqlCommand(sqlQta, Program.conn);
+                    cmdQ.Parameters.AddWithValue("@isbn", l.Isbn);
+                    using (MySqlConnector.MySqlDataReader rQ = cmdQ.ExecuteReader())
+                    {
+                        if (rQ.Read())
+                            quantita = rQ["quantita"].ToString();
+                        else
+                            quantita = l.Quantita.ToString(); 
+                    }
+                }
+                catch
+                {
+                    quantita = l.Quantita.ToString();
+                }
+                finally
+                {
+                    if (Program.conn.State == System.Data.ConnectionState.Open)
+                        Program.conn.Close();
+                }
+
+                ListViewItem lvi = new ListViewItem(l.Nome);
+                lvi.SubItems.Add(nomeAutore);
+                lvi.SubItems.Add(nomeCasa);
                 lvi.SubItems.Add(nomeGenere);
-                lvi.SubItems.Add(l.Quantita.ToString());
+                lvi.SubItems.Add(quantita);
                 lvi.Tag = l;
                 lvLibri.Items.Add(lvi);
             }
@@ -207,114 +258,41 @@ namespace ReadyToRead
 
             return libro;
         }
-
-        private bool ValidaCampi()
-        {
-            bool valido = true;
-
-            if (string.IsNullOrWhiteSpace(tbTitolo.Text))
-                valido = false;
-            else if (string.IsNullOrWhiteSpace(tbISBN.Text))
-                valido = false;
-            else if (cbAutore.SelectedIndex == -1)
-                valido = false;
-            else if (cbCasaEditrice.SelectedIndex == -1)
-                valido = false;
-            else if (clbGenere.CheckedItems.Count == 0)
-                valido = false;
-
-            if (!valido)
-                MessageBox.Show("Compilare tutti i campi obbligatori (Titolo, ISBN, Autore, Casa Editrice, Genere)", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            return valido;
-        }
-
+        
         private void GestisciLibro(bool modificaLibro)
         {
-            if (!ValidaCampi())
-                return;
-
-            ClsLibro libro = LeggiCampi();
-            string errore;
-
-            if (!modificaLibro)
-            {
-                long id = ClsLibroBL.Create(ref Program.conn, libro, out errore);
-                if (!string.IsNullOrEmpty(errore))
-                    MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else if (id > 0)
-                {
-                    if (cbAutore.SelectedIndex > -1)
-                    {
-                        ClsScrivere scrivere = new ClsScrivere();
-                        scrivere.Data = DateTime.Now;
-                        scrivere.AutoreID = (long)cbAutore.SelectedValue;
-                        scrivere.LibroISBN = libro.Isbn;
-                        ClsScrivereBL.Create(ref Program.conn, scrivere, out errore);
-                    }
-
-                    if (cbCasaEditrice.SelectedIndex > -1)
-                    {
-                        ClsPubblicare pubblicare = new ClsPubblicare();
-                        pubblicare.AnnoPubblicazione = dtpDataProduzione.Value;
-                        pubblicare.CasaEditriceID = (long)cbCasaEditrice.SelectedValue;
-                        pubblicare.LibroISBN = libro.Isbn;
-                        ClsPubblicareBL.Create(ref Program.conn, pubblicare, out errore);
-                    }
-
-                    for (int i = 0; i < clbGenere.CheckedItems.Count; i++)
-                    {
-                        ClsGenere g = (ClsGenere)clbGenere.CheckedItems[i];
-                        ClsCaratterizzare caratterizzare = new ClsCaratterizzare();
-                        caratterizzare.LibroISBN = libro.Isbn;
-                        caratterizzare.GenereID = (int)g.ID;
-                        ClsCaratterizzareBL.Create(ref Program.conn, caratterizzare, out errore);
-                    }
-
-                    MessageBox.Show("Libro aggiunto con successo!", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ResetCampi();
-                    CaricaLibri();
-                }
-            }
+            if (string.IsNullOrWhiteSpace(tbTitolo.Text) || cbAutore.SelectedIndex == -1 || cbCasaEditrice.SelectedIndex == -1 || clbGenere.CheckedItems.Count == 0)
+                MessageBox.Show("Compilare tutti i campi obbligatori (Titolo, ISBN, Autore, Casa Editrice, Genere)", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-                if (_libroSelezionato == null)
-                    MessageBox.Show("Seleziona un libro da modificare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                else
+
+                ClsLibro libro = LeggiCampi();
+                string errore;
+
+                if (!modificaLibro)
                 {
-                    long esito = ClsLibroBL.Update(ref Program.conn, _idSelezionato, libro, out errore);
+                    long id = ClsLibroBL.Create(ref Program.conn, libro, out errore);
                     if (!string.IsNullOrEmpty(errore))
                         MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    else if (esito > 0)
+                    else if (id > 0)
                     {
                         if (cbAutore.SelectedIndex > -1)
                         {
-                            List<ClsScrivere> scritture = ClsScrivereBL.GetByLibroISBN(ref Program.conn, libro.Isbn, out errore);
-                            if (scritture.Count > 0)
-                            {
-                                ClsScrivere scrivere = scritture[0];
-                                scrivere.AutoreID = (long)cbAutore.SelectedValue;
-                                scrivere.LibroISBN = libro.Isbn;
-                                ClsScrivereBL.Update(ref Program.conn, scrivere.ID, scrivere, out errore);
-                            }
+                            ClsScrivere scrivere = new ClsScrivere();
+                            scrivere.Data = DateTime.Now;
+                            scrivere.AutoreID = (long)cbAutore.SelectedValue;
+                            scrivere.LibroISBN = libro.Isbn;
+                            ClsScrivereBL.Create(ref Program.conn, scrivere, out errore);
                         }
 
                         if (cbCasaEditrice.SelectedIndex > -1)
                         {
-                            List<ClsPubblicare> pubblicazioni = ClsPubblicareBL.GetByLibroISBN(ref Program.conn, libro.Isbn, out errore);
-                            if (pubblicazioni.Count > 0)
-                            {
-                                ClsPubblicare pubblicare = pubblicazioni[0];
-                                pubblicare.AnnoPubblicazione = dtpDataProduzione.Value;
-                                pubblicare.CasaEditriceID = (long)cbCasaEditrice.SelectedValue;
-                                pubblicare.LibroISBN = libro.Isbn;
-                                ClsPubblicareBL.Update(ref Program.conn, pubblicare.ID, pubblicare, out errore);
-                            }
+                            ClsPubblicare pubblicare = new ClsPubblicare();
+                            pubblicare.AnnoPubblicazione = dtpDataProduzione.Value;
+                            pubblicare.CasaEditriceID = (long)cbCasaEditrice.SelectedValue;
+                            pubblicare.LibroISBN = libro.Isbn;
+                            ClsPubblicareBL.Create(ref Program.conn, pubblicare, out errore);
                         }
-
-                        List<ClsCaratterizzare> caratterizzazioni = ClsCaratterizzareBL.GetByLibroISBN(ref Program.conn, libro.Isbn, out errore);
-                        for (int i = 0; i < caratterizzazioni.Count; i++)
-                            ClsCaratterizzareBL.Delete(ref Program.conn, caratterizzazioni[i].ID, out errore);
 
                         for (int i = 0; i < clbGenere.CheckedItems.Count; i++)
                         {
@@ -325,15 +303,70 @@ namespace ReadyToRead
                             ClsCaratterizzareBL.Create(ref Program.conn, caratterizzare, out errore);
                         }
 
-                        MessageBox.Show("Libro modificato con successo!", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Libro aggiunto con successo!", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ResetCampi();
                         CaricaLibri();
                     }
                 }
-            }
+                else
+                {
+                    if (_libroSelezionato == null)
+                        MessageBox.Show("Seleziona un libro da modificare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    else
+                    {
+                        long esito = ClsLibroBL.Update(ref Program.conn, _idSelezionato, libro, out errore);
+                        if (!string.IsNullOrEmpty(errore))
+                            MessageBox.Show("Errore: " + errore, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        else if (esito > 0)
+                        {
+                            if (cbAutore.SelectedIndex > -1)
+                            {
+                                List<ClsScrivere> scritture = ClsScrivereBL.GetByLibroISBN(ref Program.conn, libro.Isbn, out errore);
+                                if (scritture.Count > 0)
+                                {
+                                    ClsScrivere scrivere = scritture[0];
+                                    scrivere.AutoreID = (long)cbAutore.SelectedValue;
+                                    scrivere.LibroISBN = libro.Isbn;
+                                    ClsScrivereBL.Update(ref Program.conn, scrivere.ID, scrivere, out errore);
+                                }
+                            }
 
-            if (Program._chiudiForm)
-                this.Close();
+                            if (cbCasaEditrice.SelectedIndex > -1)
+                            {
+                                List<ClsPubblicare> pubblicazioni = ClsPubblicareBL.GetByLibroISBN(ref Program.conn, libro.Isbn, out errore);
+                                if (pubblicazioni.Count > 0)
+                                {
+                                    ClsPubblicare pubblicare = pubblicazioni[0];
+                                    pubblicare.AnnoPubblicazione = dtpDataProduzione.Value;
+                                    pubblicare.CasaEditriceID = (long)cbCasaEditrice.SelectedValue;
+                                    pubblicare.LibroISBN = libro.Isbn;
+                                    ClsPubblicareBL.Update(ref Program.conn, pubblicare.ID, pubblicare, out errore);
+                                }
+                            }
+
+                            List<ClsCaratterizzare> caratterizzazioni = ClsCaratterizzareBL.GetByLibroISBN(ref Program.conn, libro.Isbn, out errore);
+                            for (int i = 0; i < caratterizzazioni.Count; i++)
+                                ClsCaratterizzareBL.Delete(ref Program.conn, caratterizzazioni[i].ID, out errore);
+
+                            for (int i = 0; i < clbGenere.CheckedItems.Count; i++)
+                            {
+                                ClsGenere g = (ClsGenere)clbGenere.CheckedItems[i];
+                                ClsCaratterizzare caratterizzare = new ClsCaratterizzare();
+                                caratterizzare.LibroISBN = libro.Isbn;
+                                caratterizzare.GenereID = (int)g.ID;
+                                ClsCaratterizzareBL.Create(ref Program.conn, caratterizzare, out errore);
+                            }
+
+                            MessageBox.Show("Libro modificato con successo!", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            ResetCampi();
+                            CaricaLibri();
+                        }
+                    }
+                }
+
+                if (Program._chiudiForm)
+                    this.Close();
+            }
         }
 
         bool modalitàVisualizza = false;
@@ -370,7 +403,7 @@ namespace ReadyToRead
         private void CampiReadOnly(bool rendiReadOnly)
         {
             tbTitolo.ReadOnly = rendiReadOnly;
-            tbISBN.ReadOnly = rendiReadOnly;
+            tbLingua.ReadOnly = rendiReadOnly;
             nudPagine.Enabled = !rendiReadOnly;
             nudPrezzo.Enabled = !rendiReadOnly;
             nudQuantita.Enabled = !rendiReadOnly;
