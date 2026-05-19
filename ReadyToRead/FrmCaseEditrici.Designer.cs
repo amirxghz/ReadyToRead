@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.pnlDetails = new System.Windows.Forms.Panel();
+            this.tbEmail = new System.Windows.Forms.TextBox();
             this.tbPassword = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
@@ -52,8 +53,8 @@
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.tbRagioneSociale = new System.Windows.Forms.TextBox();
-            this.btnNo = new System.Windows.Forms.RadioButton();
-            this.btnSi = new System.Windows.Forms.RadioButton();
+            this.rbNo = new System.Windows.Forms.RadioButton();
+            this.rbSi = new System.Windows.Forms.RadioButton();
             this.cbTipoAzienda = new System.Windows.Forms.ComboBox();
             this.btnAggiungi = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -69,7 +70,6 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.tbEmail = new System.Windows.Forms.TextBox();
             this.pnlDetails.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -100,8 +100,8 @@
             this.pnlDetails.Controls.Add(this.label23);
             this.pnlDetails.Controls.Add(this.label24);
             this.pnlDetails.Controls.Add(this.tbRagioneSociale);
-            this.pnlDetails.Controls.Add(this.btnNo);
-            this.pnlDetails.Controls.Add(this.btnSi);
+            this.pnlDetails.Controls.Add(this.rbNo);
+            this.pnlDetails.Controls.Add(this.rbSi);
             this.pnlDetails.Controls.Add(this.cbTipoAzienda);
             this.pnlDetails.Controls.Add(this.btnAggiungi);
             this.pnlDetails.Dock = System.Windows.Forms.DockStyle.Right;
@@ -110,6 +110,15 @@
             this.pnlDetails.Name = "pnlDetails";
             this.pnlDetails.Size = new System.Drawing.Size(425, 720);
             this.pnlDetails.TabIndex = 86;
+            // 
+            // tbEmail
+            // 
+            this.tbEmail.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbEmail.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.tbEmail.Location = new System.Drawing.Point(56, 551);
+            this.tbEmail.Name = "tbEmail";
+            this.tbEmail.Size = new System.Drawing.Size(321, 33);
+            this.tbEmail.TabIndex = 239;
             // 
             // tbPassword
             // 
@@ -366,29 +375,29 @@
             this.tbRagioneSociale.Size = new System.Drawing.Size(318, 33);
             this.tbRagioneSociale.TabIndex = 84;
             // 
-            // btnNo
+            // rbNo
             // 
-            this.btnNo.AutoSize = true;
-            this.btnNo.Location = new System.Drawing.Point(107, 493);
-            this.btnNo.Margin = new System.Windows.Forms.Padding(2);
-            this.btnNo.Name = "btnNo";
-            this.btnNo.Size = new System.Drawing.Size(49, 27);
-            this.btnNo.TabIndex = 81;
-            this.btnNo.TabStop = true;
-            this.btnNo.Text = "No";
-            this.btnNo.UseVisualStyleBackColor = true;
+            this.rbNo.AutoSize = true;
+            this.rbNo.Location = new System.Drawing.Point(107, 493);
+            this.rbNo.Margin = new System.Windows.Forms.Padding(2);
+            this.rbNo.Name = "rbNo";
+            this.rbNo.Size = new System.Drawing.Size(49, 27);
+            this.rbNo.TabIndex = 81;
+            this.rbNo.TabStop = true;
+            this.rbNo.Text = "No";
+            this.rbNo.UseVisualStyleBackColor = true;
             // 
-            // btnSi
+            // rbSi
             // 
-            this.btnSi.AutoSize = true;
-            this.btnSi.Location = new System.Drawing.Point(59, 493);
-            this.btnSi.Margin = new System.Windows.Forms.Padding(2);
-            this.btnSi.Name = "btnSi";
-            this.btnSi.Size = new System.Drawing.Size(43, 27);
-            this.btnSi.TabIndex = 80;
-            this.btnSi.TabStop = true;
-            this.btnSi.Text = "Si";
-            this.btnSi.UseVisualStyleBackColor = true;
+            this.rbSi.AutoSize = true;
+            this.rbSi.Location = new System.Drawing.Point(59, 493);
+            this.rbSi.Margin = new System.Windows.Forms.Padding(2);
+            this.rbSi.Name = "rbSi";
+            this.rbSi.Size = new System.Drawing.Size(43, 27);
+            this.rbSi.TabIndex = 80;
+            this.rbSi.TabStop = true;
+            this.rbSi.Text = "Si";
+            this.rbSi.UseVisualStyleBackColor = true;
             // 
             // cbTipoAzienda
             // 
@@ -532,15 +541,6 @@
             this.columnHeader4.Text = "Esclusività";
             this.columnHeader4.Width = 100;
             // 
-            // tbEmail
-            // 
-            this.tbEmail.Font = new System.Drawing.Font("Coolvetica", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbEmail.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.tbEmail.Location = new System.Drawing.Point(56, 551);
-            this.tbEmail.Name = "tbEmail";
-            this.tbEmail.Size = new System.Drawing.Size(321, 33);
-            this.tbEmail.TabIndex = 239;
-            // 
             // FrmCaseEditrici
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
@@ -587,8 +587,8 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox tbRagioneSociale;
-        private System.Windows.Forms.RadioButton btnNo;
-        private System.Windows.Forms.RadioButton btnSi;
+        private System.Windows.Forms.RadioButton rbNo;
+        private System.Windows.Forms.RadioButton rbSi;
         private System.Windows.Forms.ComboBox cbTipoAzienda;
         private System.Windows.Forms.Button btnAggiungi;
         private System.Windows.Forms.Panel panel2;

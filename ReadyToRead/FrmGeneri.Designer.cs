@@ -237,7 +237,7 @@
             // chNome
             // 
             this.chNome.Text = "Nome";
-            this.chNome.Width = 432;
+            this.chNome.Width = 421;
             // 
             // chTarget
             // 

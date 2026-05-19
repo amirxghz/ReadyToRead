@@ -102,12 +102,47 @@ namespace ReadyToRead
                 if (conn.State != ConnectionState.Open)
                     conn.Open();
 
-                MySqlDataAdapter da = new MySqlDataAdapter("SELECT * FROM utenti", conn);
+                string query = @"SELECT u.*,
+                                    CASE 
+                                        WHEN a.utenteID IS NOT NULL THEN 'admin'
+                                        WHEN c.utenteID IS NOT NULL THEN 'cliente'
+                                        ELSE 'utente'
+                                    END AS tipo_utente
+                                 FROM utenti u
+                                 LEFT JOIN admins a ON a.utenteID = u.ID
+                                 LEFT JOIN clienti c ON c.utenteID = u.ID";
+
+                MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
-                for (int i=0; i < dt.Rows.Count;i++)
-                    utenti.Add(CreaUtenteDaRiga(dt.Rows[i]));
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    string tipo = dt.Rows[i]["tipo_utente"].ToString();
+                    ClsUtente u;
+                    if (tipo == "admin")
+                        u = new ClsAdmin();
+                    else if (tipo == "cliente")
+                        u = new ClsCliente();
+                    else
+                        u = new ClsUtente();
+
+                    u.ID = Convert.ToInt64(dt.Rows[i]["ID"]);
+                    u.Nome = dt.Rows[i]["nome"] == DBNull.Value ? "" : dt.Rows[i]["nome"].ToString();
+                    u.Cognome = dt.Rows[i]["cognome"] == DBNull.Value ? "" : dt.Rows[i]["cognome"].ToString();
+                    u.Username = dt.Rows[i]["username"] == DBNull.Value ? "" : dt.Rows[i]["username"].ToString();
+                    u.Password = dt.Rows[i]["password"] == DBNull.Value ? "" : dt.Rows[i]["password"].ToString();
+                    u.Email = dt.Rows[i]["email"] == DBNull.Value ? "" : dt.Rows[i]["email"].ToString();
+                    if (dt.Rows[i]["data_nascita"] != DBNull.Value)
+                        u.DataDiNascita = Convert.ToDateTime(dt.Rows[i]["data_nascita"]);
+                    if (dt.Rows[i]["genere"] != DBNull.Value)
+                        u.Sesso = dt.Rows[i]["genere"].ToString() == "m" ? ClsUtente.eSESSO.m : ClsUtente.eSESSO.f;
+                    if (dt.Rows[i]["comune_nascita"] != DBNull.Value)
+                        u.ComuneDiNascita = (ClsUtente.eCOMUNE)Enum.Parse(typeof(ClsUtente.eCOMUNE), dt.Rows[i]["comune_nascita"].ToString(), true);
+                    u.Foto_profilo = dt.Rows[i]["foto_profilo"] == DBNull.Value ? "" : dt.Rows[i]["foto_profilo"].ToString();
+
+                    utenti.Add(u);
+                }
 
                 conn.Close();
             }
@@ -135,15 +170,48 @@ namespace ReadyToRead
                     if (conn.State != ConnectionState.Open)
                         conn.Open();
 
-                    string query = "SELECT * FROM utenti WHERE username LIKE @username";
+                    string query = @"SELECT u.*,
+                                        CASE 
+                                            WHEN a.utenteID IS NOT NULL THEN 'admin'
+                                            WHEN c.utenteID IS NOT NULL THEN 'cliente'
+                                            ELSE 'utente'
+                                        END AS tipo_utente
+                                     FROM utenti u
+                                     LEFT JOIN admins a ON a.utenteID = u.ID
+                                     LEFT JOIN clienti c ON c.utenteID = u.ID
+                                     WHERE u.username LIKE @username";
                     MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
                     da.SelectCommand.Parameters.AddWithValue("@username", "%" + username + "%");
                     DataTable dt = new DataTable();
                     da.Fill(dt);
 
-                   
-                    for (int i =0; i < dt.Rows.Count;i++)
-                        utenti.Add(CreaUtenteDaRiga(dt.Rows[i]));
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        string tipo = dt.Rows[i]["tipo_utente"].ToString();
+                        ClsUtente u;
+                        if (tipo == "admin")
+                            u = new ClsAdmin();
+                        else if (tipo == "cliente")
+                            u = new ClsCliente();
+                        else
+                            u = new ClsUtente();
+
+                        u.ID = Convert.ToInt64(dt.Rows[i]["ID"]);
+                        u.Nome = dt.Rows[i]["nome"] == DBNull.Value ? "" : dt.Rows[i]["nome"].ToString();
+                        u.Cognome = dt.Rows[i]["cognome"] == DBNull.Value ? "" : dt.Rows[i]["cognome"].ToString();
+                        u.Username = dt.Rows[i]["username"] == DBNull.Value ? "" : dt.Rows[i]["username"].ToString();
+                        u.Password = dt.Rows[i]["password"] == DBNull.Value ? "" : dt.Rows[i]["password"].ToString();
+                        u.Email = dt.Rows[i]["email"] == DBNull.Value ? "" : dt.Rows[i]["email"].ToString();
+                        if (dt.Rows[i]["data_nascita"] != DBNull.Value)
+                            u.DataDiNascita = Convert.ToDateTime(dt.Rows[i]["data_nascita"]);
+                        if (dt.Rows[i]["genere"] != DBNull.Value)
+                            u.Sesso = dt.Rows[i]["genere"].ToString() == "m" ? ClsUtente.eSESSO.m : ClsUtente.eSESSO.f;
+                        if (dt.Rows[i]["comune_nascita"] != DBNull.Value)
+                            u.ComuneDiNascita = (ClsUtente.eCOMUNE)Enum.Parse(typeof(ClsUtente.eCOMUNE), dt.Rows[i]["comune_nascita"].ToString(), true);
+                        u.Foto_profilo = dt.Rows[i]["foto_profilo"] == DBNull.Value ? "" : dt.Rows[i]["foto_profilo"].ToString();
+
+                        utenti.Add(u);
+                    }
 
                     conn.Close();
                 }
@@ -319,7 +387,6 @@ namespace ReadyToRead
 
                     if (dt.Rows.Count > 0)
                     {
-                        // Poi verifica la password con SHA2-256
                         query = "SELECT * FROM utenti WHERE username = @username AND password = SHA2(@password, 256)";
                         da = new MySqlDataAdapter(query, conn);
                         da.SelectCommand.Parameters.AddWithValue("@username", username);
@@ -331,7 +398,6 @@ namespace ReadyToRead
                         {
                             long utenteID = CreaUtenteDaRiga(dt.Rows[0]).ID;
 
-                            // Determina il ruolo: cliente o admin
                             query = "SELECT * FROM clienti WHERE utenteID = @ID";
                             da = new MySqlDataAdapter(query, conn);
                             da.SelectCommand.Parameters.AddWithValue("@ID", utenteID);

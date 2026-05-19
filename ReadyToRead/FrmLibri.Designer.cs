@@ -66,7 +66,7 @@
             this.pbCoverLibro = new System.Windows.Forms.PictureBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.dtmDataProduzione = new System.Windows.Forms.DateTimePicker();
+            this.dtpDataProduzione = new System.Windows.Forms.DateTimePicker();
             this.tbTitolo = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
@@ -133,7 +133,7 @@
             this.pnlDetails.Controls.Add(this.pbCoverLibro);
             this.pnlDetails.Controls.Add(this.label17);
             this.pnlDetails.Controls.Add(this.label22);
-            this.pnlDetails.Controls.Add(this.dtmDataProduzione);
+            this.pnlDetails.Controls.Add(this.dtpDataProduzione);
             this.pnlDetails.Controls.Add(this.tbTitolo);
             this.pnlDetails.Controls.Add(this.label21);
             this.pnlDetails.Controls.Add(this.label20);
@@ -547,16 +547,16 @@
             this.label22.TabIndex = 234;
             this.label22.Text = "🗓️";
             // 
-            // dtmDataProduzione
+            // dtpDataProduzione
             // 
-            this.dtmDataProduzione.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtmDataProduzione.Location = new System.Drawing.Point(61, 351);
-            this.dtmDataProduzione.MaxDate = new System.DateTime(2025, 11, 1, 0, 0, 0, 0);
-            this.dtmDataProduzione.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
-            this.dtmDataProduzione.Name = "dtmDataProduzione";
-            this.dtmDataProduzione.Size = new System.Drawing.Size(120, 30);
-            this.dtmDataProduzione.TabIndex = 232;
-            this.dtmDataProduzione.Value = new System.DateTime(2025, 11, 1, 0, 0, 0, 0);
+            this.dtpDataProduzione.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpDataProduzione.Location = new System.Drawing.Point(61, 351);
+            this.dtpDataProduzione.MaxDate = new System.DateTime(2025, 11, 1, 0, 0, 0, 0);
+            this.dtpDataProduzione.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
+            this.dtpDataProduzione.Name = "dtpDataProduzione";
+            this.dtpDataProduzione.Size = new System.Drawing.Size(120, 30);
+            this.dtpDataProduzione.TabIndex = 232;
+            this.dtpDataProduzione.Value = new System.DateTime(2025, 11, 1, 0, 0, 0, 0);
             // 
             // tbTitolo
             // 
@@ -777,6 +777,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmLibri";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmLibri_FormClosing);
             this.Load += new System.EventHandler(this.FrmLibri_Load);
             this.pnlDetails.ResumeLayout(false);
             this.pnlDetails.PerformLayout();
@@ -798,7 +799,7 @@
         private System.Windows.Forms.PictureBox pbCoverLibro;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.DateTimePicker dtmDataProduzione;
+        private System.Windows.Forms.DateTimePicker dtpDataProduzione;
         private System.Windows.Forms.TextBox tbTitolo;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label20;

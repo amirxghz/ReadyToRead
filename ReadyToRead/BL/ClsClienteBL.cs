@@ -21,7 +21,7 @@ namespace ReadyToRead
         private static ClsCliente CreaClienteDaRiga(DataRow r)
         {
             ClsCliente c = new ClsCliente();
-            c.Id = Convert.ToInt64(r["ID"]);
+            c.ID = Convert.ToInt64(r["ID"]);
             c.UtenteID = Convert.ToInt32(r["utenteID"]);
             c.Indirizzo = r["indirizzo"] == DBNull.Value ? "" : r["indirizzo"].ToString();
             c.CAP = r["cap"] == DBNull.Value ? "" : r["cap"].ToString();

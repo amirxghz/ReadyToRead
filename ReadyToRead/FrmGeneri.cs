@@ -110,6 +110,7 @@ namespace ReadyToRead
                 btnAnnulla.Visible = false;
                 btnVisualizza.ForeColor = Color.DodgerBlue;
                 btnVisualizza.Text = "👁️Smetti";
+                CampiReadOnly(true);
             }
             else
             {
@@ -118,7 +119,18 @@ namespace ReadyToRead
                 btnAnnulla.Visible = true;
                 btnVisualizza.ForeColor = Color.Black;
                 btnVisualizza.Text = "👁️Visualizza";
+                CampiReadOnly(false);
             }
+        }
+        private void CampiReadOnly(bool rendiReadOnly)
+        {
+            tbNome.ReadOnly = rendiReadOnly;
+            tbTarget.ReadOnly = rendiReadOnly;
+            rtbDescrizione.ReadOnly = rendiReadOnly;
+
+            btnElimina.Enabled = !rendiReadOnly;
+            btnModifica.Enabled = !rendiReadOnly;
+            tbFiltroNome.ReadOnly = rendiReadOnly;
         }
         private void VisualizzaGenere()
         {

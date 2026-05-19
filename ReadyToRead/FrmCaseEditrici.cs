@@ -70,8 +70,8 @@ namespace ReadyToRead
             tbSedeLegale.Clear();
             tbSedeOperativa.Clear();
             tbEmail.Clear();
-            btnSi.Checked = false;
-            btnNo.Checked = false;
+            rbSi.Checked = false;
+            rbNo.Checked = false;
             cbTipoAzienda.SelectedIndex = -1;
             _modalitaModifica = false;
             _casaSelezionata = null;
@@ -89,7 +89,7 @@ namespace ReadyToRead
             casa.RagioneSociale = tbRagioneSociale.Text.Trim();
             casa.IndirizzoSedeLegale = tbSedeLegale.Text.Trim();
             casa.IndirizzoSedeOperativa = tbSedeOperativa.Text.Trim();
-            casa.Esclusiva = btnSi.Checked;
+            casa.Esclusiva = rbSi.Checked;
             if (cbTipoAzienda.SelectedItem != null)
                 casa.TipoAzienda = (ClsCasa.eTIPO_AZIENDA)cbTipoAzienda.SelectedItem;
             casa.Tipologia = ClsCasa.eTIPO_CASA.editrice;
@@ -161,6 +161,7 @@ namespace ReadyToRead
                 btnAnnulla.Visible = false;
                 btnVisualizza.ForeColor = Color.DodgerBlue;
                 btnVisualizza.Text = "👁️Smetti";
+                CampiReadOnly(true);
             }
             else
             {
@@ -169,15 +170,29 @@ namespace ReadyToRead
                 btnAnnulla.Visible = true;
                 btnVisualizza.ForeColor = Color.Black;
                 btnVisualizza.Text = "👁️Visualizza";
+                CampiReadOnly(false);
             }
+        }
+        private void CampiReadOnly(bool rendiReadOnly)
+        {
+            tbUsername.ReadOnly = rendiReadOnly;
+            tbPassword.ReadOnly = rendiReadOnly;
+            tbRagioneSociale.ReadOnly = rendiReadOnly;
+            tbSedeLegale.ReadOnly = rendiReadOnly;
+            tbSedeOperativa.ReadOnly = rendiReadOnly;
+            tbFiltroNome.ReadOnly = rendiReadOnly;
+            cbTipoAzienda.Enabled = !rendiReadOnly;
+            rbNo.Enabled = !rendiReadOnly;
+            rbSi.Enabled = !rendiReadOnly;
+            tbEmail.ReadOnly = rendiReadOnly;
         }
         private void VisualizzaCasa()
         {
             _casaSelezionata = (ClsCasa)lvCase.SelectedItems[0].Tag;
             _idSelezionato = _casaSelezionata.ID;
             tbRagioneSociale.Text = _casaSelezionata.RagioneSociale;
-            btnSi.Checked = _casaSelezionata.Esclusiva;
-            btnNo.Checked = !_casaSelezionata.Esclusiva;
+            rbSi.Checked = _casaSelezionata.Esclusiva;
+            rbNo.Checked = !_casaSelezionata.Esclusiva;
             cbTipoAzienda.SelectedItem = _casaSelezionata.TipoAzienda;
             tbPassword.Text = _casaSelezionata.Password;
             tbUsername.Text = _casaSelezionata.Username;

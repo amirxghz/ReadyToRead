@@ -52,12 +52,15 @@ namespace ReadyToRead
             for  (int i =0;  i < utenti.Count; i++)
             {
                 ClsUtente u = utenti[i];
-                ListViewItem lvi = new ListViewItem(u is ClsAdmin ? "Admin" : "Cliente");
-                lvi.SubItems.Add(u.Nome + " " + u.Cognome);
-                lvi.SubItems.Add(u.Username);
-                lvi.SubItems.Add(u.Email);
-                lvi.Tag = u;
-                lvUtenti.Items.Add(lvi);
+                if (u is ClsAdmin || u is ClsCliente) //faccio vedere solo gli admin e clienti
+                {
+                    ListViewItem lvi = new ListViewItem(u is ClsAdmin ? "Admin" : "Cliente");
+                    lvi.SubItems.Add(u.Nome + " " + u.Cognome);
+                    lvi.SubItems.Add(u.Username);
+                    lvi.SubItems.Add(u.Email);
+                    lvi.Tag = u;
+                    lvUtenti.Items.Add(lvi);
+                }
             }
         }
         
@@ -160,23 +163,18 @@ namespace ReadyToRead
         
         private void VisualizzaUtente()
         {
-            if (lvUtenti.SelectedItems.Count == 0)
-                MessageBox.Show("Seleziona un utente da visualizzare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else
-            {
-                _utenteSelezionato = (ClsUtente)lvUtenti.SelectedItems[0].Tag;
-                _idSelezionato = _utenteSelezionato.ID; 
-                tbNome.Text = _utenteSelezionato.Nome;
-                tbCognome.Text = _utenteSelezionato.Cognome;
-                tbUsername.Text = _utenteSelezionato.Username;
-                tbPassword.Text = _password;               
-                tbEmail.Text = _utenteSelezionato.Email;
-                dtpDataDiNascita.Value = _utenteSelezionato.DataDiNascita;
-                rbM.Checked = _utenteSelezionato.Sesso == ClsUtente.eSESSO.m;
-                rbF.Checked = _utenteSelezionato.Sesso == ClsUtente.eSESSO.f;
-                cbComuneNascita.SelectedItem = _utenteSelezionato.ComuneDiNascita;
-                tbCF.Text = CalcolaCF();
-            }
+            _utenteSelezionato = (ClsUtente)lvUtenti.SelectedItems[0].Tag;
+            _idSelezionato = _utenteSelezionato.ID; 
+            tbNome.Text = _utenteSelezionato.Nome;
+            tbCognome.Text = _utenteSelezionato.Cognome;
+            tbUsername.Text = _utenteSelezionato.Username;
+            tbPassword.Text = _password;               
+            tbEmail.Text = _utenteSelezionato.Email;
+            dtpDataDiNascita.Value = _utenteSelezionato.DataDiNascita;
+            rbM.Checked = _utenteSelezionato.Sesso == ClsUtente.eSESSO.m;
+            rbF.Checked = _utenteSelezionato.Sesso == ClsUtente.eSESSO.f;
+            cbComuneNascita.SelectedItem = _utenteSelezionato.ComuneDiNascita;
+            tbCF.Text = CalcolaCF();
         }
         
         #region Calcolo_CF
@@ -334,6 +332,14 @@ namespace ReadyToRead
         bool modalitàVisualizza = false;
         private void btnVisualizza_Click(object sender, EventArgs e)
         {
+            if (lvUtenti.SelectedItems.Count == 0)
+                MessageBox.Show("Seleziona un utente da visualizzare.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else
+                ModificaBtnVisualizza();
+        }
+
+        private void ModificaBtnVisualizza()
+        {
             modalitàVisualizza = !modalitàVisualizza;
             if (modalitàVisualizza)
             {
@@ -342,6 +348,7 @@ namespace ReadyToRead
                 btnAnnulla.Visible = false;
                 btnVisualizza.ForeColor = Color.DodgerBlue;
                 btnVisualizza.Text = "👁️Smetti";
+                CampiReadOnly(true);
             }
             else
             {
@@ -350,7 +357,28 @@ namespace ReadyToRead
                 btnAnnulla.Visible = true;
                 btnVisualizza.ForeColor = Color.Black;
                 btnVisualizza.Text = "👁️Visualizza";
+                CampiReadOnly(false);
             }
+        }
+
+        private void CampiReadOnly(bool rendiReadOnly)
+        {
+            tbNome.ReadOnly = rendiReadOnly;
+            tbCognome.ReadOnly = rendiReadOnly;
+            tbUsername.ReadOnly = rendiReadOnly;
+            tbPassword.ReadOnly = rendiReadOnly;
+            tbEmail.ReadOnly = rendiReadOnly;
+            tbFiltroNome.ReadOnly = rendiReadOnly;
+            cbComuneNascita.Enabled = !rendiReadOnly;
+            dtpDataDiNascita.Enabled = !rendiReadOnly;
+            rbM.Enabled = !rendiReadOnly;
+            rbF.Enabled = !rendiReadOnly;
+            rbAdmin.Enabled = !rendiReadOnly;
+            rbCliente.Enabled = !rendiReadOnly;
+            btnElimina.Enabled = !rendiReadOnly;
+            btnModifica.Enabled = !rendiReadOnly;
+            btnAutore.Enabled = !rendiReadOnly;
+            btnCasaEditrice.Enabled = !rendiReadOnly;
         }
 
         private void btnModifica_Click(object sender, EventArgs e)

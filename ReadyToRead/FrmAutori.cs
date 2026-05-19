@@ -228,6 +228,7 @@ namespace ReadyToRead
                 btnAnnulla.Visible = false;
                 btnVisualizza.ForeColor = Color.DodgerBlue;
                 btnVisualizza.Text = "👁️Smetti";
+                CampiReadOnly(true);
             }
             else
             {
@@ -236,7 +237,26 @@ namespace ReadyToRead
                 btnAnnulla.Visible = true;
                 btnVisualizza.ForeColor = Color.Black;
                 btnVisualizza.Text = "👁️Visualizza";
+                CampiReadOnly(false);
             }
+        }
+        private void CampiReadOnly(bool rendiReadOnly)
+        {
+            rbVerificato.Enabled = !rendiReadOnly;
+            rbNonVerificato.Enabled = !rendiReadOnly;
+            tbNomeArte.ReadOnly = rendiReadOnly;
+            tbNome.ReadOnly = rendiReadOnly;
+            tbCognome.ReadOnly = rendiReadOnly;
+            dtpDataDiNascita.Enabled = !rendiReadOnly;
+            dtpDataMorte.Enabled = !rendiReadOnly;
+            chkAttivaDataMorte.Enabled = !rendiReadOnly;
+            rbM.Enabled = !rendiReadOnly;
+            rbF.Enabled = !rendiReadOnly;
+            tbCittà.ReadOnly = rendiReadOnly;
+            cbVerificato.Enabled = !rendiReadOnly;
+            tbFiltroNome.ReadOnly = rendiReadOnly;
+            btnElimina.Enabled = !rendiReadOnly;
+            btnModifica.Enabled = !rendiReadOnly;
         }
         private void btnModifica_Click(object sender, EventArgs e)
         {
